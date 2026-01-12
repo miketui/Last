@@ -188,7 +188,7 @@ async function generateEbookCover() {
     .composite([
       {
         input: resizedLogo,
-        top: 1150,
+        top: 1050,
         left: Math.floor((ebookWidth - 700) / 2)
       },
       {
@@ -209,7 +209,7 @@ async function generateEbookCover() {
     .composite([
       {
         input: resizedLogo,
-        top: 1150,
+        top: 1050,
         left: Math.floor((ebookWidth - 700) / 2)
       }
     ])
@@ -451,7 +451,7 @@ async function generatePrintCover() {
   // Calculate front cover center for logo
   const frontCoverCenterX = bleed + trimWidth + spineWidth + trimWidth/2;
   const logoX = Math.floor(frontCoverCenterX - 290);
-  const logoY = bleed + 1050;
+  const logoY = bleed + 950;
 
   // Badge position (top left of front cover)
   const badgeX = bleed + trimWidth + spineWidth + 80;
