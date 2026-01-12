@@ -1,0 +1,416 @@
+\documentclass[11pt,twoside]{book}
+
+% ============================================================================
+% PAGE GEOMETRY - 6x9 inch trim size for POD
+% ============================================================================
+\usepackage[
+    paperwidth=6in,
+    paperheight=9in,
+    inner=0.875in,
+    outer=0.625in,
+    top=0.75in,
+    bottom=0.75in,
+    footskip=0.4in
+]{geometry}
+
+% ============================================================================
+% ESSENTIAL PACKAGES
+% ============================================================================
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{enumitem}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{lettrine}
+\usepackage{epigraph}
+\usepackage{tikz}
+\usepackage{afterpage}
+\usepackage{pdfpages}
+\usepackage{calc}
+\usepackage{etoolbox}
+
+% ============================================================================
+% COLORS - Matching EPUB theme
+% ============================================================================
+\definecolor{teal}{RGB}{43,153,153}
+\definecolor{tealdark}{RGB}{31,114,114}
+\definecolor{teallight}{RGB}{61,179,179}
+\definecolor{gold}{RGB}{201,169,97}
+\definecolor{golddark}{RGB}{176,143,74}
+\definecolor{goldlight}{RGB}{212,185,118}
+\definecolor{ink}{RGB}{26,26,26}
+\definecolor{textcolor}{RGB}{68,68,68}
+\definecolor{cream}{RGB}{249,247,242}
+\definecolor{linecolor}{RGB}{224,224,224}
+
+% ============================================================================
+% FONTS - Using system fonts similar to EPUB design
+% ============================================================================
+\setmainfont{DejaVu Serif}[
+    Scale=1.0,
+    Ligatures=TeX
+]
+\setsansfont{DejaVu Sans}[
+    Scale=0.95,
+    Ligatures=TeX
+]
+\setmonofont{DejaVu Sans Mono}[
+    Scale=0.85
+]
+
+% Define font commands for special styling
+\newfontfamily\displayfont{DejaVu Serif}[Scale=1.1]
+\newfontfamily\headingfont{DejaVu Sans}[Scale=0.95]
+
+% ============================================================================
+% CHAPTER & SECTION STYLING
+% ============================================================================
+\titleformat{\part}[display]
+    {\centering\Huge\bfseries\color{tealdark}}
+    {\partname\ \thepart}
+    {20pt}
+    {\Huge}
+
+\titleformat{\chapter}[display]
+    {\normalfont\huge\bfseries\centering\color{tealdark}}
+    {}
+    {0pt}
+    {\huge}
+
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{tealdark}}
+    {\thesection}
+    {1em}
+    {}
+    [\color{gold}\titlerule]
+
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{teal}}
+    {\thesubsection}
+    {1em}
+    {}
+
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\bfseries\color{tealdark}}
+    {\thesubsubsection}
+    {1em}
+    {}
+
+% Spacing
+\titlespacing*{\chapter}{0pt}{30pt}{20pt}
+\titlespacing*{\section}{0pt}{20pt}{10pt}
+\titlespacing*{\subsection}{0pt}{15pt}{8pt}
+
+% ============================================================================
+% HEADERS & FOOTERS
+% ============================================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\thepage}
+\fancyhead[RE]{\textit{Curls \& Contemplation}}
+\fancyhead[LO]{\textit{\leftmark}}
+\fancyhead[RO]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Plain style for chapter pages
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[C]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% ============================================================================
+% HYPERREF SETUP
+% ============================================================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=tealdark,
+    urlcolor=teal,
+    citecolor=golddark,
+    pdftitle={Curls \& Contemplation: A Stylist's Interactive Journey},
+    pdfauthor={Michael David Warren Jr.},
+    pdfsubject={Hairstyling, Professional Development},
+    pdfkeywords={hairstyling, beauty industry, freelance, professional development}
+}
+
+% ============================================================================
+% CUSTOM ENVIRONMENTS
+% ============================================================================
+% Action Steps Box
+\newenvironment{actionsteps}{%
+    \begin{tcolorbox}[
+        colback=teal!5,
+        colframe=teal,
+        boxrule=0.5pt,
+        left=10pt,
+        right=10pt,
+        top=10pt,
+        bottom=10pt,
+        arc=0pt,
+        boxsep=5pt,
+        leftrule=4pt
+    ]
+    \textbf{\color{tealdark}ACTION STEPS}\\[0.5em]
+}{%
+    \end{tcolorbox}
+}
+
+% Case Study Box
+\newenvironment{casestudy}{%
+    \begin{tcolorbox}[
+        colback=gold!5,
+        colframe=gold,
+        boxrule=1pt,
+        left=10pt,
+        right=10pt,
+        top=10pt,
+        bottom=10pt,
+        arc=0pt,
+        boxsep=5pt
+    ]
+    \textbf{\color{golddark}CASE STUDY}\\[0.5em]
+}{%
+    \end{tcolorbox}
+}
+
+% Reflection/Quote Box
+\newenvironment{reflection}{%
+    \begin{quote}
+    \itshape
+}{%
+    \end{quote}
+}
+
+% Writing lines for journals
+\newcommand{\writinglines}[1]{%
+    \foreach \n in {1,...,#1}{%
+        \noindent\rule{\linewidth}{0.4pt}\\[0.5em]%
+    }%
+}
+
+% ============================================================================
+% LETTRINE (DROP CAPS) SETTINGS
+% ============================================================================
+\setcounter{DefaultLines}{3}
+\renewcommand{\DefaultLoversize}{0.1}
+\renewcommand{\DefaultLraise}{0}
+
+% ============================================================================
+% IMAGE HANDLING
+% ============================================================================
+\graphicspath{{latex/images/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg,.jpeg}
+
+% Full page image command
+\newcommand{\fullpageimage}[1]{%
+    \clearpage
+    \thispagestyle{empty}
+    \begin{tikzpicture}[remember picture,overlay]
+        \node at (current page.center) {%
+            \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{#1}%
+        };
+    \end{tikzpicture}
+    \clearpage
+}
+
+% ============================================================================
+% TABLE OF CONTENTS STYLING
+% ============================================================================
+\titlecontents{part}[0em]
+    {\addvspace{2em}\bfseries\large}
+    {\partname\ \thecontentslabel\quad}
+    {}
+    {\hfill\contentspage}
+
+\titlecontents{chapter}[1.5em]
+    {\addvspace{1em}\bfseries}
+    {\contentslabel{1.5em}}
+    {\hspace*{-1.5em}}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+\titlecontents{section}[3.8em]
+    {}
+    {\contentslabel{2.3em}}
+    {\hspace*{-2.3em}}
+    {\titlerule*[0.5pc]{.}\contentspage}
+
+% ============================================================================
+% MISCELLANEOUS
+% ============================================================================
+% Prevent orphans and widows
+\widowpenalty=10000
+\clubpenalty=10000
+
+% Line spacing
+\setstretch{1.15}
+
+% Paragraph settings
+\setlength{\parindent}{0.25in}
+\setlength{\parskip}{0pt}
+
+% List settings
+\setlist[itemize]{leftmargin=*,itemsep=0.5em}
+\setlist[enumerate]{leftmargin=*,itemsep=0.5em}
+
+% tcolorbox for boxes (load after other packages)
+\usepackage[most]{tcolorbox}
+
+% ============================================================================
+% DOCUMENT INFO
+% ============================================================================
+\title{Curls \& Contemplation\\[0.5em]\large A Stylist's Interactive Journey}
+\author{Michael David Warren Jr.}
+\date{2024}
+
+
+\begin{document}
+
+\frontmatter
+\pagestyle{plain}
+
+\input{latex/1-TitlePage}
+\clearpage
+
+\input{latex/2-Copyright}
+\clearpage
+
+\input{latex/3-TableOfContents}
+\clearpage
+
+\input{latex/4-Dedication}
+\clearpage
+
+\input{latex/5-SelfAssessment}
+
+\input{latex/6-AffirmationOdyssey}
+
+\input{latex/7-Preface}
+
+\input{latex/7a-preface-quote}
+\clearpage
+
+
+\mainmatter
+\pagestyle{fancy}
+
+\input{latex/8-Part-I-Foundations-of-Creative-Hairstyling}
+\clearpage
+
+\input{latex/9-chapter-i-unveiling-your-creative-odyssey}
+\clearpage
+
+\input{latex/10-chapter-ii-refining-your-creative-toolkit}
+\clearpage
+
+\input{latex/11-chapter-iii-reigniting-your-creative-fire}
+\clearpage
+
+\input{latex/12-Part-II-Building-Your-Professional-Practice}
+\clearpage
+
+\input{latex/13-chapter-iv-the-art-of-networking-in-freelance-hairstyling}
+\clearpage
+
+\input{latex/14-chapter-v-cultivating-creative-excellence-through-mentorship}
+\clearpage
+
+\input{latex/15-chapter-vi-mastering-the-business-of-hairstyling}
+\clearpage
+
+\input{latex/16-chapter-vii-embracing-wellness-and-self-care}
+\clearpage
+
+\input{latex/17-chapter-viii-advancing-skills-through-continuous-education}
+\clearpage
+
+\input{latex/18-Part-III-Advanced-Business-Strategies}
+\clearpage
+
+\input{latex/19-chapter-ix-stepping-into-leadership}
+\clearpage
+
+\input{latex/20-chapter-x-crafting-enduring-legacies}
+\clearpage
+
+\input{latex/21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists}
+\clearpage
+
+\input{latex/22-chapter-xii-financial-wisdom-building-sustainable-ventures}
+\clearpage
+
+\input{latex/23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling}
+\clearpage
+
+\input{latex/24-Part-IV-Future-Focused-Growth}
+\clearpage
+
+\input{latex/25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry}
+\clearpage
+
+\input{latex/26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling}
+\clearpage
+
+\input{latex/27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling}
+\clearpage
+
+\input{latex/28-Conclusion}
+\clearpage
+
+\input{latex/28a-conclusion-quote}
+\clearpage
+
+\input{latex/29-QuizKey}
+
+\input{latex/30-SelfAssessment}
+
+\input{latex/31-affirmations-close}
+
+\input{latex/32-continued-learning-commitment}
+
+
+\backmatter
+
+\input{latex/33-Acknowledgments}
+
+\input{latex/34-AbouttheAuthor}
+
+\input{latex/35-CurlsContempCollective}
+
+\input{latex/36-JournalingStart}
+
+\input{latex/37-ManifestingJournal}
+
+\input{latex/38-journal-page}
+
+\input{latex/39-professional-development}
+
+\input{latex/40-SMARTGoals}
+
+\input{latex/41-self-care-journal}
+
+\input{latex/42-VisionJournal}
+
+\input{latex/43-DoodlePage}
+
+\input{latex/44-bibliography}
+
+\end{document}
