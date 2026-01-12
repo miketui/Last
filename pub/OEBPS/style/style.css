@@ -1,0 +1,2528 @@
+/*
+  style.css — ACISS Design System for The Artisan's Path
+  Complete Stylesheet with All Corrections
+  
+  Colors: Teal (#2B9999) & Gold (#C9A961)
+  Fonts: Libre Baskerville (Body), Cinzel Decorative (Display), Montserrat (Headers/UI)
+  
+  Version: 2.1 - Final Corrected
+*/
+
+@import url('fonts.css');
+
+/* ====================================================================
+   1. CSS VARIABLES & RESET
+   ==================================================================== */
+:root {
+  /* Brand Colors */
+  --clr-teal-primary: #2B9999;
+  --clr-teal-dark: #1F7272;
+  --clr-teal-light: #3DB3B3;
+  --clr-teal-faint: rgba(43, 153, 153, 0.08);
+  
+  --clr-gold-accent: #C9A961;
+  --clr-gold-dark: #B08F4A;
+  --clr-gold-light: #D4B976;
+  --clr-gold-faint: rgba(201, 169, 97, 0.1);
+
+  /* Neutrals */
+  --clr-ink: #1a1a1a;
+  --clr-text: #444444;
+  --clr-paper: #ffffff;
+  --clr-cream: #f9f7f2;
+  --clr-line: #e0e0e0;
+  --clr-muted: #888888;
+
+  /* Typography */
+  --font-display: 'Cinzel Decorative', Georgia, serif;
+  --font-body: 'Libre Baskerville', Georgia, serif;
+  --font-sans: 'Montserrat', Arial, sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 3rem;
+  --space-xl: 5rem;
+}
+
+*, *::before, *::after { 
+  box-sizing: border-box; 
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--clr-text);
+  background-color: var(--clr-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ====================================================================
+   2. UTILITY CLASSES
+   ==================================================================== */
+.decorative-line {
+  height: 2px;
+  width: 80px;
+  background: var(--clr-gold-accent);
+  margin: var(--space-md) auto;
+  border: none;
+}
+
+.elegant-divider {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--clr-teal-primary), transparent);
+  margin: var(--space-lg) 0;
+  opacity: 0.5;
+}
+
+.rule-gold {
+  border: none;
+  height: 1px;
+  background: var(--clr-gold-accent);
+  margin: var(--space-md) 0;
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+.text-teal { color: var(--clr-teal-primary); }
+.text-gold { color: var(--clr-gold-accent); }
+.accent-muted { color: var(--clr-muted); }
+
+.hidden { display: none !important; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ====================================================================
+   3. FRONTMATTER STYLES (Title, Copyright, Dedication)
+   ==================================================================== */
+
+.frontmatter-shell {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-sm);
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+/* Title Page */
+.title-page-body {
+  border: 12px solid var(--clr-paper);
+  outline: 2px solid var(--clr-gold-accent);
+  background: radial-gradient(circle, #fff 0%, #fcfcfc 100%);
+}
+
+h1.frontmatter-title, h1.main-title {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 1.1;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: var(--space-sm);
+  letter-spacing: 0.02em;
+}
+
+h2.subtitle {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--clr-gold-dark);
+  text-align: center;
+  border-top: 1px solid var(--clr-gold-accent);
+  border-bottom: 1px solid var(--clr-gold-accent);
+  padding: var(--space-sm) 0;
+  margin: 0 auto var(--space-xl);
+  display: inline-block;
+  width: 80%;
+}
+
+.author {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--clr-ink);
+  text-align: center;
+  margin-top: auto;
+}
+
+/* Copyright Page */
+.copyright-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: var(--space-xl);
+}
+
+.copyright-notice, .rights-text {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-md);
+}
+
+.isbn-info {
+  font-family: 'Courier New', monospace;
+  color: var(--clr-ink);
+  font-weight: bold;
+}
+
+.publisher-info {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--clr-teal-primary);
+}
+
+/* Dedication */
+.dedication-page { text-align: center; }
+.dedication-title {
+  color: var(--clr-gold-accent);
+  font-family: var(--font-display);
+  border-bottom: 1px solid var(--clr-line);
+  padding-bottom: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+.dedication-verse {
+  font-style: italic;
+  font-size: 1.2rem;
+  margin-bottom: var(--space-lg);
+  color: var(--clr-text);
+}
+.dedication-section { margin-bottom: var(--space-md); }
+.dedication-section strong { color: var(--clr-teal-primary); font-weight: 700; }
+
+/* ====================================================================
+   4. TABLE OF CONTENTS
+   ==================================================================== */
+
+.toc-container { max-width: 650px; margin: 0 auto; }
+.contents-title, .toc-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--clr-teal-primary);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.toc-part-title {
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  border-bottom: 2px solid var(--clr-gold-accent);
+  padding-bottom: 0.25rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.toc-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px dotted var(--clr-line);
+  padding-bottom: 0.25rem;
+}
+
+.toc-link {
+  text-decoration: none;
+  color: var(--clr-text);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.toc-link:hover { color: var(--clr-gold-dark); }
+
+.toc-chapter-num {
+  font-family: var(--font-display);
+  font-weight: bold;
+  color: var(--clr-gold-accent);
+  margin-right: 1rem;
+  display: inline-block;
+  min-width: 2rem;
+}
+
+.toc-page-number {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--clr-muted);
+}
+
+/* ====================================================================
+   5. WORKSHEETS & JOURNALS (Interactive Elements)
+   ==================================================================== */
+
+.worksheet-card {
+  background: var(--clr-paper);
+  border: 1px solid var(--clr-line);
+  padding: var(--space-md);
+  margin: var(--space-md) auto;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  page-break-inside: avoid;
+}
+
+.worksheet-header {
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.worksheet-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--clr-teal-dark);
+  margin-bottom: var(--space-xs);
+}
+
+.worksheet-instructions {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--clr-muted);
+  font-style: italic;
+}
+
+.worksheet-footer {
+  margin-top: var(--space-md);
+  text-align: center;
+}
+
+.print-instruction {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+/* Question Cards within Worksheets */
+.question-card, .prompt-card, .journal-entry {
+  margin-bottom: var(--space-md);
+  page-break-inside: avoid;
+}
+
+.question-header, .prompt-header {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: var(--space-sm);
+}
+
+.question-number {
+  background: var(--clr-teal-primary);
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 28px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-right: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.question-text, .prompt-text {
+  font-weight: bold;
+  color: var(--clr-teal-dark);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+}
+
+/* Writing Areas */
+.answer-lines, .writing-lines, .writing-area {
+  margin-top: var(--space-sm);
+  width: 100%;
+}
+
+.answer-line, .writing-line, .line {
+  border-bottom: 1px solid var(--clr-line);
+  height: 2rem;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.ruled-paper-bg {
+  background-image: repeating-linear-gradient(transparent, transparent 29px, var(--clr-line) 30px);
+  background-size: 100% 30px;
+  line-height: 30px;
+  min-height: 150px;
+}
+
+/* Badges for Journals */
+.prompt-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.prompt-badge.teal { background: var(--clr-teal-faint); color: var(--clr-teal-dark); }
+.prompt-badge.gold { background: var(--clr-gold-faint); color: var(--clr-gold-dark); }
+
+/* Rating Scales */
+.rating-circles {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.rating-circle {
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--clr-teal-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--clr-teal-primary);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* ====================================================================
+   6. BIBLIOGRAPHY & QUIZ KEY
+   ==================================================================== */
+
+/* Bibliography */
+.bib-container { max-width: 800px; margin: 0 auto; }
+.bib-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-primary);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+.bib-list { list-style: none; padding: 0; margin: 0; }
+.bib-entry {
+  padding-left: 2rem;
+  text-indent: -2rem; /* Hanging Indent */
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--clr-text);
+}
+.bib-entry a { color: var(--clr-teal-primary); text-decoration: none; word-break: break-all; }
+.bib-entry a:hover { text-decoration: underline; }
+
+/* Quiz Answer Key */
+.key-container { max-width: 800px; margin: 0 auto; }
+.key-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-primary);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+.answer-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-lg) 0;
+  font-family: var(--font-sans);
+}
+.answer-table th {
+  background-color: var(--clr-teal-primary);
+  color: #fff;
+  padding: 0.75rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.answer-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--clr-line);
+  text-align: center;
+}
+.answer-table tr:nth-child(even) { background-color: var(--clr-teal-faint); }
+.chapter-col { font-weight: 700; color: var(--clr-teal-dark); }
+
+/* ====================================================================
+   7. CERTIFICATES & BACKMATTER
+   ==================================================================== */
+
+.certificate-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  padding: var(--space-md);
+}
+
+.certificate-border {
+  border: 4px double var(--clr-gold-accent);
+  padding: var(--space-lg);
+  margin: var(--space-md) auto;
+  max-width: 600px;
+  text-align: center;
+  position: relative;
+}
+
+.certificate-border .corner-deco {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--clr-gold-accent);
+}
+
+.certificate-border .corner-deco.tl {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.certificate-border .corner-deco.tr {
+  top: -2px;
+  right: -2px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.certificate-border .corner-deco.bl {
+  bottom: -2px;
+  left: -2px;
+  border-right: none;
+  border-top: none;
+}
+
+.certificate-border .corner-deco.br {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.cert-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cert-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--clr-gold-accent);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.pledge-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0;
+  text-align: left;
+}
+
+.pledge-list li {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--clr-text);
+  margin-bottom: var(--space-sm);
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.pledge-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--clr-teal-primary);
+  font-weight: bold;
+}
+
+.closing-text {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--clr-text);
+  margin: var(--space-md) 0;
+  text-align: justify;
+}
+
+.closing-quote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--clr-muted);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--clr-line);
+  text-align: center;
+}
+
+.certificate-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  margin-bottom: var(--space-md);
+}
+
+.signature-section {
+  display: flex;
+  justify-content: space-around;
+  margin-top: var(--space-lg);
+}
+
+.signature-field {
+  text-align: center;
+}
+
+.signature-line {
+  width: 150px;
+  border-bottom: 1px solid var(--clr-ink);
+  margin-bottom: 0.5rem;
+  height: 30px;
+}
+
+.signature-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--clr-muted);
+}
+
+/* Signature Row Layout for Commitment Agreement */
+.signature-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: var(--space-lg);
+  gap: var(--space-lg);
+}
+
+.sig-block {
+  flex: 1;
+  text-align: center;
+}
+
+.sig-line {
+  width: 100%;
+  border: none;
+  border-bottom: 2px dotted var(--clr-ink);
+  margin-bottom: 0.5rem;
+  height: 40px;
+}
+
+.sig-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--clr-muted);
+}
+
+/* About Author */
+.about-author-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+.author-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto var(--space-md);
+  display: block;
+  border: 3px solid var(--clr-gold-accent);
+}
+
+.author-bio {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+/* ====================================================================
+   8. CHAPTER PAGE - Base Styles
+   ==================================================================== */
+
+.chapter-page {
+  background-color: var(--clr-paper);
+}
+
+/* ====================================================================
+   9. CHAPTER TITLE PAGE
+   ==================================================================== */
+
+.chap-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 90vh;
+  padding: var(--space-lg) var(--space-md);
+  text-align: center;
+  page-break-after: always;
+}
+
+/* Roman Numeral on Brushstroke */
+.chapter-number-figure {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chapter-number-brush {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.chapter-number-roman {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 400;
+  color: var(--clr-paper);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  margin: 0;
+  padding: 0;
+  /* Override generic figcaption styles */
+  font-style: normal;
+  line-height: 1;
+}
+
+/* Title Stack with Gold Bar */
+.title-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.title-bar {
+  width: 60px;
+  height: 4px;
+  background-color: var(--clr-gold-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.title-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.title-line {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--clr-teal-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  line-height: 1.2;
+}
+
+/* Bible Quote */
+.bible-quote-container {
+  max-width: 500px;
+  margin: var(--space-md) auto var(--space-lg);
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--clr-gold-accent);
+  text-align: left;
+}
+
+.bible-quote-text {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--clr-text);
+  margin: 0 0 var(--space-xs);
+  line-height: 1.6;
+}
+
+.bible-quote-reference {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--clr-gold-dark);
+  font-weight: 600;
+}
+
+/* Introduction Section */
+.introduction-heading {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-teal-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.introduction-paragraph {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: justify;
+}
+
+.introduction-paragraph p {
+  margin-bottom: 1rem;
+  text-indent: 0;
+}
+
+/* Drop Cap - Using ::first-letter */
+.dropcap-first-letter p:first-child::first-letter {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  float: left;
+  line-height: 0.8;
+  padding-right: 0.1em;
+  padding-top: 0.05em;
+  color: var(--clr-teal-primary);
+  font-weight: 400;
+}
+
+/* Drop Cap - Using strong tag fallback */
+.introduction-paragraph p:first-of-type strong:first-child,
+.dropcap-first-letter p:first-of-type strong:first-child {
+  font-family: var(--font-display);
+  font-size: 3.2rem;
+  float: left;
+  line-height: 0.85;
+  padding-right: 0.08em;
+  padding-top: 0.05em;
+  color: var(--clr-teal-primary);
+  font-weight: 400;
+}
+
+/* ====================================================================
+   10. CHAPTER BODY CONTENT
+   ==================================================================== */
+
+.chap-body {
+  padding: var(--space-md);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.content-area {
+  margin-bottom: var(--space-lg);
+}
+
+.chap-body h2 {
+  font-family: var(--font-sans);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--clr-gold-accent);
+  padding-bottom: 0.5rem;
+}
+
+.chap-body h3 {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--clr-teal-primary);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.chap-body h4 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--clr-teal-dark);
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.chap-body p {
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+/* Action Steps Box */
+.action-steps {
+  background: var(--clr-teal-faint);
+  border-left: 4px solid var(--clr-teal-primary);
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+  page-break-inside: avoid;
+}
+
+.action-steps h2 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  border-bottom: none;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.action-steps ol, .action-steps ul {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.action-steps li {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.action-steps li em {
+  color: var(--clr-teal-dark);
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Case Study Box */
+.case-study {
+  background: var(--clr-gold-faint);
+  border: 1px solid var(--clr-gold-accent);
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+  page-break-inside: avoid;
+}
+
+.case-study h2 {
+  color: var(--clr-gold-dark);
+  border-bottom-color: var(--clr-gold-accent);
+}
+
+/* Page Breaks */
+.page-break {
+  page-break-after: always;
+  break-after: page;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  visibility: hidden;
+}
+
+/* Defensive page breaks - modern syntax for Kindle/EPUB3 compatibility */
+html {
+  break-before: page;
+  page-break-before: always;
+}
+
+.chap-title,
+.part-page,
+.part-container,
+.image-quote,
+.quote-page,
+.worksheet-page,
+.frontmatter-shell {
+  break-before: page;
+  break-after: page;
+}
+
+/* ====================================================================
+   11. QUOTE/IMAGE PAGES
+   ==================================================================== */
+
+.quote-page {
+  background-color: var(--clr-paper);
+  margin: 0;
+  padding: 0;
+}
+
+.image-quote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  page-break-before: always;
+  page-break-after: always;
+}
+
+.quote-figure {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+}
+
+.quote-figure img {
+  max-width: 100%;
+  max-height: 95vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ====================================================================
+   12. PART DIVIDER PAGES
+   ==================================================================== */
+
+.part-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.part-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  text-align: center;
+  page-break-after: always;
+}
+
+.part-container {
+  max-width: 650px;
+  padding: var(--space-lg);
+  background: var(--clr-paper);
+  border-top: 8px solid var(--clr-teal-primary);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.part-number {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--clr-gold-accent);
+  margin-bottom: var(--space-sm);
+}
+
+h1.part-title {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--clr-teal-dark);
+  margin: 0 0 var(--space-xs);
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+}
+
+h2.part-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--clr-gold-accent);
+  margin-bottom: var(--space-md);
+  font-weight: 400;
+}
+
+.part-border {
+  width: 150px;
+  height: auto;
+  margin: var(--space-md) auto;
+}
+
+p.intro-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--clr-text);
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+p.intro-text:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.1em;
+  color: var(--clr-teal-primary);
+  font-weight: 700;
+}
+
+/* ====================================================================
+   13. FOOTNOTES & ENDNOTES
+   ==================================================================== */
+
+.footnotes, .endnotes {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--clr-line);
+  font-size: 0.85rem;
+}
+
+.footnotes h2, .endnotes h2 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--clr-teal-primary);
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.footnotes ol, .endnotes ol {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.footnotes li, .endnotes li {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  top: -0.5em;
+}
+
+sup a, .fnref a {
+  color: var(--clr-teal-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+sup a:hover, .fnref a:hover {
+  text-decoration: underline;
+}
+
+/* Back link arrow */
+.endnotes li a[href^="#fnref"],
+.footnotes li a[href^="#fnref"] {
+  margin-left: 0.5em;
+  font-size: 0.9em;
+}
+
+/* ====================================================================
+   14. LINKS & INTERACTIVE ELEMENTS
+   ==================================================================== */
+
+a {
+  color: var(--clr-teal-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--clr-teal-dark);
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: 2px solid var(--clr-teal-light);
+  outline-offset: 2px;
+}
+
+/* ====================================================================
+   15. IMAGES & FIGURES
+   ==================================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+figure {
+  margin: var(--space-md) 0;
+  text-align: center;
+}
+
+figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--clr-muted);
+  font-style: italic;
+  margin-top: var(--space-xs);
+}
+
+/* ====================================================================
+   16. RESPONSIVE ADJUSTMENTS
+   ==================================================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+  }
+  
+  h1.frontmatter-title, h1.main-title {
+    font-size: 2.5rem;
+  }
+  
+  h1.part-title {
+    font-size: 2rem;
+  }
+  
+  .title-line {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .chapter-number-figure {
+    width: 140px;
+    height: 90px;
+  }
+  
+  .chapter-number-roman {
+    font-size: 2.5rem;
+  }
+  
+  .title-line {
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+  }
+  
+  .bible-quote-container {
+    padding-left: var(--space-sm);
+    max-width: 100%;
+  }
+  
+  .chap-title {
+    padding: var(--space-md) var(--space-sm);
+  }
+  
+  .introduction-paragraph {
+    max-width: 100%;
+  }
+  
+  .dropcap-first-letter p:first-child::first-letter,
+  .introduction-paragraph p:first-of-type strong:first-child {
+    font-size: 2.8rem;
+  }
+  
+  .part-container {
+    padding: var(--space-md);
+    margin: var(--space-sm);
+  }
+  
+  .worksheet-card {
+    padding: var(--space-sm);
+  }
+  
+  .rating-circles {
+    gap: 0.5rem;
+  }
+  
+  .rating-circle {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ====================================================================
+   17. CONSOLIDATED INLINE STYLES
+   Migrated from individual XHTML files for e-reader compatibility
+   ==================================================================== */
+
+/* Alias variables for inline style compatibility */
+:root {
+  --teal: #2B9999;
+  --gold: #C9A961;
+  --dark: #1F7272;
+}
+
+/* Title Page Body */
+body.title-page-body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: radial-gradient(circle at center, #fff 0%, #fcfcfc 100%);
+  border: 12px solid #fff;
+  outline: 2px solid var(--clr-gold-accent);
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+body.title-page-body .corner-deco {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-style: double;
+  border-width: 4px;
+  border-color: var(--clr-teal-primary);
+  opacity: 0.2;
+}
+
+body.title-page-body .top-right {
+  top: 20px;
+  right: 20px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+body.title-page-body .bottom-left {
+  bottom: 20px;
+  left: 20px;
+  border-right: 0;
+  border-top: 0;
+}
+
+body.title-page-body h1.main-title {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 4.5rem;
+  line-height: 1;
+  color: var(--clr-teal-dark);
+  margin: 0 0 1.5rem 0;
+  letter-spacing: 0.02em;
+}
+
+body.title-page-body .subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--clr-gold-accent);
+  margin-bottom: 4rem;
+  border-top: 1px solid var(--clr-gold-accent);
+  border-bottom: 1px solid var(--clr-gold-accent);
+  padding: 1rem 0;
+  display: inline-block;
+  width: 60%;
+}
+
+body.title-page-body .author-name {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #555;
+  margin-top: auto;
+  margin-bottom: 4rem;
+}
+
+/* Copyright Page Body */
+body.copyright-body {
+  margin: 0;
+  padding: 4rem 3rem;
+  font-family: var(--font-sans);
+  background: #fff;
+  color: #555;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+body.copyright-body .divider {
+  width: 40px;
+  height: 2px;
+  background: var(--clr-gold-accent);
+  margin-bottom: 2rem;
+}
+
+body.copyright-body .copyright-statement {
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+body.copyright-body .rights-text {
+  margin-bottom: 2rem;
+  text-align: justify;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+body.copyright-body .isbn-block {
+  font-family: monospace;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+body.copyright-body .publisher-info {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--clr-teal-primary);
+}
+
+/* Dedication Page Body */
+body.dedication-body {
+  margin: 0;
+  padding: 4rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+}
+
+body.dedication-body .dedication-container {
+  max-width: 600px;
+  text-align: center;
+}
+
+body.dedication-body h1.dedication-heading {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 1.5rem;
+  letter-spacing: 0.2em;
+  color: var(--clr-gold-accent);
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+body.dedication-body .dedication-section {
+  margin-bottom: 2.5rem;
+}
+
+body.dedication-body p.dedication-text {
+  font-family: 'Playfair Display', var(--font-body);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #555;
+  line-height: 1.8;
+  margin: 0;
+}
+
+body.dedication-body strong {
+  color: var(--clr-teal-primary);
+  font-weight: normal;
+}
+
+body.dedication-body .final-line {
+  margin-top: 4rem;
+  font-size: 0.9rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-family: sans-serif;
+  font-style: normal;
+}
+
+/* TOC Page Styles */
+body.toc-body {
+  margin: 0;
+  padding: 3rem 2rem;
+  font-family: var(--font-sans);
+  background: #fff;
+}
+
+body.toc-body .toc-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+body.toc-body h1.toc-main-title {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 2.5rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+body.toc-body .toc-subtitle {
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--clr-gold-accent);
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+}
+
+body.toc-body .toc-section {
+  margin-bottom: 2rem;
+}
+
+body.toc-body .toc-part-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-teal-primary);
+  border-bottom: 2px solid var(--clr-gold-accent);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+body.toc-body .toc-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.4rem 0;
+  border-bottom: 1px dotted #ddd;
+}
+
+body.toc-body .toc-entry a {
+  color: #444;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+body.toc-body .toc-entry a:hover {
+  color: var(--clr-teal-primary);
+}
+
+body.toc-body .toc-entry .page-num {
+  color: #999;
+  font-size: 0.85rem;
+}
+
+/* Worksheet & Journal Page Styles */
+.worksheet-page {
+  max-width: 850px;
+  min-height: 1100px;
+  margin: 2rem auto;
+  border: 1px solid #eee;
+  padding: 4rem;
+  box-sizing: border-box;
+  background-image: radial-gradient(var(--clr-teal-primary) 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+  background-color: white;
+}
+
+.paper-card {
+  background: white;
+  padding: 2.5rem;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  margin-bottom: 2rem;
+}
+
+.worksheet-page h1 {
+  font-family: 'Playfair Display', var(--font-body);
+  color: var(--clr-teal-primary);
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 0.2rem;
+}
+
+.worksheet-page h2 {
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--clr-gold-accent);
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+}
+
+.prompt-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+
+.lined-area {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.box-area {
+  width: 100%;
+  height: 100px;
+  border: 1px solid var(--clr-teal-primary);
+  border-radius: 4px;
+  background: rgba(43,153,153,0.02);
+  resize: none;
+  padding: 1rem;
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 1.1rem;
+}
+
+.transform-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.arrow {
+  color: var(--clr-gold-accent);
+  font-size: 1.5rem;
+}
+
+/* Assessment & Affirmation Page Styles */
+body.assessment-body,
+body.affirmation-body {
+  margin: 0;
+  padding: 3rem 2rem;
+  font-family: var(--font-sans);
+  background: #fff;
+  min-height: 100vh;
+}
+
+.assessment-container,
+.affirmation-container {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.assessment-container h1,
+.affirmation-container h1 {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 2.2rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.assessment-container .page-subtitle,
+.affirmation-container .page-subtitle {
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--clr-gold-accent);
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+
+/* Quiz Key & Bibliography Page Styles */
+body.quiz-key-body,
+body.bibliography-body {
+  margin: 0;
+  padding: 3rem 2rem;
+  font-family: var(--font-sans);
+  background: #fff;
+}
+
+.quiz-key-container,
+.bibliography-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.quiz-key-container h1,
+.bibliography-container h1 {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 2.2rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Acknowledgments & About Author Page Styles */
+body.acknowledgments-body,
+body.about-author-body {
+  margin: 0;
+  padding: 3rem 2rem;
+  font-family: var(--font-sans);
+  background: #fff;
+  min-height: 100vh;
+}
+
+.acknowledgments-container,
+.about-author-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.acknowledgments-container h1,
+.about-author-container h1 {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Collective/CTA Page Styles */
+body.collective-body {
+  margin: 0;
+  padding: 3rem 2rem;
+  font-family: var(--font-sans);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+}
+
+.collective-container {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.collective-container h1 {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 2.2rem;
+  color: var(--clr-teal-dark);
+  margin-bottom: 1rem;
+}
+
+/* Journal Start & Doodle Page Styles */
+body.journal-start-body,
+body.doodle-body {
+  margin: 0;
+  padding: 3rem 2rem;
+  font-family: var(--font-sans);
+  background: #fff;
+  min-height: 100vh;
+}
+
+.journal-start-container,
+.doodle-container {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.journal-start-container h1,
+.doodle-container h1 {
+  font-family: 'Playfair Display', var(--font-body);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Generic worksheet print styles */
+@media print {
+  .worksheet-page {
+    margin: 0;
+    border: none;
+    background-size: 0;
+  }
+  .paper-card {
+    border: 1px solid #ddd;
+    box-shadow: none;
+  }
+}
+
+/* ====================================================================
+   18. PRINT MEDIA QUERY (Basic)
+   ==================================================================== */
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .page-break {
+    page-break-after: always;
+  }
+  
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+  
+  .chap-title,
+  .part-page,
+  .image-quote {
+    page-break-after: always;
+  }
+  
+  .action-steps,
+  .question-card,
+  .worksheet-card {
+    page-break-inside: avoid;
+  }
+}
+
+/* ====================================================================
+   19. STANDARDIZED WORKSHEET PAGES
+   Professional worksheet styling for all interactive journal pages
+   ==================================================================== */
+
+/* Worksheet Page Container - Single Page Layout */
+.worksheet-page {
+  max-width: 850px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 3rem 2.5rem;
+  box-sizing: border-box;
+  background-color: var(--clr-paper);
+  page-break-before: always;
+  page-break-after: always;
+  page-break-inside: avoid;
+}
+
+/* Worksheet Header - Consistent across all worksheets */
+.worksheet-page .worksheet-header,
+.worksheet-page > header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 2px solid var(--clr-gold-accent);
+}
+
+.worksheet-page h1 {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--clr-teal-dark);
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.worksheet-page h2 {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-gold-accent);
+  margin: 0 0 var(--space-md) 0;
+  text-align: center;
+}
+
+.worksheet-page h3 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--clr-teal-primary);
+  margin: var(--space-md) 0 var(--space-sm) 0;
+}
+
+/* Worksheet Sections */
+.worksheet-page .section {
+  margin-bottom: var(--space-lg);
+  page-break-inside: avoid;
+}
+
+.worksheet-page .section-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: var(--space-sm);
+}
+
+.worksheet-page .section-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--clr-teal-primary);
+  color: var(--clr-paper);
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Prompt Text */
+.worksheet-page .prompt-text {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--clr-text);
+  font-style: italic;
+  margin-bottom: var(--space-sm);
+}
+
+/* Input Elements */
+.worksheet-page .lined-input,
+.worksheet-page input[type="text"] {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--clr-line);
+  padding: 0.5rem 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: transparent;
+  margin-bottom: 0.75rem;
+}
+
+.worksheet-page .lined-input:focus,
+.worksheet-page input[type="text"]:focus {
+  outline: none;
+  border-bottom-color: var(--clr-teal-primary);
+}
+
+.worksheet-page textarea {
+  width: 100%;
+  min-height: 100px;
+  border: 1px solid var(--clr-line);
+  border-radius: 4px;
+  padding: 1rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  resize: vertical;
+  background: var(--clr-cream);
+}
+
+.worksheet-page textarea:focus {
+  outline: none;
+  border-color: var(--clr-teal-primary);
+}
+
+/* Box Containers */
+.worksheet-page .box-container {
+  background: var(--clr-paper);
+  border: 1px solid var(--clr-line);
+  border-radius: 8px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.worksheet-page .box-container h4 {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--clr-gold-accent);
+  text-align: center;
+  margin: 0 0 var(--space-sm) 0;
+}
+
+/* Quote Box */
+.worksheet-page .quote-box {
+  background: var(--clr-teal-faint);
+  border-left: 4px solid var(--clr-teal-primary);
+  padding: var(--space-md);
+  margin: var(--space-lg) 0;
+  text-align: center;
+}
+
+/* Worksheet Footer */
+.worksheet-page .footer,
+.worksheet-page > footer {
+  margin-top: auto;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--clr-line);
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--clr-muted);
+}
+
+/* Badge Styling */
+.worksheet-page .badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--clr-teal-faint);
+  color: var(--clr-teal-dark);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 20px;
+  margin-bottom: var(--space-sm);
+}
+
+/* SMART Goals Worksheet Specific */
+.worksheet-page .main-goal {
+  background: var(--clr-cream);
+  padding: var(--space-md);
+  border-radius: 8px;
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.worksheet-page .goal-input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--clr-gold-accent);
+  padding: 0.75rem 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  text-align: center;
+  background: transparent;
+  color: var(--clr-teal-dark);
+}
+
+.worksheet-page .smart-row {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+  padding: var(--space-md);
+  background: var(--clr-paper);
+  border: 1px solid var(--clr-line);
+  border-radius: 8px;
+  page-break-inside: avoid;
+}
+
+.worksheet-page .smart-row .letter {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-teal-primary);
+  color: var(--clr-paper);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.worksheet-page .smart-row .row-content {
+  flex: 1;
+}
+
+.worksheet-page .smart-row .row-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  margin-bottom: 0.25rem;
+}
+
+.worksheet-page .smart-row .row-desc {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--clr-muted);
+  margin-bottom: 0.5rem;
+}
+
+.worksheet-page .smart-row .row-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--clr-line);
+  padding: 0.5rem 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  background: transparent;
+}
+
+.worksheet-page .commitment-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--clr-gold-faint);
+  border: 2px solid var(--clr-gold-accent);
+  border-radius: 8px;
+  padding: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.worksheet-page .date-input {
+  border: none;
+  border-bottom: 2px solid var(--clr-gold-accent);
+  padding: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  background: transparent;
+  width: 150px;
+}
+
+/* Module-based Worksheets */
+.worksheet-page .module {
+  background: var(--clr-paper);
+  border: 1px solid var(--clr-line);
+  border-radius: 8px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  page-break-inside: avoid;
+}
+
+.worksheet-page .module-title {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--clr-teal-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--clr-gold-accent);
+}
+
+/* Grid Layout */
+.worksheet-page .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+@media (max-width: 600px) {
+  .worksheet-page .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Prompt Cards */
+.worksheet-page .prompt {
+  background: var(--clr-cream);
+  border-radius: 8px;
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.worksheet-page .prompt h3 {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+/* Canvas/Doodle Area */
+.worksheet-page .canvas {
+  background: var(--clr-paper);
+  border: 2px dashed var(--clr-line);
+  border-radius: 8px;
+  min-height: 300px;
+  margin: var(--space-md) 0;
+}
+
+/* Notes Section */
+.worksheet-page .notes {
+  background: var(--clr-cream);
+  border-radius: 8px;
+  padding: var(--space-md);
+  min-height: 100px;
+}
+
+/* Tags */
+.worksheet-page .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.worksheet-page .tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: var(--clr-teal-faint);
+  color: var(--clr-teal-dark);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  border-radius: 20px;
+}
+
+/* ====================================================================
+   20. STANDARDIZED BACKMATTER PAGES
+   Single-page layouts with proper page breaks
+   ==================================================================== */
+
+/* Backmatter Section Base */
+.backmatter-section {
+  max-width: 700px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  page-break-before: always;
+  page-break-after: always;
+}
+
+.backmatter-section h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.backmatter-section p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--clr-text);
+  margin-bottom: var(--space-md);
+  text-align: justify;
+}
+
+/* Acknowledgments Page */
+.ack-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-paper);
+}
+
+.ack-container {
+  max-width: 650px;
+  padding: 3rem 2rem;
+  page-break-before: always;
+  page-break-after: always;
+}
+
+.ack-container .ack-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.ack-container .salutation {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--clr-teal-primary);
+  font-size: 1.1rem;
+  margin-bottom: var(--space-md);
+}
+
+.ack-container p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--clr-text);
+  margin-bottom: var(--space-md);
+  text-align: justify;
+}
+
+.ack-container .signature {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--clr-teal-dark);
+  margin: var(--space-lg) 0;
+  text-align: right;
+}
+
+.ack-container .ps-block {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--clr-muted);
+  background: var(--clr-cream);
+  padding: var(--space-md);
+  border-radius: 8px;
+  margin: var(--space-lg) 0;
+}
+
+.ack-container .quote {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--clr-gold-dark);
+  text-align: center;
+  padding: var(--space-md);
+  border-top: 1px solid var(--clr-line);
+  margin-top: var(--space-lg);
+}
+
+/* About Author Page */
+.bio-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-paper);
+}
+
+.profile-card {
+  max-width: 650px;
+  padding: 3rem 2rem;
+  text-align: center;
+  page-break-before: always;
+  page-break-after: always;
+}
+
+.profile-card h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  margin-bottom: var(--space-lg);
+}
+
+.profile-card .author-photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--clr-gold-accent);
+  margin: 0 auto var(--space-lg);
+  display: block;
+}
+
+.profile-card p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--clr-text);
+  margin-bottom: var(--space-md);
+  text-align: justify;
+}
+
+/* Journal Body/Card Styles */
+.journal-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-paper);
+}
+
+.journal-card {
+  max-width: 700px;
+  padding: 3rem 2rem;
+  page-break-before: always;
+  page-break-after: always;
+}
+
+.journal-card .main-heading {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  margin-bottom: var(--space-sm);
+}
+
+.journal-card .sub-heading {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--clr-teal-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: var(--space-lg) 0 var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 2px solid var(--clr-gold-accent);
+}
+
+.journal-card .intro-text {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--clr-text);
+  margin-bottom: var(--space-md);
+}
+
+.journal-card .journey-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.journal-card .journey-item {
+  padding: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  background: var(--clr-cream);
+  border-radius: 8px;
+  border-left: 4px solid var(--clr-teal-primary);
+}
+
+.journal-card .journey-item h3 {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  margin: 0 0 0.25rem 0;
+}
+
+.journal-card .journey-item p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--clr-muted);
+  margin: 0;
+}
+
+.journal-card .usage-guide {
+  margin: 0;
+}
+
+.journal-card .usage-pair {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--clr-teal-faint);
+  border-radius: 8px;
+}
+
+.journal-card .usage-pair dt {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  min-width: 120px;
+}
+
+.journal-card .usage-pair dd {
+  font-family: var(--font-body);
+  color: var(--clr-text);
+  margin: 0;
+}
+
+.journal-card .closing-message {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--clr-teal-dark);
+  text-align: center;
+  padding: var(--space-md);
+  margin: var(--space-lg) 0;
+  border-top: 1px solid var(--clr-line);
+  border-bottom: 1px solid var(--clr-line);
+}
+
+.journal-card .cta-box {
+  background: var(--clr-gold-faint);
+  border: 2px solid var(--clr-gold-accent);
+  border-radius: 8px;
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.journal-card .cta-box h4 {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--clr-gold-dark);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.journal-card .cta-box p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--clr-text);
+  margin: 0;
+}
+
+/* Collective Page */
+.collective-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--clr-cream) 0%, var(--clr-paper) 100%);
+}
+
+.collective-container {
+  max-width: 650px;
+  padding: 3rem 2rem;
+  text-align: center;
+  page-break-before: always;
+  page-break-after: always;
+}
+
+.collective-container h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--clr-teal-dark);
+  margin-bottom: var(--space-md);
+}
+
+.collective-container p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--clr-text);
+  margin-bottom: var(--space-md);
+}
+
+/* Journal Lines for Reflection Pages */
+.journal-lines {
+  flex: 1;
+  min-height: 400px;
+}
+
+.journal-lines .page-content {
+  width: 100%;
+  min-height: 100%;
+  border: none;
+  background: transparent;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 29px,
+    var(--clr-line) 30px
+  );
+  background-size: 100% 30px;
+  line-height: 30px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  resize: none;
+  padding: 0;
+}
+
+/* Meta Header for Journal Pages */
+.worksheet-page .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--clr-teal-primary);
+}
+
+.worksheet-page .meta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.worksheet-page .meta-group .label {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--clr-muted);
+}
+
+.worksheet-page .input-meta {
+  border: none;
+  border-bottom: 1px solid var(--clr-line);
+  padding: 0.25rem 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  min-width: 150px;
+  background: transparent;
+}
+
+/* ====================================================================
+   END OF STYLESHEET
+   ==================================================================== */

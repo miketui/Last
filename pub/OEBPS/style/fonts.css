@@ -1,0 +1,144 @@
+/*
+  fonts.css — Font definitions for Curls & Contemplation EPUB
+  The font files referenced here reside in the OEBPS/fonts directory. Use
+  `font-display: swap` for better performance and fallback behaviour.
+*/
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('../fonts/librebaskerville-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('../fonts/librebaskerville-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('../fonts/librebaskerville-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cinzel Decorative';
+  src: url('../fonts/CinzelDecorative.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../fonts/Montserrat-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../fonts/Montserrat-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * FONT ALIASES
+ * Map Google Fonts names to local embedded fonts for offline e-reader compatibility.
+ * Lato -> Montserrat (similar sans-serif)
+ * Playfair Display -> Libre Baskerville (similar elegant serif)
+ */
+
+/* Lato alias - maps to Montserrat */
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Montserrat-Regular.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Montserrat-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lato';
+  src: url('../fonts/Montserrat-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Playfair Display alias - maps to Libre Baskerville */
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('../fonts/librebaskerville-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('../fonts/librebaskerville-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  src: url('../fonts/librebaskerville-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * GLOBAL TYPOGRAPHY ASSIGNMENTS
+ * Maps generic HTML elements to your specific font stack.
+ */
+
+body, p, li, dd, dt {
+  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+}
+
+/* Headings & Display Text */
+h1, .frontmatter-title, .main-title, .key-title, .bib-title, .dedication-heading {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-weight: 400;
+}
+
+h2, h3, h4, h5, h6, .subtitle, .section-heading {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Special Contexts */
+.bible-quote-text, .bible-quote-container blockquote, .dedication-text, .quote-figure blockquote {
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+}
+
+.author, .publisher-info, .copyright-notice, .isbn-info, .toc-page-number, .footer-text, .print-instruction {
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+/* Dropcaps */
+.dropcap-first-letter p:first-child::first-letter,
+.dropcap-paragraph::first-letter {
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 700;
+}
+

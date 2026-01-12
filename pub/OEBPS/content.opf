@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="en">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:identifier id="bookid">urn:uuid:curls-contemplation-2024</dc:identifier>
+    <dc:title>Curls &amp; Contemplation: A Freelance Hairstylist's Guide to Creative Excellence</dc:title>
+    <dc:creator id="creator">Michael David</dc:creator>
+    <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
+    <dc:language>en</dc:language>
+    <dc:publisher>Michael David</dc:publisher>
+    <dc:date>2024</dc:date>
+    <dc:description>A comprehensive guide for freelance hairstylists to develop their creative skills, build professional practices, and achieve business success while maintaining wellness and ethical standards.</dc:description>
+    <dc:subject>Hairstyling</dc:subject>
+    <dc:subject>Beauty Industry</dc:subject>
+    <dc:subject>Freelance Business</dc:subject>
+    <dc:subject>Professional Development</dc:subject>
+    <dc:rights>All rights reserved</dc:rights>
+    <meta property="dcterms:modified">2024-12-19T00:00:00Z</meta>
+    <meta name="cover" content="cover-image"/>
+  </metadata>
+
+  <manifest>
+    <!-- Cover -->
+    <item id="cover-image" href="images/cover.png" media-type="image/png" properties="cover-image"/>
+
+    <!-- Navigation -->
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+
+    <!-- Stylesheets -->
+    <item id="style-main" href="style/style.css" media-type="text/css"/>
+    <item id="style-fonts" href="style/fonts.css" media-type="text/css"/>
+    <item id="style-print" href="style/print.css" media-type="text/css"/>
+
+    <!-- Fonts -->
+    <item id="font-cinzel" href="fonts/CinzelDecorative.woff2" media-type="font/woff2"/>
+    <item id="font-montserrat-bold" href="fonts/Montserrat-Bold.woff2" media-type="font/woff2"/>
+    <item id="font-montserrat-regular" href="fonts/Montserrat-Regular.woff2" media-type="font/woff2"/>
+    <item id="font-libre-bold" href="fonts/librebaskerville-bold.woff2" media-type="font/woff2"/>
+    <item id="font-libre-italic" href="fonts/librebaskerville-italic.woff2" media-type="font/woff2"/>
+    <item id="font-libre-regular" href="fonts/librebaskerville-regular.woff2" media-type="font/woff2"/>
+
+    <!-- Images -->
+    <item id="img-michael" href="images/Michael.jpeg" media-type="image/jpeg"/>
+    <item id="img-brushstroke" href="images/brushstroke.svg" media-type="image/svg+xml"/>
+    <item id="img-preface-quote" href="images/preface-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-conclusion-quote" href="images/conclusion-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-i-quote" href="images/chapter-i-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-ii-quote" href="images/chapter-ii-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-iii-quote" href="images/chapter-iii-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-iv-quote" href="images/chapter-iv-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-v-quote" href="images/chapter-v-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-vi-quote" href="images/chapter-vi-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-vii-quote" href="images/chapter-vii-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-viii-quote" href="images/chapter-viii-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-ix-quote" href="images/chapter-ix-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-x-quote" href="images/chapter-x-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-xi-quote" href="images/chapter-xi-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-xii-quote" href="images/chapter-xii-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-xiii-quote" href="images/chapter-xiii-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-xiv-quote" href="images/chapter-xiv-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-xv-quote" href="images/chapter-xv-quote.jpeg" media-type="image/jpeg"/>
+    <item id="img-chapter-xvi-quote" href="images/chapter-xvi-quote.jpeg" media-type="image/jpeg"/>
+
+    <!-- Front Matter -->
+    <item id="titlepage" href="xhtml/1-TitlePage.xhtml" media-type="application/xhtml+xml"/>
+    <item id="copyright" href="xhtml/2-Copyright.xhtml" media-type="application/xhtml+xml"/>
+    <item id="toc-page" href="xhtml/3-TableOfContents.xhtml" media-type="application/xhtml+xml"/>
+    <item id="dedication" href="xhtml/4-Dedication.xhtml" media-type="application/xhtml+xml"/>
+    <item id="self-assessment-1" href="xhtml/5-SelfAssessment.xhtml" media-type="application/xhtml+xml"/>
+    <item id="affirmation-odyssey" href="xhtml/6-AffirmationOdyssey.xhtml" media-type="application/xhtml+xml"/>
+    <item id="preface" href="xhtml/7-Preface.xhtml" media-type="application/xhtml+xml"/>
+    <item id="preface-quote" href="xhtml/7a-preface-quote.xhtml" media-type="application/xhtml+xml"/>
+
+    <!-- Part I -->
+    <item id="part-i" href="xhtml/8-Part-I-Foundations-of-Creative-Hairstyling.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-i" href="xhtml/9-chapter-i-unveiling-your-creative-odyssey.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-ii" href="xhtml/10-chapter-ii-refining-your-creative-toolkit.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-iii" href="xhtml/11-chapter-iii-reigniting-your-creative-fire.xhtml" media-type="application/xhtml+xml"/>
+
+    <!-- Part II -->
+    <item id="part-ii" href="xhtml/12-Part-II-Building-Your-Professional-Practice.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-iv" href="xhtml/13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-v" href="xhtml/14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-vi" href="xhtml/15-chapter-vi-mastering-the-business-of-hairstyling.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-vii" href="xhtml/16-chapter-vii-embracing-wellness-and-self-care.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-viii" href="xhtml/17-chapter-viii-advancing-skills-through-continuous-education.xhtml" media-type="application/xhtml+xml"/>
+
+    <!-- Part III -->
+    <item id="part-iii" href="xhtml/18-Part-III-Advanced-Business-Strategies.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-ix" href="xhtml/19-chapter-ix-stepping-into-leadership.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-x" href="xhtml/20-chapter-x-crafting-enduring-legacies.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-xi" href="xhtml/21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-xii" href="xhtml/22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-xiii" href="xhtml/23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml" media-type="application/xhtml+xml"/>
+
+    <!-- Part IV -->
+    <item id="part-iv" href="xhtml/24-Part-IV-Future-Focused-Growth.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-xiv" href="xhtml/25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-xv" href="xhtml/26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml" media-type="application/xhtml+xml"/>
+    <item id="chapter-xvi" href="xhtml/27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml" media-type="application/xhtml+xml"/>
+
+    <!-- Back Matter -->
+    <item id="conclusion" href="xhtml/28-Conclusion.xhtml" media-type="application/xhtml+xml"/>
+    <item id="conclusion-quote" href="xhtml/28a-conclusion-quote.xhtml" media-type="application/xhtml+xml"/>
+    <item id="quiz-key" href="xhtml/29-QuizKey.xhtml" media-type="application/xhtml+xml"/>
+    <item id="self-assessment-2" href="xhtml/30-SelfAssessment.xhtml" media-type="application/xhtml+xml"/>
+    <item id="affirmations-close" href="xhtml/31-affirmations-close.xhtml" media-type="application/xhtml+xml"/>
+    <item id="continued-learning" href="xhtml/32-continued-learning-commitment.xhtml" media-type="application/xhtml+xml"/>
+    <item id="acknowledgments" href="xhtml/33-Acknowledgments.xhtml" media-type="application/xhtml+xml"/>
+    <item id="about-author" href="xhtml/34-AbouttheAuthor.xhtml" media-type="application/xhtml+xml"/>
+    <item id="curls-collective" href="xhtml/35-CurlsContempCollective.xhtml" media-type="application/xhtml+xml"/>
+    <item id="journaling-start" href="xhtml/36-JournalingStart.xhtml" media-type="application/xhtml+xml"/>
+    <item id="manifesting-journal" href="xhtml/37-ManifestingJournal.xhtml" media-type="application/xhtml+xml"/>
+    <item id="journal-page" href="xhtml/38-journal-page.xhtml" media-type="application/xhtml+xml"/>
+    <item id="professional-dev" href="xhtml/39-professional-development.xhtml" media-type="application/xhtml+xml"/>
+    <item id="smart-goals" href="xhtml/40-SMARTGoals.xhtml" media-type="application/xhtml+xml"/>
+    <item id="self-care-journal" href="xhtml/41-self-care-journal.xhtml" media-type="application/xhtml+xml"/>
+    <item id="vision-journal" href="xhtml/42-VisionJournal.xhtml" media-type="application/xhtml+xml"/>
+    <item id="doodle-page" href="xhtml/43-DoodlePage.xhtml" media-type="application/xhtml+xml"/>
+    <item id="bibliography" href="xhtml/44-bibliography.xhtml" media-type="application/xhtml+xml"/>
+  </manifest>
+
+  <spine toc="ncx">
+    <!-- Front Matter -->
+    <itemref idref="titlepage"/>
+    <itemref idref="copyright"/>
+    <itemref idref="toc-page"/>
+    <itemref idref="dedication"/>
+    <itemref idref="self-assessment-1"/>
+    <itemref idref="affirmation-odyssey"/>
+    <itemref idref="preface"/>
+    <itemref idref="preface-quote"/>
+
+    <!-- Part I: Foundations of Creative Hairstyling -->
+    <itemref idref="part-i"/>
+    <itemref idref="chapter-i"/>
+    <itemref idref="chapter-ii"/>
+    <itemref idref="chapter-iii"/>
+
+    <!-- Part II: Building Your Professional Practice -->
+    <itemref idref="part-ii"/>
+    <itemref idref="chapter-iv"/>
+    <itemref idref="chapter-v"/>
+    <itemref idref="chapter-vi"/>
+    <itemref idref="chapter-vii"/>
+    <itemref idref="chapter-viii"/>
+
+    <!-- Part III: Advanced Business Strategies -->
+    <itemref idref="part-iii"/>
+    <itemref idref="chapter-ix"/>
+    <itemref idref="chapter-x"/>
+    <itemref idref="chapter-xi"/>
+    <itemref idref="chapter-xii"/>
+    <itemref idref="chapter-xiii"/>
+
+    <!-- Part IV: Future-Focused Growth -->
+    <itemref idref="part-iv"/>
+    <itemref idref="chapter-xiv"/>
+    <itemref idref="chapter-xv"/>
+    <itemref idref="chapter-xvi"/>
+
+    <!-- Back Matter -->
+    <itemref idref="conclusion"/>
+    <itemref idref="conclusion-quote"/>
+    <itemref idref="quiz-key"/>
+    <itemref idref="self-assessment-2"/>
+    <itemref idref="affirmations-close"/>
+    <itemref idref="continued-learning"/>
+    <itemref idref="acknowledgments"/>
+    <itemref idref="about-author"/>
+    <itemref idref="curls-collective"/>
+    <itemref idref="journaling-start"/>
+    <itemref idref="manifesting-journal"/>
+    <itemref idref="journal-page"/>
+    <itemref idref="professional-dev"/>
+    <itemref idref="smart-goals"/>
+    <itemref idref="self-care-journal"/>
+    <itemref idref="vision-journal"/>
+    <itemref idref="doodle-page"/>
+    <itemref idref="bibliography"/>
+  </spine>
+
+  <guide>
+    <reference type="cover" title="Cover" href="xhtml/1-TitlePage.xhtml"/>
+    <reference type="toc" title="Table of Contents" href="xhtml/3-TableOfContents.xhtml"/>
+    <reference type="text" title="Beginning" href="xhtml/7-Preface.xhtml"/>
+  </guide>
+</package>
