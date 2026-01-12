@@ -1,0 +1,27 @@
+<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto;">
+  <defs>
+    <filter id="roughen">
+      <feTurbulence baseFrequency="0.02" numOctaves="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2"/>
+    </filter>
+  </defs>
+
+  <!-- Main brushstroke shape -->
+  <path d="M20 75 Q30 45, 60 35 Q90 30, 120 45 Q135 55, 130 75 Q125 95, 100 110 Q70 120, 40 105 Q15 85, 20 75 Z"
+        fill="#4ECDC4"
+        opacity="0.9"
+        filter="url(#roughen)"/>
+
+  <!-- Additional texture strokes -->
+  <path d="M25 70 Q50 40, 80 38 Q110 42, 125 65"
+        stroke="#3BA99C"
+        stroke-width="3"
+        fill="none"
+        opacity="0.6"/>
+
+  <path d="M30 80 Q60 85, 90 78 Q115 72, 125 80"
+        stroke="#3BA99C"
+        stroke-width="2"
+        fill="none"
+        opacity="0.4"/>
+</svg>
