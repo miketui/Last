@@ -16,38 +16,86 @@
 /* ====================================================================
    1. PAGE SETUP - 6x9" TRIM SIZE
    ==================================================================== */
+/* ====================================================================
+   1. PAGE SETUP - 6x9" TRIM SIZE (PrinceXML + POD friendly)
+   Notes:
+   - KDP/most POD printers do NOT want crop marks unless you are doing full-bleed.
+   - Use :left/:right to control inside (gutter) vs outside margins.
+   ==================================================================== */
+
+/* Default page box */
 @page {
   size: 6in 9in;
+
+  /* Top/Bottom margins (tune later if needed) */
   margin-top: 0.75in;
   margin-bottom: 0.75in;
-  margin-inside: 0.875in;   /* Gutter margin for binding */
-  margin-outside: 0.625in;
 
-  /* Page marks for professional printing */
-  marks: crop cross;
+  /* Fallback if :left/:right not applied */
+  margin-left: 0.70in;
+  margin-right: 0.70in;
+
+  /* Page number (folios) */
+  @bottom-center {
+    content: counter(page);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9.5pt;
+    letter-spacing: 0.02em;
+  }
 }
 
-/* Alternate margins for left/right pages (verso/recto) */
+/* Verso (left) pages: inside margin on the LEFT */
 @page :left {
-  margin-left: 0.875in;   /* Gutter side */
-  margin-right: 0.625in;
+  margin-left: 0.95in;   /* gutter/binding side */
+  margin-right: 0.70in;  /* outside */
 }
 
+/* Recto (right) pages: inside margin on the RIGHT */
 @page :right {
-  margin-left: 0.625in;
-  margin-right: 0.875in;  /* Gutter side */
+  margin-left: 0.70in;   /* outside */
+  margin-right: 0.95in;  /* gutter/binding side */
 }
 
-/* First page of chapters - extra top margin */
+/* First page of a document: no folio by default */
 @page :first {
-  margin-top: 1in;
+  @bottom-center { content: ""; }
 }
 
-/* Blank pages */
+/* Blank pages inserted by recto starts: keep fully blank */
 @page :blank {
-  @top-center { content: none; }
-  @bottom-center { content: none; }
+  @bottom-center { content: ""; }
 }
+
+/* ====================================================================
+   1B. PAGE TYPES (Suppress folios on openers/standalone pages)
+   ==================================================================== */
+@page nofolio {
+  @bottom-center { content: ""; }
+}
+
+/* Chapter title pages (and similar openers) should start on a right-hand page */
+section.chap-title {
+  break-before: right;
+  page: nofolio;
+}
+
+/* Standalone quote pages: new page + no folio (matches your Preface/Conclusion quote style) */
+section.image-quote {
+  break-before: page;
+  page: nofolio;
+}
+
+/* Part divider pages: treat as openers */
+section.part-container, section.part-divider, section.part-title, .part-title, .part-divider {
+  break-before: right;
+  page: nofolio;
+}
+
+/* Frontmatter openers (common patterns) */
+.frontmatter-title, .main-title, .title-page, section.frontmatter, section.preface {
+  page: nofolio;
+}
+
 
 /* ====================================================================
    2. BASE TYPOGRAPHY FOR PRINT
