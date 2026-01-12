@@ -62,23 +62,42 @@
 \definecolor{linecolor}{RGB}{224,224,224}
 
 % ============================================================================
-% FONTS - Using system fonts similar to EPUB design
+% FONTS - Using project fonts matching EPUB design
 % ============================================================================
-\setmainfont{DejaVu Serif}[
+% Main text font - Libre Baskerville (elegant serif)
+\setmainfont{librebaskerville-regular.ttf}[
+    Path=latex/fonts/,
+    BoldFont=librebaskerville-bold.ttf,
+    ItalicFont=librebaskerville-italic.ttf,
     Scale=1.0,
     Ligatures=TeX
 ]
-\setsansfont{DejaVu Sans}[
+
+% Sans-serif font - Montserrat (modern, clean)
+\setsansfont{Montserrat-Regular.ttf}[
+    Path=latex/fonts/,
+    BoldFont=Montserrat-Bold.ttf,
     Scale=0.95,
     Ligatures=TeX
 ]
+
+% Fallback mono font
 \setmonofont{DejaVu Sans Mono}[
     Scale=0.85
 ]
 
-% Define font commands for special styling
-\newfontfamily\displayfont{DejaVu Serif}[Scale=1.1]
-\newfontfamily\headingfont{DejaVu Sans}[Scale=0.95]
+% Decorative display font - Cinzel Decorative (for titles)
+\newfontfamily\displayfont{CinzelDecorative.ttf}[
+    Path=latex/fonts/,
+    Scale=1.1
+]
+
+% Heading font - Montserrat
+\newfontfamily\headingfont{Montserrat-Regular.ttf}[
+    Path=latex/fonts/,
+    BoldFont=Montserrat-Bold.ttf,
+    Scale=0.95
+]
 
 % ============================================================================
 % CHAPTER & SECTION STYLING
@@ -273,6 +292,10 @@
 
 % tcolorbox for boxes (load after other packages)
 \usepackage[most]{tcolorbox}
+
+% Pandoc tightlist command (used in converted content)
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 % ============================================================================
 % DOCUMENT INFO
