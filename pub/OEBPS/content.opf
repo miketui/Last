@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="en">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-    <dc:identifier id="bookid">urn:uuid:curls-contemplation-2024</dc:identifier>
+    <dc:identifier id="bookid">urn:uuid:c8d4e5f6-a1b2-4c3d-9e8f-0a1b2c3d4e5f</dc:identifier>
     <dc:title>Curls &amp; Contemplation: A Freelance Hairstylist's Guide to Creative Excellence</dc:title>
     <dc:creator id="creator">Michael David</dc:creator>
     <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
