@@ -10,17 +10,37 @@ interface EmailFormState {
   success: boolean;
 }
 
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  priceCents: number;
+  type: string;
+}
+
+interface PodLink {
+  label: string;
+  url: string;
+  flag: string;
+}
+
+interface OrderInfo {
+  id: number;
+  productType: string;
+  purchaseDate?: string;
+  downloadToken: string;
+  downloadExpiry: string;
+  downloadsRemaining: number;
+}
+
 // Analytics helper
 const trackEvent = (eventName: string, properties: Record<string, string> = {}) => {
-  // Google Analytics 4 tracking
   if (typeof window !== 'undefined' && (window as any).gtag) {
     (window as any).gtag('event', eventName, properties);
   }
   console.log('Track:', eventName, properties);
 };
-
-// Amazon Pre-order URL
-const AMAZON_URL = 'https://www.amazon.com/dp/PLACEHOLDER_ASIN?tag=curlscontemp-20&utm_source=website&utm_medium=button&utm_campaign=preorder';
 
 // Navigation Component
 const Navigation: React.FC<{ currentPage: string; setPage: (page: string) => void }> = ({ currentPage, setPage }) => {
@@ -28,10 +48,10 @@ const Navigation: React.FC<{ currentPage: string; setPage: (page: string) => voi
 
   const navLinks = [
     { id: 'home', label: 'Home' },
+    { id: 'pre-order', label: 'Pre-Order' },
     { id: 'book-preview', label: 'Book Preview' },
     { id: 'about', label: 'About' },
     { id: 'resources', label: 'Resources' },
-    { id: 'newsletter', label: 'Newsletter' },
   ];
 
   return (
@@ -80,7 +100,6 @@ const EmailSignupForm: React.FC<{ source: string; compact?: boolean }> = ({ sour
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formState.email)) {
       setFormState(s => ({ ...s, error: 'Please enter a valid email address' }));
@@ -103,8 +122,6 @@ const EmailSignupForm: React.FC<{ source: string; compact?: boolean }> = ({ sour
 
       setFormState(s => ({ ...s, loading: false, success: true }));
       trackEvent('email_signup_success', { source });
-
-      // Store in localStorage to skip email gate
       localStorage.setItem('subscribed', 'true');
     } catch {
       setFormState(s => ({ ...s, loading: false, error: 'Something went wrong. Please try again.' }));
@@ -149,27 +166,8 @@ const EmailSignupForm: React.FC<{ source: string; compact?: boolean }> = ({ sour
   );
 };
 
-// Pre-order CTA Button
-const PreOrderButton: React.FC<{ size?: 'normal' | 'large'; source: string }> = ({ size = 'normal', source }) => {
-  const handleClick = () => {
-    trackEvent('pre_order_click', { source, button_location: source });
-  };
-
-  return (
-    <a
-      href={AMAZON_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`btn btn-primary ${size === 'large' ? 'btn-lg' : ''}`}
-      onClick={handleClick}
-    >
-      Pre-Order on Amazon
-    </a>
-  );
-};
-
 // Hero Section
-const HeroSection: React.FC = () => {
+const HeroSection: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
   return (
     <section className="hero" id="main-content">
       <div className="container">
@@ -180,8 +178,12 @@ const HeroSection: React.FC = () => {
             <p className="hero-description">{bookMetadata.description}</p>
             <p className="hero-author">By {bookMetadata.author}</p>
             <div className="hero-cta">
-              <PreOrderButton size="large" source="hero" />
-              <a href="#book-preview" className="btn btn-outline">Explore the Book</a>
+              <button className="btn btn-primary btn-lg" onClick={() => setPage('pre-order')}>
+                Pre-Order Now
+              </button>
+              <a href="#book-preview" className="btn btn-outline" onClick={(e) => { e.preventDefault(); setPage('book-preview'); }}>
+                Explore the Book
+              </a>
             </div>
             <EmailSignupForm source="hero" />
           </div>
@@ -239,7 +241,7 @@ const AuthorSection: React.FC = () => {
 };
 
 // Table of Contents Section
-const TableOfContentsSection: React.FC = () => {
+const TableOfContentsSection: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
   return (
     <section className="section toc-section" id="table-of-contents">
       <div className="container">
@@ -272,7 +274,447 @@ const TableOfContentsSection: React.FC = () => {
           </ul>
         </div>
         <div className="text-center" style={{ marginTop: 'var(--space-lg)' }}>
-          <PreOrderButton source="toc" />
+          <button className="btn btn-primary" onClick={() => setPage('pre-order')}>Pre-Order Now</button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Pre-Order Page
+const PreOrderPage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [podLinks, setPodLinks] = useState<Record<string, PodLink>>({});
+  const [loading, setLoading] = useState(true);
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data.products);
+        setPodLinks(data.podLinks);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const handleCheckout = async (productId: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    setCheckoutLoading(productId);
+    setError('');
+    trackEvent('checkout_initiated', { product_id: productId });
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId, email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Checkout failed');
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
+      trackEvent('checkout_error', { product_id: productId });
+    } finally {
+      setCheckoutLoading(null);
+    }
+  };
+
+  return (
+    <section className="section" style={{ paddingTop: '120px', minHeight: '100vh' }}>
+      <div className="container">
+        <div className="toc-header">
+          <h1 className="display-title">Pre-Order Your Copy</h1>
+          <p className="toc-subtitle">Choose your preferred format and start your journey to creative excellence</p>
+        </div>
+
+        {/* eBook Section */}
+        <div style={{ maxWidth: '600px', margin: '0 auto var(--space-xl)' }}>
+          <div className="resource-card" style={{ padding: 'var(--space-lg)' }}>
+            <span className="resource-category">Digital Edition</span>
+            <h2 style={{ marginBottom: 'var(--space-sm)' }}>eBook</h2>
+            <p style={{ marginBottom: 'var(--space-md)', fontSize: '2rem', fontWeight: 700, color: 'var(--color-gold)' }}>
+              $14.99
+            </p>
+            <ul style={{ marginBottom: 'var(--space-md)', textAlign: 'left' }}>
+              <li>Instant digital delivery</li>
+              <li>Interactive worksheets included</li>
+              <li>Read on any device</li>
+              <li>Lifetime access</li>
+            </ul>
+
+            <div className="form-group" style={{ marginBottom: 'var(--space-sm)' }}>
+              <label className="form-label" htmlFor="checkout-email">Email for delivery</label>
+              <input
+                id="checkout-email"
+                type="email"
+                className={`form-input ${error ? 'error' : ''}`}
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setError(''); }}
+              />
+              {error && <p className="form-error">{error}</p>}
+            </div>
+
+            <button
+              className="btn btn-primary btn-lg"
+              style={{ width: '100%' }}
+              onClick={() => handleCheckout('ebook')}
+              disabled={checkoutLoading === 'ebook' || loading}
+            >
+              {checkoutLoading === 'ebook' ? <span className="loading" /> : 'Buy eBook - $14.99'}
+            </button>
+
+            <p style={{ marginTop: 'var(--space-sm)', fontSize: '0.875rem', color: 'var(--color-muted)' }}>
+              Secure checkout powered by Stripe
+            </p>
+          </div>
+        </div>
+
+        {/* Print Book Section */}
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: 'var(--space-md)' }}>Prefer Print?</h2>
+          <p style={{ textAlign: 'center', marginBottom: 'var(--space-lg)', color: 'var(--color-muted)' }}>
+            Order the beautiful print edition through Amazon Print-on-Demand
+          </p>
+
+          <div className="resources-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+            {Object.entries(podLinks).map(([key, link]) => (
+              <a
+                key={key}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="resource-card"
+                style={{ textAlign: 'center', textDecoration: 'none' }}
+                onClick={() => trackEvent('pod_click', { region: link.flag })}
+              >
+                <span style={{ fontSize: '2rem', marginBottom: 'var(--space-sm)', display: 'block' }}>
+                  {link.flag === 'US' ? '🇺🇸' : link.flag === 'UK' ? '🇬🇧' : '🇨🇦'}
+                </span>
+                <h3 style={{ marginBottom: 'var(--space-xs)' }}>{link.label}</h3>
+                <span className="btn btn-outline btn-sm">Order on Amazon</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Already purchased */}
+        <div style={{ textAlign: 'center', marginTop: 'var(--space-xl)', paddingTop: 'var(--space-lg)', borderTop: '1px solid var(--color-border)' }}>
+          <p style={{ marginBottom: 'var(--space-sm)' }}>Already purchased?</p>
+          <button className="btn btn-outline" onClick={() => setPage('order-portal')}>
+            Access Your Downloads
+          </button>
+        </div>
+
+        {/* Legal links */}
+        <div style={{ textAlign: 'center', marginTop: 'var(--space-lg)', fontSize: '0.875rem', color: 'var(--color-muted)' }}>
+          <a href="/terms" style={{ marginRight: 'var(--space-md)' }}>Terms of Service</a>
+          <a href="/privacy" style={{ marginRight: 'var(--space-md)' }}>Privacy Policy</a>
+          <a href="/pre-order-policy">Pre-Order Policy</a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Order Portal Page
+const OrderPortalPage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [orders, setOrders] = useState<OrderInfo[] | null>(null);
+  const [notFound, setNotFound] = useState(false);
+
+  const handleLookup = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setNotFound(false);
+    trackEvent('order_portal_lookup', { source: 'order_portal' });
+
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Lookup failed');
+      }
+
+      if (data.found) {
+        setOrders(data.orders);
+        trackEvent('order_portal_found', { order_count: data.orders.length.toString() });
+      } else {
+        setNotFound(true);
+        trackEvent('order_portal_not_found', {});
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDownload = (token: string) => {
+    trackEvent('download_initiated', { token: token.slice(0, 8) });
+    window.open(`/api/download?token=${token}`, '_blank');
+  };
+
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  return (
+    <section className="section" style={{ paddingTop: '120px', minHeight: '100vh' }}>
+      <div className="container" style={{ maxWidth: '600px' }}>
+        <div className="toc-header">
+          <h1 className="display-title">Order Portal</h1>
+          <p className="toc-subtitle">Access your purchased eBooks and download links</p>
+        </div>
+
+        {!orders ? (
+          <div className="resource-card" style={{ padding: 'var(--space-lg)' }}>
+            <form onSubmit={handleLookup}>
+              <div className="form-group">
+                <label className="form-label" htmlFor="portal-email">Email Address</label>
+                <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)', marginBottom: 'var(--space-sm)' }}>
+                  Enter the email address you used for your purchase
+                </p>
+                <input
+                  id="portal-email"
+                  type="email"
+                  className={`form-input ${error ? 'error' : ''}`}
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setError(''); setNotFound(false); }}
+                  required
+                />
+                {error && <p className="form-error">{error}</p>}
+              </div>
+
+              <button type="submit" className="btn btn-primary btn-lg" style={{ width: '100%' }} disabled={loading}>
+                {loading ? <span className="loading" /> : 'Find My Orders'}
+              </button>
+            </form>
+
+            {notFound && (
+              <div style={{ marginTop: 'var(--space-md)', padding: 'var(--space-md)', background: 'var(--color-bg-alt)', borderRadius: '8px' }}>
+                <p style={{ marginBottom: 'var(--space-sm)' }}>No orders found for this email address.</p>
+                <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)' }}>
+                  If you believe this is an error, please check the email address or contact support.
+                </p>
+                <button className="btn btn-outline" style={{ marginTop: 'var(--space-sm)' }} onClick={() => setPage('pre-order')}>
+                  Pre-Order Now
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            <div style={{ marginBottom: 'var(--space-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <p style={{ color: 'var(--color-muted)' }}>Showing orders for: <strong>{email}</strong></p>
+              <button className="btn btn-outline btn-sm" onClick={() => { setOrders(null); setEmail(''); }}>
+                Different Email
+              </button>
+            </div>
+
+            {orders.map((order) => (
+              <div key={order.id} className="resource-card" style={{ padding: 'var(--space-lg)', marginBottom: 'var(--space-md)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 'var(--space-md)' }}>
+                  <div>
+                    <span className="resource-category">{order.productType === 'ebook' ? 'Digital Edition' : order.productType}</span>
+                    <h3>Curls & Contemplation</h3>
+                    {order.purchaseDate && (
+                      <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)' }}>
+                        Purchased: {formatDate(order.purchaseDate)}
+                      </p>
+                    )}
+                  </div>
+                  <span style={{ background: 'var(--color-teal)', color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '0.75rem' }}>
+                    Completed
+                  </span>
+                </div>
+
+                <div style={{ background: 'var(--color-bg-alt)', padding: 'var(--space-md)', borderRadius: '8px', marginBottom: 'var(--space-md)' }}>
+                  <p style={{ fontSize: '0.875rem', marginBottom: 'var(--space-xs)' }}>
+                    <strong>Downloads remaining:</strong> {order.downloadsRemaining} of 5
+                  </p>
+                  <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)' }}>
+                    Link expires: {formatDate(order.downloadExpiry)}
+                  </p>
+                </div>
+
+                <button
+                  className="btn btn-primary"
+                  style={{ width: '100%' }}
+                  onClick={() => handleDownload(order.downloadToken)}
+                  disabled={order.downloadsRemaining <= 0}
+                >
+                  {order.downloadsRemaining > 0 ? 'Download eBook (EPUB)' : 'Download Limit Reached'}
+                </button>
+
+                {order.downloadsRemaining <= 0 && (
+                  <p style={{ marginTop: 'var(--space-sm)', fontSize: '0.875rem', color: 'var(--color-muted)', textAlign: 'center' }}>
+                    Need more downloads? Contact support for assistance.
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div style={{ textAlign: 'center', marginTop: 'var(--space-xl)' }}>
+          <button className="btn btn-outline" onClick={() => setPage('home')}>
+            Back to Home
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Order Confirmation Page
+const OrderConfirmationPage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
+  const [loading, setLoading] = useState(true);
+  const [order, setOrder] = useState<OrderInfo | null>(null);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
+
+    if (!sessionId) {
+      setError('No order information found');
+      setLoading(false);
+      return;
+    }
+
+    fetch(`/api/order?session_id=${sessionId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setOrder({
+            id: data.order.id,
+            productType: data.order.productType,
+            downloadToken: data.downloadToken,
+            downloadExpiry: data.downloadExpiry,
+            downloadsRemaining: data.downloadsRemaining,
+          });
+          trackEvent('order_confirmed', { order_id: data.order.id.toString() });
+        } else {
+          setError('Order is still being processed. Please check back shortly.');
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Failed to load order information');
+        setLoading(false);
+      });
+  }, []);
+
+  const handleDownload = () => {
+    if (order) {
+      trackEvent('download_initiated', { source: 'confirmation' });
+      window.open(`/api/download?token=${order.downloadToken}`, '_blank');
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="section" style={{ paddingTop: '120px', minHeight: '100vh', textAlign: 'center' }}>
+        <div className="container">
+          <span className="loading" style={{ width: '48px', height: '48px' }} />
+          <p style={{ marginTop: 'var(--space-md)' }}>Loading your order...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (error || !order) {
+    return (
+      <section className="section" style={{ paddingTop: '120px', minHeight: '100vh' }}>
+        <div className="container" style={{ maxWidth: '500px', textAlign: 'center' }}>
+          <h1 className="display-title">Order Processing</h1>
+          <p style={{ marginBottom: 'var(--space-md)', color: 'var(--color-muted)' }}>{error}</p>
+          <button className="btn btn-primary" onClick={() => setPage('order-portal')}>
+            Check Order Portal
+          </button>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="thank-you-content">
+      <div className="container">
+        <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+          <div className="success-icon">✓</div>
+          <h1 className="display-title">Thank You!</h1>
+          <p style={{ marginBottom: 'var(--space-lg)' }}>
+            Your purchase is complete. You can download your eBook below.
+          </p>
+
+          <div className="resource-card" style={{ padding: 'var(--space-lg)', marginBottom: 'var(--space-lg)' }}>
+            <h3 style={{ marginBottom: 'var(--space-md)' }}>Your Download</h3>
+
+            <div style={{ background: 'var(--color-bg-alt)', padding: 'var(--space-md)', borderRadius: '8px', marginBottom: 'var(--space-md)' }}>
+              <p style={{ fontSize: '0.875rem', marginBottom: 'var(--space-xs)' }}>
+                <strong>Downloads remaining:</strong> {order.downloadsRemaining} of 5
+              </p>
+              <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)' }}>
+                Link expires: {new Date(order.downloadExpiry).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
+            </div>
+
+            <button className="btn btn-primary btn-lg" style={{ width: '100%' }} onClick={handleDownload}>
+              Download eBook (EPUB)
+            </button>
+          </div>
+
+          <p style={{ fontSize: '0.875rem', color: 'var(--color-muted)', marginBottom: 'var(--space-md)' }}>
+            A confirmation email has been sent with your download link. You can also access your purchases anytime from the Order Portal.
+          </p>
+
+          <div style={{ display: 'flex', gap: 'var(--space-sm)', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button className="btn btn-outline" onClick={() => setPage('order-portal')}>
+              Order Portal
+            </button>
+            <button className="btn btn-outline" onClick={() => setPage('home')}>
+              Back to Home
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -371,7 +813,7 @@ const EmailGateModal: React.FC<{ isOpen: boolean; onClose: () => void; onSuccess
 };
 
 // Resources Page
-const ResourcesPage: React.FC = () => {
+const ResourcesPage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedResource, setSelectedResource] = useState<string | null>(null);
 
@@ -440,7 +882,7 @@ const ResourcesPage: React.FC = () => {
             <p style={{ marginBottom: 'var(--space-md)', color: 'var(--color-muted)' }}>
               Pre-order the book to get all interactive worksheets and resources.
             </p>
-            <PreOrderButton source="resources" />
+            <button className="btn btn-primary" onClick={() => setPage('pre-order')}>Pre-Order Now</button>
           </div>
         </div>
       </section>
@@ -545,7 +987,7 @@ const ThankYouPage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }
             and receive your welcome resources.
           </p>
           <div style={{ display: 'flex', gap: 'var(--space-sm)', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <PreOrderButton source="thank_you" />
+            <button className="btn btn-primary" onClick={() => setPage('pre-order')}>Pre-Order Now</button>
             <button className="btn btn-outline" onClick={() => setPage('home')}>
               Back to Home
             </button>
@@ -557,7 +999,7 @@ const ThankYouPage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }
 };
 
 // About Page
-const AboutPage: React.FC = () => {
+const AboutPage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
   return (
     <section className="section" style={{ paddingTop: '120px' }}>
       <div className="container">
@@ -587,7 +1029,7 @@ const AboutPage: React.FC = () => {
             <p>{authorBio.closingMessage}</p>
 
             <div style={{ marginTop: 'var(--space-lg)' }}>
-              <PreOrderButton source="about" />
+              <button className="btn btn-primary" onClick={() => setPage('pre-order')}>Pre-Order Now</button>
             </div>
           </div>
         </div>
@@ -597,7 +1039,7 @@ const AboutPage: React.FC = () => {
 };
 
 // Book Preview Page
-const BookPreviewPage: React.FC = () => {
+const BookPreviewPage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
   return (
     <section className="section toc-section" style={{ paddingTop: '120px', minHeight: '100vh' }}>
       <div className="container">
@@ -651,7 +1093,7 @@ const BookPreviewPage: React.FC = () => {
         </div>
 
         <div className="text-center" style={{ marginTop: 'var(--space-xl)' }}>
-          <PreOrderButton size="large" source="book_preview" />
+          <button className="btn btn-primary btn-lg" onClick={() => setPage('pre-order')}>Pre-Order Now</button>
         </div>
       </div>
     </section>
@@ -667,23 +1109,33 @@ const Footer: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
           <div className="footer-brand">
             <h3>Curls & Contemplation</h3>
             <p>A Freelance Hairstylist's Guide to Creative Excellence</p>
-            <PreOrderButton source="footer" />
+            <button className="btn btn-primary" onClick={() => setPage('pre-order')}>Pre-Order Now</button>
           </div>
           <div className="footer-links">
             <h4>Quick Links</h4>
             <ul>
               <li><a href="#" onClick={(e) => { e.preventDefault(); setPage('home'); }}>Home</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); setPage('pre-order'); }}>Pre-Order</a></li>
               <li><a href="#" onClick={(e) => { e.preventDefault(); setPage('book-preview'); }}>Book Preview</a></li>
               <li><a href="#" onClick={(e) => { e.preventDefault(); setPage('about'); }}>About</a></li>
               <li><a href="#" onClick={(e) => { e.preventDefault(); setPage('resources'); }}>Resources</a></li>
             </ul>
           </div>
           <div className="footer-links">
-            <h4>Connect</h4>
+            <h4>Support</h4>
             <ul>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); setPage('order-portal'); }}>Order Portal</a></li>
               <li><a href={authorBio.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a></li>
               <li><a href="#" onClick={(e) => { e.preventDefault(); setPage('newsletter'); }}>Newsletter</a></li>
+            </ul>
+          </div>
+          <div className="footer-links">
+            <h4>Legal</h4>
+            <ul>
               <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/terms">Terms of Service</a></li>
+              <li><a href="/cookies">Cookie Policy</a></li>
+              <li><a href="/pre-order-policy">Pre-Order Policy</a></li>
             </ul>
           </div>
         </div>
@@ -696,43 +1148,68 @@ const Footer: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
 };
 
 // Home Page
-const HomePage: React.FC = () => {
+const HomePage: React.FC<{ setPage: (page: string) => void }> = ({ setPage }) => {
   return (
     <>
-      <HeroSection />
+      <HeroSection setPage={setPage} />
       <AuthorSection />
-      <TableOfContentsSection />
+      <TableOfContentsSection setPage={setPage} />
     </>
   );
 };
 
 // Main App
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState(() => {
+    // Check for order confirmation route
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      const params = new URLSearchParams(window.location.search);
+      if (path === '/order-confirmation' || params.has('session_id')) {
+        return 'order-confirmation';
+      }
+    }
+    return 'home';
+  });
 
   useEffect(() => {
-    // Track page view
     trackEvent('page_view', { page: currentPage });
-    // Scroll to top on page change
     window.scrollTo(0, 0);
+
+    // Update URL for key pages (SPA routing)
+    const pageRoutes: Record<string, string> = {
+      'home': '/',
+      'pre-order': '/pre-order',
+      'order-portal': '/order-portal',
+      'order-confirmation': '/order-confirmation',
+    };
+    if (pageRoutes[currentPage] && window.location.pathname !== pageRoutes[currentPage]) {
+      window.history.pushState({}, '', pageRoutes[currentPage]);
+    }
   }, [currentPage]);
 
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return <HomePage />;
+        return <HomePage setPage={setCurrentPage} />;
+      case 'pre-order':
+        return <PreOrderPage setPage={setCurrentPage} />;
+      case 'order-portal':
+        return <OrderPortalPage setPage={setCurrentPage} />;
+      case 'order-confirmation':
+        return <OrderConfirmationPage setPage={setCurrentPage} />;
       case 'book-preview':
-        return <BookPreviewPage />;
+        return <BookPreviewPage setPage={setCurrentPage} />;
       case 'about':
-        return <AboutPage />;
+        return <AboutPage setPage={setCurrentPage} />;
       case 'resources':
-        return <ResourcesPage />;
+        return <ResourcesPage setPage={setCurrentPage} />;
       case 'newsletter':
         return <NewsletterPage setPage={setCurrentPage} />;
       case 'thank-you':
         return <ThankYouPage setPage={setCurrentPage} />;
       default:
-        return <HomePage />;
+        return <HomePage setPage={setCurrentPage} />;
     }
   };
 

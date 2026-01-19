@@ -1,5 +1,17 @@
 import { test, expect, describe, beforeAll, afterAll } from "bun:test";
 import { bookMetadata, authorBio, tableOfContents, resources } from "./lib/book-data";
+import {
+  getOrCreateCustomer,
+  createOrder,
+  updateOrderStatus,
+  getCompletedOrdersByEmail,
+  createDownloadToken,
+  validateAndIncrementDownload,
+  addSubscriber,
+  getSubscriber,
+  db,
+} from "./lib/database";
+import { PRODUCTS, POD_LINKS } from "./lib/stripe";
 
 describe("Book Data", () => {
   test("bookMetadata contains required fields", () => {
@@ -306,5 +318,115 @@ describe("Accessibility", () => {
     // Test white on teal buttons
     const whiteOnTeal = getContrastRatio("#ffffff", "#2B9999");
     expect(whiteOnTeal).toBeGreaterThanOrEqual(3.0);
+  });
+});
+
+describe("Database Operations", () => {
+  const testEmail = `test-${Date.now()}@example.com`;
+
+  test("can create and retrieve customer", () => {
+    const customer = getOrCreateCustomer(testEmail);
+    expect(customer).toBeTruthy();
+    expect(customer.email).toBe(testEmail.toLowerCase());
+    expect(customer.id).toBeGreaterThan(0);
+
+    // Second call should return same customer
+    const sameCustomer = getOrCreateCustomer(testEmail);
+    expect(sameCustomer.id).toBe(customer.id);
+  });
+
+  test("can create order", () => {
+    const customer = getOrCreateCustomer(testEmail);
+    const order = createOrder(customer.id, "ebook", 1499, `session_${Date.now()}`);
+    expect(order).toBeTruthy();
+    expect(order.customer_id).toBe(customer.id);
+    expect(order.product_type).toBe("ebook");
+    expect(order.amount_cents).toBe(1499);
+    expect(order.status).toBe("pending");
+  });
+
+  test("can update order status", () => {
+    const customer = getOrCreateCustomer(testEmail);
+    const sessionId = `session_update_${Date.now()}`;
+    createOrder(customer.id, "ebook", 1499, sessionId);
+
+    const updatedOrder = updateOrderStatus(sessionId, "completed");
+    expect(updatedOrder).toBeTruthy();
+    expect(updatedOrder!.status).toBe("completed");
+    expect(updatedOrder!.completed_at).toBeTruthy();
+  });
+
+  test("can get completed orders by email", () => {
+    const uniqueEmail = `completed-${Date.now()}@example.com`;
+    const customer = getOrCreateCustomer(uniqueEmail);
+    const sessionId = `session_complete_${Date.now()}`;
+
+    createOrder(customer.id, "ebook", 1499, sessionId);
+    updateOrderStatus(sessionId, "completed");
+
+    const orders = getCompletedOrdersByEmail(uniqueEmail);
+    expect(orders.length).toBeGreaterThan(0);
+    expect(orders[0].status).toBe("completed");
+  });
+
+  test("can create and validate download token", () => {
+    const customer = getOrCreateCustomer(testEmail);
+    const sessionId = `session_token_${Date.now()}`;
+    const order = createOrder(customer.id, "ebook", 1499, sessionId);
+
+    const token = createDownloadToken(order.id, 72);
+    expect(token).toBeTruthy();
+    expect(token.token).toBeTruthy();
+    expect(token.token.length).toBe(64); // 32 bytes = 64 hex chars
+    expect(token.max_downloads).toBe(5);
+    expect(token.download_count).toBe(0);
+  });
+
+  test("download token validation increments count", () => {
+    const customer = getOrCreateCustomer(testEmail);
+    const sessionId = `session_validate_${Date.now()}`;
+    const order = createOrder(customer.id, "ebook", 1499, sessionId);
+    const token = createDownloadToken(order.id, 72);
+
+    const result = validateAndIncrementDownload(token.token);
+    expect(result.valid).toBe(true);
+    expect(result.token).toBeTruthy();
+    expect(result.token!.download_count).toBe(1);
+  });
+
+  test("download token validation fails for invalid token", () => {
+    const result = validateAndIncrementDownload("invalid_token_12345");
+    expect(result.valid).toBe(false);
+    expect(result.reason).toBe("Token not found");
+  });
+
+  test("can add and retrieve subscriber", () => {
+    const subscriberEmail = `subscriber-${Date.now()}@example.com`;
+    const subscriber = addSubscriber(subscriberEmail, "test");
+    expect(subscriber).toBeTruthy();
+    expect(subscriber!.email).toBe(subscriberEmail.toLowerCase());
+
+    const retrieved = getSubscriber(subscriberEmail);
+    expect(retrieved).toBeTruthy();
+    expect(retrieved!.source).toBe("test");
+  });
+});
+
+describe("Stripe Configuration", () => {
+  test("products are correctly configured", () => {
+    expect(PRODUCTS.ebook).toBeTruthy();
+    expect(PRODUCTS.ebook.name).toBe("Curls & Contemplation (eBook)");
+    expect(PRODUCTS.ebook.priceCents).toBe(1499);
+    expect(PRODUCTS.ebook.type).toBe("ebook");
+  });
+
+  test("PoD links are configured", () => {
+    expect(POD_LINKS.amazonUS).toBeTruthy();
+    expect(POD_LINKS.amazonUK).toBeTruthy();
+    expect(POD_LINKS.amazonCA).toBeTruthy();
+
+    expect(POD_LINKS.amazonUS.flag).toBe("US");
+    expect(POD_LINKS.amazonUK.flag).toBe("UK");
+    expect(POD_LINKS.amazonCA.flag).toBe("CA");
   });
 });
