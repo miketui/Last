@@ -2,3 +2,18 @@ node_modules/
 tmp/
 *.log
 .DS_Store
+
+# Website private files (eBooks)
+website/private/*.epub
+website/private/*.pdf
+website/curls.db
+website/curls.db-wal
+website/curls.db-shm
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build output
+website/dist/

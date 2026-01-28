@@ -19,6 +19,7 @@ import {
   revokeDownloadTokens,
   extendDownloadToken,
   updateSubscriberTags,
+  db,
 } from "./lib/database";
 import {
   createPaymentIntent,
@@ -432,6 +433,86 @@ const handleCheckoutConfig = async (): Promise<Response> => {
   return Response.json(getCheckoutConfig());
 };
 
+// API handler for portal data (order details and downloads)
+const handleGetPortalData = async (token: string): Promise<Response> => {
+  const order = getOrderByPortalToken(token);
+
+  if (!order) {
+    return Response.json({ error: "Order not found" }, { status: 404 });
+  }
+
+  // Get customer info
+  const customer = db.prepare("SELECT * FROM customers WHERE id = ?").get(order.customer_id) as { email: string; name: string | null } | null;
+
+  // Determine order status for portal display
+  let status: "pre_order" | "ready" | "refunded" = "pre_order";
+  if (order.status === "refunded") {
+    status = "refunded";
+  } else if (order.status === "succeeded" && isPostLaunch()) {
+    status = "ready";
+  }
+
+  // Get download tokens if post-launch and order is successful
+  const downloads: Array<{
+    id: string;
+    format: string;
+    url: string;
+    expiresAt: string;
+    downloadsRemaining: number;
+  }> = [];
+
+  if (status === "ready") {
+    const tokens = getDownloadTokensByOrder(order.id);
+    for (const dt of tokens) {
+      const remaining = dt.max_downloads - dt.downloads_used;
+      if (remaining > 0 && new Date(dt.expires_at) > new Date()) {
+        downloads.push({
+          id: dt.id,
+          format: dt.format.toUpperCase(),
+          url: `/download/${dt.token}`,
+          expiresAt: dt.expires_at,
+          downloadsRemaining: remaining,
+        });
+      }
+    }
+
+    // If no valid download tokens exist, create new ones
+    if (downloads.length === 0 && order.status === "succeeded") {
+      const epubToken = createDownloadToken(order.id, "epub", 7);
+      const pdfToken = createDownloadToken(order.id, "pdf", 7);
+
+      downloads.push(
+        {
+          id: epubToken.id,
+          format: "EPUB",
+          url: `/download/${epubToken.token}`,
+          expiresAt: epubToken.expires_at,
+          downloadsRemaining: epubToken.max_downloads,
+        },
+        {
+          id: pdfToken.id,
+          format: "PDF",
+          url: `/download/${pdfToken.token}`,
+          expiresAt: pdfToken.expires_at,
+          downloadsRemaining: pdfToken.max_downloads,
+        }
+      );
+    }
+  }
+
+  return Response.json({
+    orderId: order.id,
+    orderDate: order.created_at,
+    status,
+    customerEmail: customer?.email,
+    customerName: customer?.name,
+    amountTotal: order.amount_total,
+    currency: order.currency,
+    releaseDate: !isPostLaunch() ? RELEASE_DATE.toISOString() : null,
+    downloads,
+  });
+};
+
 // Serve static files from public directory
 const serveStaticFile = async (path: string): Promise<Response | null> => {
   const publicPath = `./public${path}`;
@@ -548,9 +629,6 @@ const generateSitemap = (): string => {
     { loc: "/chapters", changefreq: "monthly", priority: "0.8" },
     { loc: "/about", changefreq: "monthly", priority: "0.7" },
     { loc: "/resources", changefreq: "weekly", priority: "0.8" },
-    { loc: "/blog", changefreq: "weekly", priority: "0.7" },
-    { loc: "/press", changefreq: "monthly", priority: "0.5" },
-    { loc: "/newsletter", changefreq: "monthly", priority: "0.6" },
     { loc: "/privacy", changefreq: "yearly", priority: "0.3" },
     { loc: "/terms", changefreq: "yearly", priority: "0.3" },
   ];
@@ -633,6 +711,21 @@ const server = Bun.serve({
 
     "/api/portal/extend": {
       POST: handleExtendToken,
+    },
+
+    // Portal data endpoint - returns order details for the portal page
+    "/api/portal/:token": {
+      GET: async (req) => {
+        const url = new URL(req.url);
+        const pathParts = url.pathname.split("/");
+        const token = pathParts[pathParts.length - 1];
+
+        if (!token || token === "extend") {
+          return Response.json({ error: "Invalid portal token" }, { status: 400 });
+        }
+
+        return handleGetPortalData(token);
+      },
     },
 
     // Admin routes

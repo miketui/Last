@@ -1218,11 +1218,135 @@ const ResourcesPage: React.FC = () => {
   );
 };
 
+// Stripe Payment Element Component
+const StripePaymentForm: React.FC<{
+  clientSecret: string;
+  publishableKey: string;
+  onSuccess: () => void;
+  onError: (error: string) => void;
+  priceFormatted: string;
+}> = ({ clientSecret, publishableKey, onSuccess, onError, priceFormatted }) => {
+  const paymentElementRef = useRef<HTMLDivElement>(null);
+  const [stripe, setStripe] = useState<any>(null);
+  const [elements, setElements] = useState<any>(null);
+  const [processing, setProcessing] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    // Wait for Stripe.js to load
+    const initStripe = () => {
+      if ((window as any).Stripe && publishableKey) {
+        const stripeInstance = (window as any).Stripe(publishableKey);
+        setStripe(stripeInstance);
+
+        const elementsInstance = stripeInstance.elements({
+          clientSecret,
+          appearance: {
+            theme: 'stripe',
+            variables: {
+              colorPrimary: '#2A7C7C',
+              colorBackground: '#ffffff',
+              colorText: '#1a1a1a',
+              colorDanger: '#C45A5A',
+              fontFamily: '"Libre Baskerville", Georgia, serif',
+              spacingUnit: '4px',
+              borderRadius: '8px',
+            },
+          },
+        });
+        setElements(elementsInstance);
+
+        // Mount the Payment Element
+        if (paymentElementRef.current) {
+          const paymentElement = elementsInstance.create('payment', {
+            layout: 'tabs',
+          });
+          paymentElement.mount(paymentElementRef.current);
+          paymentElement.on('ready', () => setReady(true));
+        }
+      }
+    };
+
+    // Check if Stripe is already loaded
+    if ((window as any).Stripe) {
+      initStripe();
+    } else {
+      // Wait for Stripe script to load
+      const checkStripe = setInterval(() => {
+        if ((window as any).Stripe) {
+          clearInterval(checkStripe);
+          initStripe();
+        }
+      }, 100);
+
+      return () => clearInterval(checkStripe);
+    }
+  }, [clientSecret, publishableKey]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    setProcessing(true);
+    trackEvent('payment_submit', { source: 'stripe_element' });
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/thank-you`,
+      },
+      redirect: 'if_required',
+    });
+
+    if (error) {
+      onError(error.message || 'Payment failed. Please try again.');
+      setProcessing(false);
+      trackEvent('payment_error', { error: error.type });
+    } else {
+      // Payment succeeded
+      trackEvent('payment_success', { source: 'stripe_element' });
+      onSuccess();
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="stripe-payment-form">
+      <h3>Payment Details</h3>
+      <div
+        ref={paymentElementRef}
+        className="payment-element-container"
+        style={{ minHeight: '200px', marginBottom: '16px' }}
+      />
+      {!ready && (
+        <div className="payment-loading" style={{ textAlign: 'center', padding: '20px' }}>
+          <span className="loading" /> Loading payment options...
+        </div>
+      )}
+      <button
+        type="submit"
+        className="btn btn-gold btn-lg"
+        style={{ width: '100%', marginTop: '16px' }}
+        disabled={processing || !ready}
+      >
+        {processing ? <span className="loading" /> : `Pay ${priceFormatted}`}
+      </button>
+      <div className="checkout-security" style={{ marginTop: '16px', textAlign: 'center' }}>
+        <span>🔒 Secure checkout powered by Stripe</span>
+      </div>
+    </form>
+  );
+};
+
 // Checkout Page
 const CheckoutPage: React.FC = () => {
   const { setPage } = useContext(RouterContext);
   const [config, setConfig] = useState<CheckoutConfig | null>(null);
   const [loading, setLoading] = useState(true);
+  const [step, setStep] = useState<'info' | 'payment'>('info');
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [formState, setFormState] = useState({
     email: '',
     name: '',
@@ -1233,6 +1357,7 @@ const CheckoutPage: React.FC = () => {
     error: '',
   });
   const [turnstileToken, setTurnstileToken] = useState('');
+  const [finalAmount, setFinalAmount] = useState<number | null>(null);
 
   useEffect(() => {
     fetch('/api/checkout/config')
@@ -1257,14 +1382,14 @@ const CheckoutPage: React.FC = () => {
       setFormState(s => ({
         ...s,
         couponValid: data.valid,
-        couponDiscount: data.discount || 0,
+        couponDiscount: data.percentOff || 0,
       }));
     } catch {
       setFormState(s => ({ ...s, couponValid: false }));
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleInfoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -1274,7 +1399,7 @@ const CheckoutPage: React.FC = () => {
     }
 
     setFormState(s => ({ ...s, processing: true, error: '' }));
-    trackEvent('checkout_submit', { source: 'checkout_page' });
+    trackEvent('checkout_info_submit', { source: 'checkout_page' });
 
     try {
       const response = await fetch('/api/checkout', {
@@ -1294,22 +1419,29 @@ const CheckoutPage: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Checkout failed');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Checkout failed');
       }
 
       const data = await response.json();
-
-      // In a real implementation, this would redirect to Stripe Checkout
-      // or initialize Stripe Elements with the client secret
-      console.log('Payment intent created:', data);
-
-      // For demo purposes, simulate success
-      trackEvent('checkout_success', { source: 'checkout_page' });
-      setPage('thank-you');
-    } catch {
-      setFormState(s => ({ ...s, processing: false, error: 'Payment failed. Please try again.' }));
+      setClientSecret(data.clientSecret);
+      setFinalAmount(data.amount);
+      setStep('payment');
+      setFormState(s => ({ ...s, processing: false }));
+      trackEvent('checkout_payment_ready', { source: 'checkout_page' });
+    } catch (err: any) {
+      setFormState(s => ({ ...s, processing: false, error: err.message || 'Something went wrong. Please try again.' }));
       trackEvent('checkout_error', { source: 'checkout_page' });
     }
+  };
+
+  const handlePaymentSuccess = () => {
+    trackEvent('checkout_success', { source: 'checkout_page' });
+    setPage('thank-you');
+  };
+
+  const handlePaymentError = (error: string) => {
+    setFormState(s => ({ ...s, error }));
   };
 
   if (loading) {
@@ -1321,6 +1453,26 @@ const CheckoutPage: React.FC = () => {
       </section>
     );
   }
+
+  if (!config?.publishableKey) {
+    return (
+      <section className="checkout-page" style={{ paddingTop: '120px' }}>
+        <div className="container container-narrow">
+          <div className="checkout-error-state" style={{ textAlign: 'center', padding: '40px' }}>
+            <h2>Checkout Temporarily Unavailable</h2>
+            <p>We're setting up our payment system. Please check back soon or contact us for assistance.</p>
+            <a href="mailto:support@curlsandcontemplation.com" className="btn btn-primary">Contact Support</a>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const displayPrice = finalAmount
+    ? `$${(finalAmount / 100).toFixed(2)}`
+    : (formState.couponValid && formState.couponDiscount > 0
+        ? `$${((config?.amount || 1999) * (1 - formState.couponDiscount / 100) / 100).toFixed(2)}`
+        : `$${((config?.amount || 1999) / 100).toFixed(2)}`);
 
   return (
     <section className="checkout-page" style={{ paddingTop: '120px' }}>
@@ -1344,13 +1496,11 @@ const CheckoutPage: React.FC = () => {
               <span className="price-amount">
                 {formState.couponValid && formState.couponDiscount > 0 ? (
                   <>
-                    <span className="price-original">{config?.priceFormatted}</span>
-                    <span className="price-discounted">
-                      ${((config?.priceAmount || 0) * (1 - formState.couponDiscount / 100) / 100).toFixed(2)}
-                    </span>
+                    <span className="price-original">${((config?.amount || 1999) / 100).toFixed(2)}</span>
+                    <span className="price-discounted">{displayPrice}</span>
                   </>
                 ) : (
-                  config?.priceFormatted
+                  displayPrice
                 )}
               </span>
             </div>
@@ -1362,72 +1512,103 @@ const CheckoutPage: React.FC = () => {
             )}
           </div>
 
-          <form onSubmit={handleSubmit} className="checkout-form">
-            <h3>Your Information</h3>
-            <div className="form-group">
-              <label className="form-label" htmlFor="checkout-name">Name</label>
-              <input
-                id="checkout-name"
-                type="text"
-                className="form-input"
-                placeholder="Your name"
-                value={formState.name}
-                onChange={(e) => setFormState(s => ({ ...s, name: e.target.value }))}
-              />
-            </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="checkout-email">Email Address *</label>
-              <input
-                id="checkout-email"
-                type="email"
-                className={`form-input ${formState.error ? 'error' : ''}`}
-                placeholder="you@example.com"
-                value={formState.email}
-                onChange={(e) => setFormState(s => ({ ...s, email: e.target.value, error: '' }))}
-                required
-              />
-              <p className="form-hint">Your eBook will be delivered to this email.</p>
-            </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="checkout-coupon">Coupon Code</label>
-              <div className="coupon-input">
+          {step === 'info' && (
+            <form onSubmit={handleInfoSubmit} className="checkout-form">
+              <h3>Your Information</h3>
+              <div className="form-group">
+                <label className="form-label" htmlFor="checkout-name">Name</label>
                 <input
-                  id="checkout-coupon"
+                  id="checkout-name"
                   type="text"
                   className="form-input"
-                  placeholder="Enter code"
-                  value={formState.coupon}
-                  onChange={(e) => setFormState(s => ({ ...s, coupon: e.target.value, couponValid: null }))}
+                  placeholder="Your name"
+                  value={formState.name}
+                  onChange={(e) => setFormState(s => ({ ...s, name: e.target.value }))}
                 />
-                <button type="button" className="btn btn-outline" onClick={validateCoupon}>
-                  Apply
-                </button>
               </div>
-              {formState.couponValid === true && (
-                <p className="form-success">Coupon applied! {formState.couponDiscount}% off</p>
-              )}
-              {formState.couponValid === false && (
-                <p className="form-error">Invalid coupon code</p>
-              )}
+              <div className="form-group">
+                <label className="form-label" htmlFor="checkout-email">Email Address *</label>
+                <input
+                  id="checkout-email"
+                  type="email"
+                  className={`form-input ${formState.error ? 'error' : ''}`}
+                  placeholder="you@example.com"
+                  value={formState.email}
+                  onChange={(e) => setFormState(s => ({ ...s, email: e.target.value, error: '' }))}
+                  required
+                />
+                <p className="form-hint">Your eBook will be delivered to this email.</p>
+              </div>
+              <div className="form-group">
+                <label className="form-label" htmlFor="checkout-coupon">Coupon Code</label>
+                <div className="coupon-input">
+                  <input
+                    id="checkout-coupon"
+                    type="text"
+                    className="form-input"
+                    placeholder="Enter code"
+                    value={formState.coupon}
+                    onChange={(e) => setFormState(s => ({ ...s, coupon: e.target.value, couponValid: null }))}
+                  />
+                  <button type="button" className="btn btn-outline" onClick={validateCoupon}>
+                    Apply
+                  </button>
+                </div>
+                {formState.couponValid === true && (
+                  <p className="form-success">Coupon applied! {formState.couponDiscount}% off</p>
+                )}
+                {formState.couponValid === false && (
+                  <p className="form-error">Invalid coupon code</p>
+                )}
+              </div>
+
+              <TurnstileWidget onVerify={setTurnstileToken} />
+
+              {formState.error && <p className="form-error">{formState.error}</p>}
+
+              <button type="submit" className="btn btn-gold btn-lg" style={{ width: '100%' }} disabled={formState.processing}>
+                {formState.processing ? <span className="loading" /> : 'Continue to Payment'}
+              </button>
+
+              <div className="checkout-guarantee" style={{ marginTop: '16px' }}>
+                <p><strong>30-Day Money-Back Guarantee</strong></p>
+                <p>Not satisfied? Email us for a full refund. No questions asked.</p>
+              </div>
+            </form>
+          )}
+
+          {step === 'payment' && clientSecret && config?.publishableKey && (
+            <div className="checkout-form">
+              <div className="checkout-step-header" style={{ marginBottom: '16px' }}>
+                <button
+                  type="button"
+                  className="btn btn-outline btn-sm"
+                  onClick={() => setStep('info')}
+                  style={{ marginBottom: '8px' }}
+                >
+                  ← Edit Information
+                </button>
+                <p className="checkout-email-confirm">
+                  Purchasing as: <strong>{formState.email}</strong>
+                </p>
+              </div>
+
+              {formState.error && <p className="form-error" style={{ marginBottom: '16px' }}>{formState.error}</p>}
+
+              <StripePaymentForm
+                clientSecret={clientSecret}
+                publishableKey={config.publishableKey}
+                onSuccess={handlePaymentSuccess}
+                onError={handlePaymentError}
+                priceFormatted={displayPrice}
+              />
+
+              <div className="checkout-guarantee" style={{ marginTop: '16px' }}>
+                <p><strong>30-Day Money-Back Guarantee</strong></p>
+                <p>Not satisfied? Email us for a full refund. No questions asked.</p>
+              </div>
             </div>
-
-            <TurnstileWidget onVerify={setTurnstileToken} />
-
-            {formState.error && <p className="form-error">{formState.error}</p>}
-
-            <button type="submit" className="btn btn-gold btn-lg" style={{ width: '100%' }} disabled={formState.processing}>
-              {formState.processing ? <span className="loading" /> : `Pay ${config?.priceFormatted}`}
-            </button>
-
-            <div className="checkout-security">
-              <span>🔒 Secure checkout powered by Stripe</span>
-            </div>
-
-            <div className="checkout-guarantee">
-              <p><strong>30-Day Money-Back Guarantee</strong></p>
-              <p>Not satisfied? Email us for a full refund. No questions asked.</p>
-            </div>
-          </form>
+          )}
         </div>
       </div>
     </section>
@@ -1516,35 +1697,34 @@ const OrderPortalPage: React.FC<{ token: string }> = ({ token }) => {
   const [order, setOrder] = useState<OrderPortalData | null>(null);
   const [error, setError] = useState('');
   const [extending, setExtending] = useState<string | null>(null);
+  const [releaseDate, setReleaseDate] = useState<string | null>(null);
 
   useEffect(() => {
-    // In production, this would fetch order data from the API
-    // For demo, we'll simulate the response
     const fetchOrder = async () => {
       try {
-        // Simulated API response - in production: await fetch(`/api/portal/${token}`)
-        const mockOrder: OrderPortalData = {
-          orderId: 'ORD_' + token.slice(0, 8),
-          orderDate: new Date().toISOString(),
-          status: 'ready', // or 'pre_order' or 'refunded'
-          downloads: [
-            {
-              id: 'dl_epub_001',
-              format: 'EPUB',
-              url: `/download/epub_${token}`,
-              expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-              downloadsRemaining: 3,
-            },
-            {
-              id: 'dl_pdf_001',
-              format: 'PDF',
-              url: `/download/pdf_${token}`,
-              expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-              downloadsRemaining: 3,
-            },
-          ],
+        const response = await fetch(`/api/portal/${token}`);
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            setError('Order not found. Please check your link or contact support.');
+          } else {
+            setError('Could not load your order. Please try again later.');
+          }
+          setLoading(false);
+          return;
+        }
+
+        const data = await response.json();
+
+        const portalData: OrderPortalData = {
+          orderId: data.orderId,
+          orderDate: data.orderDate,
+          status: data.status,
+          downloads: data.downloads || [],
         };
-        setOrder(mockOrder);
+
+        setOrder(portalData);
+        setReleaseDate(data.releaseDate);
         setLoading(false);
       } catch {
         setError('Could not load your order. Please check your link or contact support.');
@@ -1552,7 +1732,12 @@ const OrderPortalPage: React.FC<{ token: string }> = ({ token }) => {
       }
     };
 
-    fetchOrder();
+    if (token) {
+      fetchOrder();
+    } else {
+      setError('Invalid portal link.');
+      setLoading(false);
+    }
   }, [token]);
 
   const handleExtend = async (downloadId: string) => {
@@ -1621,7 +1806,8 @@ const OrderPortalPage: React.FC<{ token: string }> = ({ token }) => {
                 <span className="preorder-icon">📅</span>
                 <h2>Pre-Order Confirmed!</h2>
                 <p>
-                  Your eBook will be delivered automatically on release day.
+                  Your eBook will be delivered automatically on release day
+                  {releaseDate ? ` (${new Date(releaseDate).toLocaleDateString()})` : ''}.
                   We'll send you an email with download links as soon as it's available.
                 </p>
               </div>
