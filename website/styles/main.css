@@ -420,6 +420,44 @@ p {
   align-items: center;
   padding-top: 80px;
   background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-paper) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle animated gradient background */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 80%;
+  height: 150%;
+  background: radial-gradient(ellipse, rgba(43, 153, 153, 0.03) 0%, transparent 70%);
+  animation: heroGlow 15s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 60%;
+  height: 100%;
+  background: radial-gradient(ellipse, rgba(201, 169, 97, 0.04) 0%, transparent 60%);
+  animation: heroGlow 12s ease-in-out infinite alternate-reverse;
+  pointer-events: none;
+}
+
+@keyframes heroGlow {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(20px, -20px) scale(1.1);
+    opacity: 1;
+  }
 }
 
 .hero-content {
@@ -473,13 +511,197 @@ p {
 
 .hero-image {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+}
+
+/* ====================================================================
+   3D BOOK COVER ANIMATION
+   Modern, creative floating book with depth and interactivity
+   ==================================================================== */
+
+.book-3d-wrapper {
+  perspective: 1200px;
+  perspective-origin: center center;
 }
 
 .book-cover {
   max-width: 400px;
-  box-shadow: var(--shadow-lg);
   border-radius: 4px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+
+  /* Multi-layered shadow for 3D depth effect */
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    0 16px 32px rgba(0, 0, 0, 0.12),
+    0 32px 64px rgba(0, 0, 0, 0.08);
+}
+
+/* Floating animation - subtle continuous movement */
+.book-cover-3d {
+  animation: bookFloat 6s ease-in-out infinite;
+}
+
+@keyframes bookFloat {
+  0%, 100% {
+    transform: translateY(0px) rotateX(2deg) rotateY(-3deg);
+  }
+  50% {
+    transform: translateY(-15px) rotateX(-2deg) rotateY(3deg);
+  }
+}
+
+/* Hover effect - dramatic 3D tilt */
+.book-3d-wrapper:hover .book-cover-3d {
+  animation-play-state: paused;
+  transform: translateY(-20px) rotateX(5deg) rotateY(-15deg) scale(1.05);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    0 16px 32px rgba(0, 0, 0, 0.15),
+    0 32px 64px rgba(0, 0, 0, 0.1),
+    0 48px 96px rgba(43, 153, 153, 0.1),
+    -20px 20px 60px rgba(201, 169, 97, 0.15);
+}
+
+/* Book spine effect - pseudo-element for 3D edge */
+.book-3d-wrapper::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  width: 20px;
+  height: 80%;
+  background: linear-gradient(90deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(201, 169, 97, 0.4) 30%,
+    rgba(201, 169, 97, 0.6) 50%,
+    rgba(201, 169, 97, 0.4) 70%,
+    transparent 100%);
+  transform: rotateY(-90deg) translateX(-10px);
+  transform-origin: left;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.book-3d-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.book-3d-wrapper:hover::after {
+  opacity: 1;
+}
+
+/* Shine/glare effect on hover */
+.book-cover-3d::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.book-3d-wrapper:hover .book-cover-3d::before {
+  left: 150%;
+}
+
+/* Page edges effect */
+.book-cover-3d {
+  position: relative;
+}
+
+.book-cover-3d::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 5%;
+  width: 8px;
+  height: 90%;
+  background: linear-gradient(90deg,
+    #f5f5f0 0%,
+    #e8e8e0 20%,
+    #f0f0ea 40%,
+    #e5e5dd 60%,
+    #f2f2ec 80%,
+    #eaeae2 100%);
+  border-radius: 0 2px 2px 0;
+  transform: rotateY(10deg);
+  transform-origin: left;
+  box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+}
+
+.book-3d-wrapper:hover .book-cover-3d::after {
+  width: 12px;
+}
+
+/* Hero badges below book cover */
+.hero-badges {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-badges .badge {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hero-badges .badge:hover {
+  transform: translateY(-2px);
+}
+
+.badge-teal {
+  background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(43, 153, 153, 0.3);
+}
+
+.badge-teal:hover {
+  box-shadow: 0 6px 20px rgba(43, 153, 153, 0.4);
+}
+
+.badge-gold {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
+}
+
+.badge-gold:hover {
+  box-shadow: 0 6px 20px rgba(201, 169, 97, 0.4);
+}
+
+.badge-coral {
+  background: linear-gradient(135deg, #e07a5f 0%, #c55d42 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(224, 122, 95, 0.3);
+}
+
+.badge-coral:hover {
+  box-shadow: 0 6px 20px rgba(224, 122, 95, 0.4);
 }
 
 @media (max-width: 968px) {
@@ -502,6 +724,46 @@ p {
 
   .book-cover {
     max-width: 300px;
+  }
+
+  /* Reduce 3D animation intensity on tablet */
+  .book-cover-3d {
+    animation: bookFloatMobile 8s ease-in-out infinite;
+  }
+
+  @keyframes bookFloatMobile {
+    0%, 100% {
+      transform: translateY(0px) rotateY(-2deg);
+    }
+    50% {
+      transform: translateY(-8px) rotateY(2deg);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  /* Simplify 3D effects on mobile for performance */
+  .book-cover-3d {
+    animation: bookFloatSimple 6s ease-in-out infinite;
+  }
+
+  @keyframes bookFloatSimple {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  .book-3d-wrapper:hover .book-cover-3d {
+    transform: translateY(-10px) scale(1.02);
+  }
+
+  /* Hide pseudo-elements on mobile */
+  .book-cover-3d::after,
+  .book-3d-wrapper::after {
+    display: none;
   }
 }
 
