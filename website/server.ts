@@ -37,6 +37,22 @@ import {
   addToMailchimp,
   MAILCHIMP_TAGS,
 } from "./lib/email";
+import {
+  processEmailQueue,
+  onSubscriberSignup,
+  onPreOrder,
+  onPurchase,
+  scheduleLaunchReminders,
+  createBroadcast,
+  queueBroadcast,
+  getEmailStats,
+  queueEmail,
+  EMAIL_TEMPLATES,
+  getSubscribersBySegment,
+  cancelQueuedEmails,
+  enrollInSequence,
+  SEQUENCES,
+} from "./lib/email-automation";
 
 const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
 
@@ -83,12 +99,8 @@ const handleSubscribe = async (req: Request): Promise<Response> => {
     // Store subscriber
     const subscriber = addSubscriber(email, source || "website", name);
 
-    // Add to Mailchimp
-    await addToMailchimp({
-      email,
-      name,
-      tags: [MAILCHIMP_TAGS.LEAD_FREEBIE],
-    });
+    // Trigger automated welcome sequence
+    await onSubscriberSignup(email, name, source || "website");
 
     console.log(`[Subscribe] New subscriber: ${email} from ${source}`);
 
@@ -121,20 +133,16 @@ const handleFreeResource = async (req: Request): Promise<Response> => {
     // Store subscriber with freebie tag
     addSubscriber(email, `freebie_${resource || "pricing_kit"}`, name, [MAILCHIMP_TAGS.LEAD_FREEBIE]);
 
-    // Add to Mailchimp
-    await addToMailchimp({
-      email,
-      name,
-      tags: [MAILCHIMP_TAGS.LEAD_FREEBIE],
-    });
-
-    // Send free resource email
+    // Send free resource email immediately
     await sendFreeResourceDelivery({
       email,
       name,
       resourceName: "Stylist's 10-Minute Pricing Confidence Kit",
       downloadUrl: `${SITE_URL}/downloads/pricing-confidence-kit.pdf`,
     });
+
+    // Trigger automated welcome/nurture sequence (will add to Mailchimp too)
+    await onSubscriberSignup(email, name, `freebie_${resource || "pricing_kit"}`);
 
     console.log(`[FreeResource] Delivered to: ${email}`);
 
@@ -275,39 +283,33 @@ const handleStripeWebhook = async (req: Request): Promise<Response> => {
         const portalToken = createPortalToken(order.id);
         const portalUrl = `${SITE_URL}/portal/${portalToken.token}`;
 
-        // Determine tag based on launch state
-        const tag = isPostLaunch() ? MAILCHIMP_TAGS.CUSTOMER_POSTLAUNCH : MAILCHIMP_TAGS.CUSTOMER_PREORDER;
-
-        // Update Mailchimp
-        await addToMailchimp({ email, name, tags: [tag] });
-
-        // If post-launch, create download tokens immediately
+        // If post-launch, create download tokens immediately and trigger purchase automation
         if (isPostLaunch()) {
           const epubToken = createDownloadToken(order.id, "epub", 7);
           const pdfToken = createDownloadToken(order.id, "pdf", 7);
 
-          // Send eBook ready email
-          await sendEbookReady({
+          // Trigger purchase automation (sends thank you email, adds to Mailchimp)
+          await onPurchase(
             email,
             name,
             portalUrl,
-            epubDownloadUrl: `${SITE_URL}/download/${epubToken.token}`,
-            pdfDownloadUrl: `${SITE_URL}/download/${pdfToken.token}`,
-          });
+            `${SITE_URL}/download/${epubToken.token}`,
+            `${SITE_URL}/download/${pdfToken.token}`
+          );
 
           console.log(`[Webhook] Post-launch order fulfilled: ${order.id}`);
         } else {
-          // Send pre-order confirmation
-          await sendPreOrderConfirmation({
+          // Trigger pre-order automation (sends confirmation, schedules reminders, adds to Mailchimp)
+          await onPreOrder(
             email,
             name,
-            orderId: order.id,
-            amount: paymentIntent.amount,
+            order.id,
+            paymentIntent.amount,
             portalUrl,
-            releaseDate: RELEASE_DATE.toISOString(),
-          });
+            RELEASE_DATE
+          );
 
-          console.log(`[Webhook] Pre-order confirmed: ${order.id}`);
+          console.log(`[Webhook] Pre-order confirmed with launch reminders: ${order.id}`);
         }
         break;
       }
@@ -397,6 +399,141 @@ const handleReleaseCron = async (req: Request): Promise<Response> => {
     console.error("[ReleaseCron] Error:", error);
     return Response.json({ error: "Cron error" }, { status: 500 });
   }
+};
+
+// API handler for email queue processing cron
+const handleEmailQueueCron = async (req: Request): Promise<Response> => {
+  // Verify cron secret
+  const authHeader = req.headers.get("authorization");
+  const cronSecret = process.env.CRON_SECRET;
+
+  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    // Process pending emails (up to 100 per cron run)
+    const result = await processEmailQueue(100);
+
+    console.log(`[EmailQueueCron] Processed: ${result.sent} sent, ${result.failed} failed`);
+
+    return Response.json({
+      message: "Email queue processed",
+      sent: result.sent,
+      failed: result.failed,
+      stats: getEmailStats(),
+    });
+  } catch (error) {
+    console.error("[EmailQueueCron] Error:", error);
+    return Response.json({ error: "Cron error" }, { status: 500 });
+  }
+};
+
+// API handler for newsletter broadcast
+const handleCreateBroadcast = async (req: Request): Promise<Response> => {
+  // Verify admin auth
+  const authHeader = req.headers.get("authorization");
+  const adminKey = process.env.ADMIN_API_KEY;
+
+  if (adminKey && authHeader !== `Bearer ${adminKey}`) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const body = await req.json();
+    const { name, subject, content, ctaText, ctaUrl, segment, scheduledFor } = body;
+
+    if (!name || !subject || !content) {
+      return Response.json({ error: "Missing required fields: name, subject, content" }, { status: 400 });
+    }
+
+    const broadcast = createBroadcast({
+      name,
+      subject,
+      content,
+      ctaText,
+      ctaUrl,
+      segment,
+      scheduledFor: scheduledFor ? new Date(scheduledFor) : undefined,
+    });
+
+    console.log(`[Newsletter] Created broadcast: ${name}`);
+
+    return Response.json({
+      message: "Broadcast created",
+      broadcast,
+    });
+  } catch (error) {
+    console.error("[Newsletter] Error:", error);
+    return Response.json({ error: "Internal server error" }, { status: 500 });
+  }
+};
+
+// API handler to queue/send a broadcast
+const handleSendBroadcast = async (req: Request): Promise<Response> => {
+  // Verify admin auth
+  const authHeader = req.headers.get("authorization");
+  const adminKey = process.env.ADMIN_API_KEY;
+
+  if (adminKey && authHeader !== `Bearer ${adminKey}`) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const body = await req.json();
+    const { broadcastId } = body;
+
+    if (!broadcastId) {
+      return Response.json({ error: "Missing broadcastId" }, { status: 400 });
+    }
+
+    const queuedCount = queueBroadcast(broadcastId);
+
+    console.log(`[Newsletter] Queued broadcast ${broadcastId} to ${queuedCount} subscribers`);
+
+    return Response.json({
+      message: "Broadcast queued for sending",
+      queuedCount,
+    });
+  } catch (error) {
+    console.error("[Newsletter] Error:", error);
+    return Response.json({ error: "Internal server error" }, { status: 500 });
+  }
+};
+
+// API handler for email automation stats
+const handleEmailStats = async (req: Request): Promise<Response> => {
+  // Verify admin auth
+  const authHeader = req.headers.get("authorization");
+  const adminKey = process.env.ADMIN_API_KEY;
+
+  if (adminKey && authHeader !== `Bearer ${adminKey}`) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  return Response.json(getEmailStats());
+};
+
+// API handler for subscriber list (for newsletter management)
+const handleGetSubscribers = async (req: Request): Promise<Response> => {
+  // Verify admin auth
+  const authHeader = req.headers.get("authorization");
+  const adminKey = process.env.ADMIN_API_KEY;
+
+  if (adminKey && authHeader !== `Bearer ${adminKey}`) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const url = new URL(req.url);
+  const segment = url.searchParams.get("segment") || undefined;
+
+  const subscribers = getSubscribersBySegment(segment);
+
+  return Response.json({
+    count: subscribers.length,
+    segment: segment || "all",
+    subscribers,
+  });
 };
 
 // API handler for portal token extension
@@ -709,6 +846,11 @@ const server = Bun.serve({
       POST: handleReleaseCron,
     },
 
+    // Email automation cron - process queued emails
+    "/api/cron/process-emails": {
+      POST: handleEmailQueueCron,
+    },
+
     "/api/portal/extend": {
       POST: handleExtendToken,
     },
@@ -739,6 +881,23 @@ const server = Bun.serve({
         }
         return Response.json({ orders: getAllOrders() });
       },
+    },
+
+    // Newsletter/email management admin routes
+    "/api/admin/newsletter/broadcast": {
+      POST: handleCreateBroadcast,
+    },
+
+    "/api/admin/newsletter/send": {
+      POST: handleSendBroadcast,
+    },
+
+    "/api/admin/newsletter/subscribers": {
+      GET: handleGetSubscribers,
+    },
+
+    "/api/admin/email-stats": {
+      GET: handleEmailStats,
     },
 
     // Health check
@@ -797,13 +956,19 @@ Sitemap: ${SITE_URL}/sitemap.xml`,
   },
 });
 
+// Get initial email stats
+const emailStats = getEmailStats();
+
 console.log(`
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  Curls & Contemplation - eBook Sales Platform
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Server running at: http://localhost:${server.port}
 Launch State: ${isPostLaunch() ? "POST-LAUNCH" : "PRE-ORDER"}
 Release Date: ${RELEASE_DATE.toISOString()}
+
+Email Automation:
+  Queued: ${emailStats.queued} | Sent: ${emailStats.sent} | Active Sequences: ${emailStats.activeSequences}
 
 Pages:
   /              Homepage
@@ -817,11 +982,23 @@ Pages:
   /portal/:token Order Portal
 
 API Endpoints:
-  POST /api/subscribe       Email subscription
-  POST /api/free-resource   Free lead magnet
-  POST /api/checkout        Create payment intent
-  POST /api/stripe/webhooks Stripe webhooks
-  POST /api/cron/release    Launch day automation
-  GET  /api/health          Health check
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  POST /api/subscribe           Email subscription (triggers welcome sequence)
+  POST /api/free-resource       Free lead magnet (triggers nurture sequence)
+  POST /api/checkout            Create payment intent
+  POST /api/stripe/webhooks     Stripe webhooks (triggers order emails)
+
+Cron Jobs (add to your scheduler):
+  POST /api/cron/release-ebook  Launch day: fulfill pre-orders
+  POST /api/cron/process-emails Process email queue (run every 5 min)
+
+Admin API (requires ADMIN_API_KEY):
+  POST /api/admin/newsletter/broadcast  Create newsletter broadcast
+  POST /api/admin/newsletter/send       Queue broadcast for sending
+  GET  /api/admin/newsletter/subscribers List subscribers by segment
+  GET  /api/admin/email-stats           Email automation statistics
+  GET  /api/admin/orders                List all orders
+
+Health:
+  GET  /api/health              System health check
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `);
