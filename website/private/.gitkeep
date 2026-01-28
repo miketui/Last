@@ -1,0 +1,7 @@
+# Private files directory for eBook delivery
+# Place your eBook files here:
+# - CurlsAndContemplation.epub
+# - CurlsAndContemplation.pdf
+#
+# These files are served via tokenized download links
+# and should NOT be committed to version control.
