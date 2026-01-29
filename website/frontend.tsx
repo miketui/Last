@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef, createContext, useContext, useCallb
 import { createRoot } from 'react-dom/client';
 import { bookMetadata, authorBio, tableOfContents, resources, subscriptionBenefits } from './lib/book-data';
 import { chapterPreviews, getChapterBySlug, getChapterNavigation, partTitles, type ChapterPreview } from './lib/chapter-content';
+import { BlogPage, BlogPostPage } from './components/BlogComponents';
+import { FAQPage } from './components/FAQComponent';
+import { SampleChapterBanner, SampleChapterInline } from './components/SampleChapterBanner';
 
 // Types
 interface EmailFormState {
@@ -66,6 +69,12 @@ const parseUrl = (pathname: string): { page: string; params: Record<string, stri
   }
   if (segments[0] === 'portal' && segments[1]) {
     return { page: 'portal', params: { token: segments[1] } };
+  }
+  if (segments[0] === 'blog' && segments[1]) {
+    return { page: 'blog-post', params: { slug: segments[1] } };
+  }
+  if (segments[0] === 'blog') {
+    return { page: 'blog', params: {} };
   }
 
   return { page: segments[0] || 'home', params: {} };
@@ -152,8 +161,10 @@ const Navigation: React.FC = () => {
     { id: 'home', label: 'Home', path: '/' },
     { id: 'book', label: 'Book', path: '/book' },
     { id: 'chapters', label: 'Chapters', path: '/chapters' },
+    { id: 'blog', label: 'Blog', path: '/blog' },
     { id: 'about', label: 'About', path: '/about' },
     { id: 'resources', label: 'Free Kit', path: '/resources' },
+    { id: 'faq', label: 'FAQ', path: '/faq' },
   ];
 
   return (
@@ -772,6 +783,8 @@ const CTASection: React.FC = () => {
 
 // Home Page
 const HomePage: React.FC = () => {
+  const { navigate } = useContext(RouterContext);
+
   return (
     <>
       <HeroSection />
@@ -780,6 +793,7 @@ const HomePage: React.FC = () => {
       <AuthorSection />
       <FreeKitSection />
       <TestimonialsSection />
+      <SampleChapterBanner onNavigate={navigate} />
       <CTASection />
     </>
   );
@@ -2048,6 +2062,7 @@ const App: React.FC = () => {
     if (newPage === 'home') path = '/';
     if (newPage === 'chapter' && newParams.slug) path = `/chapter/${newParams.slug}`;
     if (newPage === 'portal' && newParams.token) path = `/portal/${newParams.token}`;
+    if (newPage === 'blog-post' && newParams.slug) path = `/blog/${newParams.slug}`;
 
     window.history.pushState({}, '', path);
   }, []);
@@ -2096,6 +2111,12 @@ const App: React.FC = () => {
         return <ThankYouPage />;
       case 'portal':
         return <OrderPortalPage token={params.token || ''} />;
+      case 'blog':
+        return <BlogPage onNavigate={navigate} />;
+      case 'blog-post':
+        return <BlogPostPage slug={params.slug || ''} onNavigate={navigate} />;
+      case 'faq':
+        return <FAQPage />;
       case 'privacy':
         return <PrivacyPage />;
       case 'terms':
