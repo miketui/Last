@@ -454,7 +454,373 @@ Your website is fully functional and ready for development/testing!
 2. **Get real domain** - Purchase and configure DNS
 3. **Switch to live Stripe keys** - Use production API keys
 4. **Verify email domain** - Set up Resend with custom domain
-5. **Deploy to Vercel** - Follow deployment guide
+5. **Deploy to Railway** - See Railway Deployment Guide below (recommended!)
+6. **OR Deploy to Vercel** - Alternative deployment option
+
+---
+
+## 🚂 Railway Deployment Guide (10 Minutes)
+
+Railway is perfect for deploying your book website! It's simple, affordable, and handles everything automatically.
+
+### Why Railway?
+- ✅ **Easy Setup** - Connect GitHub, click deploy
+- ✅ **Automatic Deploys** - Push to GitHub = auto-deploy
+- ✅ **Built-in Database** - SQLite works perfectly
+- ✅ **Fair Pricing** - $5/month for hobby projects
+- ✅ **Custom Domains** - Easy domain setup
+- ✅ **Bun Support** - Native Bun runtime support
+
+---
+
+### Step 1: Prepare Your Repository (2 minutes)
+
+Make sure all your changes are pushed to GitHub:
+
+```bash
+cd ~/Last/website
+git add .
+git commit -m "Prepare for Railway deployment"
+git push origin main
+```
+
+---
+
+### Step 2: Sign Up for Railway (1 minute)
+
+1. Go to: https://railway.app/
+2. Click "Login" (top right)
+3. Click "Login with GitHub"
+4. Authorize Railway to access your GitHub
+
+---
+
+### Step 3: Create New Project (2 minutes)
+
+1. Click "**New Project**" (big purple button)
+2. Click "**Deploy from GitHub repo**"
+3. Find and select: **miketui/Last**
+4. Railway will detect it's a monorepo
+5. Click "**Add variables**" (we'll do this in next step)
+
+---
+
+### Step 4: Configure Root Directory (Important!)
+
+Since your website is in a subfolder, you need to tell Railway:
+
+1. In your project dashboard, click on your service
+2. Click "**Settings**" tab
+3. Scroll to "**Root Directory**"
+4. Enter: `website`
+5. Click "**Update**"
+
+---
+
+### Step 5: Add Environment Variables (5 minutes)
+
+1. Click "**Variables**" tab in your Railway project
+2. Click "**+ New Variable**"
+3. Add each variable one by one:
+
+**Required Variables:**
+
+```bash
+SITE_URL
+# Value: Will be provided by Railway (wait for deployment)
+# For now use: https://your-project.up.railway.app
+
+NODE_ENV=production
+
+RELEASE_DATE=2026-03-15T16:00:00.000Z
+
+STRIPE_PUBLISHABLE_KEY=pk_live_...
+# ⚠️ Use LIVE keys for production! (pk_live_ not pk_test_)
+
+STRIPE_SECRET_KEY=sk_live_...
+# ⚠️ Use LIVE keys for production! (sk_live_ not sk_test_)
+
+STRIPE_WEBHOOK_SECRET=whsec_...
+# Get this after creating webhook (see Step 7)
+
+RESEND_API_KEY=re_...
+
+FROM_EMAIL=hello@curlsandcontemplation.com
+
+FROM_NAME=Curls & Contemplation
+
+ADMIN_API_KEY=
+# Generate a secure random key:
+# In terminal: openssl rand -base64 32
+
+CRON_SECRET=
+# Generate a secure random key:
+# In terminal: openssl rand -base64 32
+```
+
+**Optional Variables:**
+
+```bash
+MAILCHIMP_API_KEY=...
+MAILCHIMP_SERVER_PREFIX=us1
+MAILCHIMP_LIST_ID=...
+
+TURNSTILE_SITE_KEY=0x...
+TURNSTILE_SECRET_KEY=0x...
+
+GA_MEASUREMENT_ID=G-...
+```
+
+**How to add each variable:**
+1. Click "+ New Variable"
+2. Enter variable name (e.g., `STRIPE_SECRET_KEY`)
+3. Enter value (e.g., `sk_live_abc123...`)
+4. Press Enter or click outside
+5. Repeat for all variables
+
+---
+
+### Step 6: Generate Secure Keys (1 minute)
+
+In your terminal, generate secure keys for admin and cron:
+
+```bash
+# Generate ADMIN_API_KEY
+openssl rand -base64 32
+
+# Generate CRON_SECRET
+openssl rand -base64 32
+```
+
+Copy these values and add them to Railway variables.
+
+---
+
+### Step 7: Deploy! (2 minutes)
+
+1. Click "**Deploy**" button (if not already deploying)
+2. Railway will automatically:
+   - Install Bun
+   - Install dependencies
+   - Build your project
+   - Start the server
+3. Wait for "**Success**" status (usually 1-2 minutes)
+
+**Your website is now LIVE!** 🎉
+
+---
+
+### Step 8: Get Your Railway URL
+
+1. Go to "**Settings**" tab
+2. Scroll to "**Domains**"
+3. You'll see a URL like: `your-project.up.railway.app`
+4. Click to copy it
+
+**Update your SITE_URL:**
+1. Go back to "**Variables**" tab
+2. Find `SITE_URL`
+3. Update value to: `https://your-project.up.railway.app`
+4. Railway will automatically redeploy
+
+---
+
+### Step 9: Update Stripe Webhook (Important!)
+
+Your webhook endpoint has changed! Update it in Stripe:
+
+1. Go to: https://dashboard.stripe.com/webhooks
+2. Click on your webhook (or create new one)
+3. Update endpoint URL to:
+   ```
+   https://your-project.up.railway.app/api/stripe/webhooks
+   ```
+   (Replace with your actual Railway URL)
+4. Make sure these events are selected:
+   - `payment_intent.succeeded`
+   - `charge.refunded`
+5. Copy the **Signing secret**
+6. Add to Railway variables as `STRIPE_WEBHOOK_SECRET`
+
+---
+
+### Step 10: Set Up Custom Domain (Optional, 5 minutes)
+
+1. In Railway, go to "**Settings**" → "**Domains**"
+2. Click "**+ Custom Domain**"
+3. Enter your domain: `curlsandcontemplation.com`
+4. Railway gives you DNS records to add:
+
+**Add these to your domain registrar:**
+```
+Type: CNAME
+Name: @  (or leave blank)
+Value: [railway-provided-value].railway.app
+```
+
+```
+Type: CNAME
+Name: www
+Value: [railway-provided-value].railway.app
+```
+
+5. Wait 5-10 minutes for DNS propagation
+6. Update `SITE_URL` in Railway to your custom domain
+7. Update Stripe webhook URL to custom domain
+
+---
+
+### Step 11: Set Up Cron Jobs (Optional but Recommended)
+
+Railway doesn't have built-in cron, but you can use external services:
+
+**Option A: Cron-Job.org (Free)**
+
+1. Sign up: https://cron-job.org/
+2. Create new cron job:
+   - **Title:** Process Email Queue
+   - **URL:** `https://your-project.up.railway.app/api/cron/process-emails`
+   - **Schedule:** Every 5 minutes
+   - **Request Method:** POST
+   - **Headers:** Add `Authorization: Bearer YOUR_CRON_SECRET`
+
+3. Create second cron job:
+   - **Title:** Release Day Fulfillment
+   - **URL:** `https://your-project.up.railway.app/api/cron/release-ebook`
+   - **Schedule:** Set to your release date/time
+   - **Request Method:** POST
+   - **Headers:** Add `Authorization: Bearer YOUR_CRON_SECRET`
+
+**Option B: EasyCron (Free tier)**
+
+1. Sign up: https://www.easycron.com/
+2. Create similar cron jobs as above
+
+**Option C: GitHub Actions (Free)**
+
+Add `.github/workflows/cron.yml` to your repo:
+
+```yaml
+name: Cron Jobs
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Every 5 minutes
+
+jobs:
+  process-emails:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Process Email Queue
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            https://your-project.up.railway.app/api/cron/process-emails
+```
+
+---
+
+### Step 12: Monitor Your Deployment
+
+**Check Logs:**
+1. In Railway dashboard, click "**View Logs**"
+2. You'll see real-time server output
+3. Look for any errors
+
+**Check Build:**
+1. Click "**Deployments**" tab
+2. See all your deployments
+3. Click any deployment to see build logs
+
+**Check Database:**
+Your SQLite database persists in Railway's volume storage automatically!
+
+---
+
+### Railway Deployment Checklist
+
+- [ ] Repository pushed to GitHub
+- [ ] Railway account created
+- [ ] Project created from GitHub repo
+- [ ] Root directory set to `website`
+- [ ] All environment variables added
+- [ ] Secure keys generated for ADMIN_API_KEY and CRON_SECRET
+- [ ] Deployment successful
+- [ ] SITE_URL updated with Railway URL
+- [ ] Stripe webhook updated with Railway URL
+- [ ] Webhook secret added to Railway variables
+- [ ] Custom domain configured (optional)
+- [ ] Cron jobs set up (optional but recommended)
+- [ ] Website tested in production
+
+---
+
+### Testing Your Railway Deployment
+
+1. **Visit your site:** `https://your-project.up.railway.app`
+2. **Test checkout:** Use Stripe LIVE mode (real card, then refund)
+3. **Test email capture:** Should send real emails via Resend
+4. **Check logs:** Monitor in Railway dashboard for any errors
+
+---
+
+### Railway Tips & Tricks
+
+**Automatic Deploys:**
+- Push to GitHub → Railway auto-deploys
+- No manual deployment needed!
+
+**Monitoring:**
+- Railway shows resource usage
+- Set up alerts for high usage
+- Monitor costs in billing section
+
+**Database Backups:**
+```bash
+# Download your database
+railway run sqlite3 curls-contemplation.db .dump > backup.sql
+```
+
+**Environment Variables:**
+- Update anytime in Railway dashboard
+- Railway auto-restarts with new values
+
+**Rollback:**
+- Go to "Deployments" tab
+- Click "..." on previous deployment
+- Click "Redeploy"
+
+---
+
+### Railway vs Vercel Comparison
+
+| Feature | Railway | Vercel |
+|---------|---------|--------|
+| **Bun Support** | ✅ Native | ✅ Native |
+| **SQLite** | ✅ Works great | ⚠️ Requires Turso |
+| **Pricing** | $5/month | $20/month Pro |
+| **Setup** | Simple | More complex |
+| **Cron Jobs** | External service | Built-in |
+| **WebSockets** | ✅ Supported | ❌ Serverless |
+| **Best For** | Full apps | Static/serverless |
+
+**Recommendation:** Use Railway! It's simpler and cheaper for this project.
+
+---
+
+### Railway Cost Estimate
+
+**Hobby Plan:** $5/month includes:
+- ✅ 512MB RAM
+- ✅ 1GB disk
+- ✅ Unlimited deploys
+- ✅ Custom domains
+
+**Your website will use:**
+- ~100MB RAM
+- ~200MB disk
+- Well within free tier limits!
+
+**Expected cost:** $5/month (fixed)
 
 ---
 
@@ -503,6 +869,32 @@ Your website is fully functional and ready for development/testing!
   PORT=3001 bun --hot server.ts
   ```
 
+### Railway-Specific Issues
+
+**Deployment fails:**
+- Check "View Logs" in Railway for error details
+- Verify `Root Directory` is set to `website`
+- Make sure all environment variables are set
+
+**Database errors on Railway:**
+- Railway automatically persists SQLite in volume storage
+- Database resets? Check if volume is attached in Settings → Volumes
+
+**Webhooks not working:**
+- Verify webhook URL uses Railway domain
+- Check STRIPE_WEBHOOK_SECRET is correct
+- Test webhook: `railway run curl https://your-site.railway.app/api/health`
+
+**Site not updating:**
+- Push changes to GitHub
+- Railway should auto-deploy (check Deployments tab)
+- Force redeploy: Deployments → "..." → Redeploy
+
+**Environment variables not working:**
+- Changes take effect after restart
+- Railway auto-restarts when variables change
+- Check spelling of variable names
+
 ---
 
 ## 📞 Need More Help?
@@ -548,7 +940,47 @@ All test cards:
 
 ---
 
-## 📚 Appendix C: File Locations Reference
+## 📚 Appendix C: Railway CLI (Optional)
+
+For advanced users who want to use Railway CLI:
+
+### Install Railway CLI
+```bash
+npm install -g @railway/cli
+```
+
+### Login to Railway
+```bash
+railway login
+```
+
+### Link Your Project
+```bash
+cd ~/Last/website
+railway link
+```
+
+### Useful Commands
+```bash
+# View logs
+railway logs
+
+# Run commands in Railway environment
+railway run bun verify-setup.ts
+
+# Open project in browser
+railway open
+
+# Add environment variable
+railway variables set KEY=VALUE
+
+# Check status
+railway status
+```
+
+---
+
+## 📚 Appendix D: File Locations Reference
 
 ```
 website/
