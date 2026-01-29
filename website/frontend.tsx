@@ -5,6 +5,7 @@ import { chapterPreviews, getChapterBySlug, getChapterNavigation, partTitles, ty
 import { BlogPage, BlogPostPage } from './components/BlogComponents';
 import { FAQPage } from './components/FAQComponent';
 import { SampleChapterBanner, SampleChapterInline } from './components/SampleChapterBanner';
+import { AdminDashboard, AdminAuthProvider, useAdminAuth } from './components/AdminDashboard';
 
 // Types
 interface EmailFormState {
@@ -76,8 +77,30 @@ const parseUrl = (pathname: string): { page: string; params: Record<string, stri
   if (segments[0] === 'blog') {
     return { page: 'blog', params: {} };
   }
+  if (segments[0] === 'admin') {
+    return { page: 'admin', params: {} };
+  }
 
   return { page: segments[0] || 'home', params: {} };
+};
+
+// Track page view for analytics (non-admin pages only)
+const trackPageView = async (path: string) => {
+  // Don't track admin pages
+  if (path.startsWith('/admin')) return;
+
+  try {
+    await fetch('/api/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        path,
+        referrer: document.referrer || null,
+      }),
+    });
+  } catch {
+    // Silently fail - analytics are non-critical
+  }
 };
 
 // POD Retailer Links by Region
@@ -2088,6 +2111,7 @@ const App: React.FC = () => {
   // Track page views
   useEffect(() => {
     trackEvent('page_view', { page, ...params });
+    trackPageView(window.location.pathname);
     window.scrollTo(0, 0);
   }, [page, params]);
 
@@ -2121,10 +2145,25 @@ const App: React.FC = () => {
         return <PrivacyPage />;
       case 'terms':
         return <TermsPage />;
+      case 'admin':
+        return (
+          <AdminAuthProvider>
+            <AdminDashboard onExit={() => setPage('home')} />
+          </AdminAuthProvider>
+        );
       default:
         return <HomePage />;
     }
   };
+
+  // Admin page has its own layout
+  if (page === 'admin') {
+    return (
+      <RouterContext.Provider value={{ page, params, setPage, navigate }}>
+        {renderPage()}
+      </RouterContext.Provider>
+    );
+  }
 
   return (
     <RouterContext.Provider value={{ page, params, setPage, navigate }}>

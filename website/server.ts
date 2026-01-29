@@ -20,6 +20,22 @@ import {
   extendDownloadToken,
   updateSubscriberTags,
   db,
+  // Admin dashboard functions
+  getDashboardStats,
+  getRecentOrders,
+  getRevenueByDay,
+  getSubscribersByDay,
+  getSubscribersBySource,
+  getOrdersByStatus,
+  getAllSubscribers,
+  getAllCustomers,
+  getTopCustomers,
+  createAdminSession,
+  validateAdminSession,
+  deleteAdminSession,
+  cleanupExpiredSessions,
+  recordPageView,
+  getPageViewStats,
 } from "./lib/database";
 import {
   createPaymentIntent,
@@ -55,6 +71,8 @@ import {
 } from "./lib/email-automation";
 
 const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123"; // Change in production!
 
 // Email validation
 const isValidEmail = (email: string): boolean => {
@@ -758,6 +776,220 @@ const getContentType = (path: string): string => {
   return types[ext || ""] || "application/octet-stream";
 };
 
+// =====================================================
+// ADMIN DASHBOARD API HANDLERS
+// =====================================================
+
+// Admin login handler
+const handleAdminLogin = async (req: Request): Promise<Response> => {
+  try {
+    const body = await req.json();
+    const { username, password } = body;
+
+    if (!username || !password) {
+      return Response.json({ error: "Username and password required" }, { status: 400 });
+    }
+
+    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+      return Response.json({ error: "Invalid credentials" }, { status: 401 });
+    }
+
+    // Clean up expired sessions
+    cleanupExpiredSessions();
+
+    // Create new session (24 hours)
+    const token = createAdminSession(24);
+
+    console.log(`[Admin] Login successful for user: ${username}`);
+
+    return Response.json({
+      success: true,
+      token,
+      expiresIn: 24 * 60 * 60 * 1000, // 24 hours in ms
+    });
+  } catch (error) {
+    console.error("[Admin Login] Error:", error);
+    return Response.json({ error: "Login failed" }, { status: 500 });
+  }
+};
+
+// Admin logout handler
+const handleAdminLogout = async (req: Request): Promise<Response> => {
+  const token = req.headers.get("authorization")?.replace("Bearer ", "");
+  if (token) {
+    deleteAdminSession(token);
+  }
+  return Response.json({ success: true });
+};
+
+// Verify admin session middleware helper
+const verifyAdminSession = (req: Request): boolean => {
+  const authHeader = req.headers.get("authorization");
+  if (!authHeader) return false;
+
+  // Support both Bearer token (session) and API key auth
+  const token = authHeader.replace("Bearer ", "");
+  const adminKey = process.env.ADMIN_API_KEY;
+
+  // Check API key first
+  if (adminKey && token === adminKey) {
+    return true;
+  }
+
+  // Then check session token
+  return validateAdminSession(token);
+};
+
+// Admin dashboard stats handler
+const handleAdminDashboardStats = async (req: Request): Promise<Response> => {
+  if (!verifyAdminSession(req)) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const stats = getDashboardStats();
+    const emailStats = getEmailStats();
+
+    return Response.json({
+      ...stats,
+      emailStats,
+    });
+  } catch (error) {
+    console.error("[Admin Stats] Error:", error);
+    return Response.json({ error: "Failed to get stats" }, { status: 500 });
+  }
+};
+
+// Admin orders list handler
+const handleAdminOrdersList = async (req: Request): Promise<Response> => {
+  if (!verifyAdminSession(req)) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const url = new URL(req.url);
+    const limit = parseInt(url.searchParams.get("limit") || "50");
+    const all = url.searchParams.get("all") === "true";
+
+    const orders = all ? getAllOrders() : getRecentOrders(limit);
+    const orderStats = getOrdersByStatus();
+
+    return Response.json({
+      orders,
+      stats: orderStats,
+      total: orders.length,
+    });
+  } catch (error) {
+    console.error("[Admin Orders] Error:", error);
+    return Response.json({ error: "Failed to get orders" }, { status: 500 });
+  }
+};
+
+// Admin subscribers list handler
+const handleAdminSubscribersList = async (req: Request): Promise<Response> => {
+  if (!verifyAdminSession(req)) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const subscribers = getAllSubscribers();
+    const sourceStats = getSubscribersBySource();
+
+    return Response.json({
+      subscribers,
+      sourceStats,
+      total: subscribers.length,
+    });
+  } catch (error) {
+    console.error("[Admin Subscribers] Error:", error);
+    return Response.json({ error: "Failed to get subscribers" }, { status: 500 });
+  }
+};
+
+// Admin customers list handler
+const handleAdminCustomersList = async (req: Request): Promise<Response> => {
+  if (!verifyAdminSession(req)) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const customers = getAllCustomers();
+    const topCustomers = getTopCustomers(10);
+
+    return Response.json({
+      customers,
+      topCustomers,
+      total: customers.length,
+    });
+  } catch (error) {
+    console.error("[Admin Customers] Error:", error);
+    return Response.json({ error: "Failed to get customers" }, { status: 500 });
+  }
+};
+
+// Admin analytics/charts data handler
+const handleAdminAnalytics = async (req: Request): Promise<Response> => {
+  if (!verifyAdminSession(req)) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const url = new URL(req.url);
+    const days = parseInt(url.searchParams.get("days") || "30");
+
+    const revenueByDay = getRevenueByDay(days);
+    const subscribersByDay = getSubscribersByDay(days);
+    const trafficStats = getPageViewStats(days);
+
+    return Response.json({
+      revenueByDay,
+      subscribersByDay,
+      traffic: trafficStats,
+    });
+  } catch (error) {
+    console.error("[Admin Analytics] Error:", error);
+    return Response.json({ error: "Failed to get analytics" }, { status: 500 });
+  }
+};
+
+// Admin verify session handler
+const handleAdminVerifySession = async (req: Request): Promise<Response> => {
+  if (!verifyAdminSession(req)) {
+    return Response.json({ valid: false }, { status: 401 });
+  }
+  return Response.json({ valid: true });
+};
+
+// Track page view handler (called from frontend)
+const handleTrackPageView = async (req: Request): Promise<Response> => {
+  try {
+    const body = await req.json();
+    const { path, referrer } = body;
+
+    // Hash IP for privacy
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded ? forwarded.split(",")[0] : "unknown";
+    const ipHash = await hashString(ip);
+
+    const userAgent = req.headers.get("user-agent") || undefined;
+
+    recordPageView(path, referrer, userAgent, ipHash);
+
+    return Response.json({ success: true });
+  } catch (error) {
+    return Response.json({ error: "Failed to track" }, { status: 500 });
+  }
+};
+
+// Simple hash function for IP privacy
+const hashString = async (str: string): Promise<string> => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(str + "salt_for_privacy");
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.slice(0, 8).map(b => b.toString(16).padStart(2, "0")).join("");
+};
+
 // Generate sitemap with all pages
 const generateSitemap = (): string => {
   const pages = [
@@ -900,6 +1132,44 @@ const server = Bun.serve({
       GET: handleEmailStats,
     },
 
+    // Admin Dashboard Routes
+    "/api/admin/login": {
+      POST: handleAdminLogin,
+    },
+
+    "/api/admin/logout": {
+      POST: handleAdminLogout,
+    },
+
+    "/api/admin/verify": {
+      GET: handleAdminVerifySession,
+    },
+
+    "/api/admin/dashboard/stats": {
+      GET: handleAdminDashboardStats,
+    },
+
+    "/api/admin/dashboard/orders": {
+      GET: handleAdminOrdersList,
+    },
+
+    "/api/admin/dashboard/subscribers": {
+      GET: handleAdminSubscribersList,
+    },
+
+    "/api/admin/dashboard/customers": {
+      GET: handleAdminCustomersList,
+    },
+
+    "/api/admin/dashboard/analytics": {
+      GET: handleAdminAnalytics,
+    },
+
+    // Track page views (for analytics)
+    "/api/track": {
+      POST: handleTrackPageView,
+    },
+
     // Health check
     "/api/health": {
       GET: () =>
@@ -977,9 +1247,15 @@ Pages:
   /chapter/:slug Chapter Preview
   /about         About the Author
   /resources     Free Resources
+  /blog          Blog Index
+  /faq           FAQ Page
   /checkout      Checkout
   /thank-you     Order Confirmation
   /portal/:token Order Portal
+
+Admin Dashboard:
+  /admin         Admin Login & Dashboard
+                 (Default: admin / admin123 - CHANGE IN PRODUCTION!)
 
 API Endpoints:
   POST /api/subscribe           Email subscription (triggers welcome sequence)
@@ -987,16 +1263,17 @@ API Endpoints:
   POST /api/checkout            Create payment intent
   POST /api/stripe/webhooks     Stripe webhooks (triggers order emails)
 
+Admin API (session or ADMIN_API_KEY):
+  POST /api/admin/login                 Admin authentication
+  GET  /api/admin/dashboard/stats       Dashboard statistics
+  GET  /api/admin/dashboard/orders      Orders with filtering
+  GET  /api/admin/dashboard/subscribers Subscribers list
+  GET  /api/admin/dashboard/customers   Customers list
+  GET  /api/admin/dashboard/analytics   Revenue & traffic analytics
+
 Cron Jobs (add to your scheduler):
   POST /api/cron/release-ebook  Launch day: fulfill pre-orders
   POST /api/cron/process-emails Process email queue (run every 5 min)
-
-Admin API (requires ADMIN_API_KEY):
-  POST /api/admin/newsletter/broadcast  Create newsletter broadcast
-  POST /api/admin/newsletter/send       Queue broadcast for sending
-  GET  /api/admin/newsletter/subscribers List subscribers by segment
-  GET  /api/admin/email-stats           Email automation statistics
-  GET  /api/admin/orders                List all orders
 
 Health:
   GET  /api/health              System health check

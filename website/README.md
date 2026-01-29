@@ -44,6 +44,15 @@ A complete, production-ready eBook sales platform built with **Bun**, **React**,
 - ✅ **SQLite Database** - Fast, embedded data storage
 - ✅ **HMR Support** - Hot module replacement for development
 
+### 📊 Admin Dashboard
+- ✅ **Secure Login** - Username/password authentication with session tokens
+- ✅ **Revenue Analytics** - Real-time sales tracking, daily/monthly revenue
+- ✅ **Order Management** - View all orders, filter by status
+- ✅ **Subscriber Management** - Email list overview, source tracking
+- ✅ **Customer Insights** - Top customers, lifetime value
+- ✅ **Traffic Analytics** - Page views, unique visitors, top pages
+- ✅ **Email Statistics** - Queue status, sent/failed counts
+
 ---
 
 ## 🚀 Quick Start
@@ -117,6 +126,37 @@ website/
     ├── CurlsAndContemplation.epub
     └── CurlsAndContemplation.pdf
 ```
+
+---
+
+## 📊 Admin Dashboard
+
+Access your admin dashboard at `/admin` to manage your eBook business.
+
+### Features
+- **Overview Dashboard** - Revenue stats, recent orders, key metrics at a glance
+- **Orders Management** - View all orders, filter by status (succeeded/pending/refunded)
+- **Subscriber Management** - Email list with source tracking and tag management
+- **Customer Insights** - Customer list with order history and lifetime value
+- **Analytics** - Traffic stats, revenue charts, subscriber growth
+
+### Setup
+
+1. **Configure credentials** in your `.env` file:
+```bash
+# Admin Dashboard Login
+ADMIN_USERNAME=your_admin_username
+ADMIN_PASSWORD=your_secure_password
+```
+
+2. **Access the dashboard** at `https://yourdomain.com/admin`
+
+3. **Log in** with your credentials
+
+### Security
+- Sessions expire after 24 hours
+- All admin API endpoints require authentication
+- Passwords should be strong and unique in production
 
 ---
 
@@ -312,14 +352,32 @@ GET  /api/checkout/config     Frontend config
 GET  /api/health              Health check
 ```
 
-### Admin Endpoints (requires ADMIN_API_KEY)
+### Admin Endpoints (requires ADMIN_API_KEY or session token)
 
 ```
+# Authentication
+POST /api/admin/login                 Admin login (returns session token)
+POST /api/admin/logout                Admin logout
+GET  /api/admin/verify                Verify session
+
+# Dashboard Data
+GET  /api/admin/dashboard/stats       Dashboard statistics
+GET  /api/admin/dashboard/orders      Orders list with filtering
+GET  /api/admin/dashboard/subscribers Subscribers with source stats
+GET  /api/admin/dashboard/customers   Customers with lifetime value
+GET  /api/admin/dashboard/analytics   Revenue/traffic analytics
+
+# Legacy Admin Endpoints
 GET  /api/admin/orders                All orders
 POST /api/admin/newsletter/broadcast  Create broadcast
 POST /api/admin/newsletter/send       Queue broadcast
 GET  /api/admin/newsletter/subscribers Subscriber list
 GET  /api/admin/email-stats          Email statistics
+```
+
+### Analytics Tracking
+```
+POST /api/track                       Track page view (auto-called by frontend)
 ```
 
 ### Cron Endpoints (requires CRON_SECRET)
@@ -378,11 +436,86 @@ Add to `vercel.json`:
 
 ### Railway (Recommended - $5/month)
 
-1. Push to GitHub
-2. Connect Railway to repository
-3. Set **Root Directory** to `website`
-4. Add all environment variables
-5. Deploy!
+Railway is the recommended platform for deploying this Bun-based application.
+
+#### Quick Deploy Steps
+
+1. **Push to GitHub**
+```bash
+git add .
+git commit -m "Ready for deployment"
+git push origin main
+```
+
+2. **Create Railway Project**
+   - Go to [railway.app](https://railway.app)
+   - Click "New Project" → "Deploy from GitHub repo"
+   - Select your repository
+
+3. **Configure Build Settings**
+   - Root Directory: `website`
+   - Build Command: (auto-detected from `railway.json`)
+   - Start Command: `bun run server.ts`
+
+4. **Add Environment Variables**
+   In Railway dashboard, add all variables from `.env.example`:
+   ```
+   SITE_URL=https://your-app.railway.app
+   RELEASE_DATE=2026-03-15T16:00:00.000Z
+   STRIPE_PUBLISHABLE_KEY=pk_live_...
+   STRIPE_SECRET_KEY=sk_live_...
+   STRIPE_WEBHOOK_SECRET=whsec_...
+   RESEND_API_KEY=re_...
+   FROM_EMAIL=hello@yourdomain.com
+   FROM_NAME=Your Book Name
+   ADMIN_API_KEY=your_secure_key
+   ADMIN_USERNAME=admin
+   ADMIN_PASSWORD=your_secure_password
+   CRON_SECRET=your_cron_secret
+   ```
+
+5. **Deploy** - Railway will automatically build and deploy
+
+6. **Set up Custom Domain** (Optional)
+   - In Railway settings → Domains
+   - Add your custom domain
+   - Update DNS records as instructed
+
+7. **Configure Stripe Webhook**
+   - Go to Stripe Dashboard → Webhooks
+   - Add endpoint: `https://your-domain.com/api/stripe/webhooks`
+   - Events: `payment_intent.succeeded`, `charge.refunded`
+   - Copy webhook secret to `STRIPE_WEBHOOK_SECRET`
+
+#### Railway Configuration File
+
+The `railway.json` file is already configured:
+```json
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "curl -fsSL https://bun.sh/install | bash && bun install"
+  },
+  "deploy": {
+    "startCommand": "bun run server.ts",
+    "restartPolicyType": "ON_FAILURE"
+  }
+}
+```
+
+#### Setting Up Cron Jobs on Railway
+
+Railway doesn't have built-in cron, use an external service like [cron-job.org](https://cron-job.org):
+
+1. **Email Queue Processing** (Every 5 minutes)
+   - URL: `https://your-domain.com/api/cron/process-emails`
+   - Method: POST
+   - Header: `Authorization: Bearer YOUR_CRON_SECRET`
+
+2. **Release Fulfillment** (On launch day)
+   - URL: `https://your-domain.com/api/cron/release-ebook`
+   - Method: POST
+   - Header: `Authorization: Bearer YOUR_CRON_SECRET`
 
 **📖 Complete guide: [START-HERE.md - Railway Section](./START-HERE.md#-railway-deployment-guide-10-minutes)**
 
@@ -601,13 +734,16 @@ bun setup-database.ts
 - [ ] Verify email domain in Resend
 - [ ] Set up cron jobs for email processing
 - [ ] Add custom domain
+- [ ] **Configure admin credentials** (change ADMIN_USERNAME & ADMIN_PASSWORD)
 - [ ] Test complete purchase flow
 - [ ] Test email sequences
 - [ ] Test download portal
+- [ ] **Test admin dashboard** at `/admin`
 - [ ] Review blog posts for branding
 - [ ] Test FAQ section
 - [ ] Run `bun verify-setup.ts`
 - [ ] Deploy to Railway or Vercel
+- [ ] **Add railway.json** to repository (already done!)
 - [ ] Monitor first transactions
 
 **📖 Complete checklist: [DEPLOYMENT.md](./DEPLOYMENT.md)**

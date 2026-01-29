@@ -386,5 +386,276 @@ export interface Subscriber {
   created_at: string;
 }
 
+// Admin Dashboard Queries
+export function getDashboardStats() {
+  // Total revenue
+  const revenueResult = db.prepare(`
+    SELECT
+      COALESCE(SUM(amount_total), 0) as total_revenue,
+      COUNT(*) as total_orders
+    FROM orders
+    WHERE status = 'succeeded'
+  `).get() as { total_revenue: number; total_orders: number };
+
+  // Today's revenue
+  const todayRevenue = db.prepare(`
+    SELECT COALESCE(SUM(amount_total), 0) as revenue
+    FROM orders
+    WHERE status = 'succeeded'
+    AND date(created_at) = date('now')
+  `).get() as { revenue: number };
+
+  // This month's revenue
+  const monthRevenue = db.prepare(`
+    SELECT COALESCE(SUM(amount_total), 0) as revenue
+    FROM orders
+    WHERE status = 'succeeded'
+    AND strftime('%Y-%m', created_at) = strftime('%Y-%m', 'now')
+  `).get() as { revenue: number };
+
+  // Total subscribers
+  const subscriberCount = db.prepare(`
+    SELECT COUNT(*) as count FROM subscribers
+  `).get() as { count: number };
+
+  // New subscribers today
+  const newSubscribersToday = db.prepare(`
+    SELECT COUNT(*) as count FROM subscribers
+    WHERE date(created_at) = date('now')
+  `).get() as { count: number };
+
+  // Total customers
+  const customerCount = db.prepare(`
+    SELECT COUNT(*) as count FROM customers
+  `).get() as { count: number };
+
+  // Refund count
+  const refundCount = db.prepare(`
+    SELECT COUNT(*) as count FROM orders WHERE status = 'refunded'
+  `).get() as { count: number };
+
+  // Downloads today
+  const downloadsToday = db.prepare(`
+    SELECT COALESCE(SUM(downloads_used), 0) as count FROM download_tokens
+    WHERE date(created_at) = date('now')
+  `).get() as { count: number };
+
+  // Total downloads
+  const totalDownloads = db.prepare(`
+    SELECT COALESCE(SUM(downloads_used), 0) as count FROM download_tokens
+  `).get() as { count: number };
+
+  return {
+    totalRevenue: revenueResult.total_revenue,
+    totalOrders: revenueResult.total_orders,
+    todayRevenue: todayRevenue.revenue,
+    monthRevenue: monthRevenue.revenue,
+    totalSubscribers: subscriberCount.count,
+    newSubscribersToday: newSubscribersToday.count,
+    totalCustomers: customerCount.count,
+    refundCount: refundCount.count,
+    downloadsToday: downloadsToday.count,
+    totalDownloads: totalDownloads.count,
+  };
+}
+
+export function getRecentOrders(limit: number = 10) {
+  return db.prepare(`
+    SELECT o.*, c.email as customer_email, c.name as customer_name
+    FROM orders o
+    JOIN customers c ON o.customer_id = c.id
+    ORDER BY o.created_at DESC
+    LIMIT ?
+  `).all(limit) as (Order & { customer_email: string; customer_name: string })[];
+}
+
+export function getRevenueByDay(days: number = 30) {
+  return db.prepare(`
+    SELECT
+      date(created_at) as date,
+      COUNT(*) as orders,
+      SUM(amount_total) as revenue
+    FROM orders
+    WHERE status = 'succeeded'
+    AND created_at >= date('now', '-' || ? || ' days')
+    GROUP BY date(created_at)
+    ORDER BY date(created_at) ASC
+  `).all(days) as { date: string; orders: number; revenue: number }[];
+}
+
+export function getSubscribersByDay(days: number = 30) {
+  return db.prepare(`
+    SELECT
+      date(created_at) as date,
+      COUNT(*) as count
+    FROM subscribers
+    WHERE created_at >= date('now', '-' || ? || ' days')
+    GROUP BY date(created_at)
+    ORDER BY date(created_at) ASC
+  `).all(days) as { date: string; count: number }[];
+}
+
+export function getSubscribersBySource() {
+  return db.prepare(`
+    SELECT
+      source,
+      COUNT(*) as count
+    FROM subscribers
+    GROUP BY source
+    ORDER BY count DESC
+  `).all() as { source: string; count: number }[];
+}
+
+export function getOrdersByStatus() {
+  return db.prepare(`
+    SELECT
+      status,
+      COUNT(*) as count,
+      SUM(amount_total) as total_amount
+    FROM orders
+    GROUP BY status
+  `).all() as { status: string; count: number; total_amount: number }[];
+}
+
+export function getAllSubscribers() {
+  return db.prepare(`
+    SELECT * FROM subscribers ORDER BY created_at DESC
+  `).all() as Subscriber[];
+}
+
+export function getAllCustomers() {
+  return db.prepare(`
+    SELECT c.*,
+      (SELECT COUNT(*) FROM orders o WHERE o.customer_id = c.id) as order_count,
+      (SELECT SUM(amount_total) FROM orders o WHERE o.customer_id = c.id AND o.status = 'succeeded') as total_spent
+    FROM customers c
+    ORDER BY c.created_at DESC
+  `).all() as (Customer & { order_count: number; total_spent: number })[];
+}
+
+export function getTopCustomers(limit: number = 10) {
+  return db.prepare(`
+    SELECT c.*,
+      COUNT(o.id) as order_count,
+      SUM(o.amount_total) as total_spent
+    FROM customers c
+    JOIN orders o ON o.customer_id = c.id AND o.status = 'succeeded'
+    GROUP BY c.id
+    ORDER BY total_spent DESC
+    LIMIT ?
+  `).all(limit) as (Customer & { order_count: number; total_spent: number })[];
+}
+
+// Admin session tokens table
+db.exec(`
+  CREATE TABLE IF NOT EXISTS admin_sessions (
+    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+    token TEXT UNIQUE NOT NULL,
+    created_at TEXT DEFAULT (datetime('now')),
+    expires_at TEXT NOT NULL
+  );
+  CREATE INDEX IF NOT EXISTS idx_admin_sessions_token ON admin_sessions(token);
+`);
+
+export function createAdminSession(expiresInHours: number = 24): string {
+  const token = generateToken();
+  const expiresAt = new Date(Date.now() + expiresInHours * 60 * 60 * 1000).toISOString();
+  db.prepare(`
+    INSERT INTO admin_sessions (token, expires_at) VALUES (?, ?)
+  `).run(token, expiresAt);
+  return token;
+}
+
+export function validateAdminSession(token: string): boolean {
+  const session = db.prepare(`
+    SELECT * FROM admin_sessions
+    WHERE token = ? AND datetime(expires_at) > datetime('now')
+  `).get(token);
+  return session !== null;
+}
+
+export function deleteAdminSession(token: string): void {
+  db.prepare(`DELETE FROM admin_sessions WHERE token = ?`).run(token);
+}
+
+export function cleanupExpiredSessions(): void {
+  db.prepare(`DELETE FROM admin_sessions WHERE datetime(expires_at) <= datetime('now')`).run();
+}
+
+// Traffic/page views tracking table
+db.exec(`
+  CREATE TABLE IF NOT EXISTS page_views (
+    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+    path TEXT NOT NULL,
+    referrer TEXT,
+    user_agent TEXT,
+    ip_hash TEXT,
+    created_at TEXT DEFAULT (datetime('now'))
+  );
+  CREATE INDEX IF NOT EXISTS idx_page_views_created ON page_views(created_at);
+  CREATE INDEX IF NOT EXISTS idx_page_views_path ON page_views(path);
+`);
+
+export function recordPageView(path: string, referrer?: string, userAgent?: string, ipHash?: string) {
+  db.prepare(`
+    INSERT INTO page_views (path, referrer, user_agent, ip_hash) VALUES (?, ?, ?, ?)
+  `).run(path, referrer ?? null, userAgent ?? null, ipHash ?? null);
+}
+
+export function getPageViewStats(days: number = 30) {
+  const totalViews = db.prepare(`
+    SELECT COUNT(*) as count FROM page_views
+    WHERE created_at >= date('now', '-' || ? || ' days')
+  `).get(days) as { count: number };
+
+  const uniqueVisitors = db.prepare(`
+    SELECT COUNT(DISTINCT ip_hash) as count FROM page_views
+    WHERE created_at >= date('now', '-' || ? || ' days')
+    AND ip_hash IS NOT NULL
+  `).get(days) as { count: number };
+
+  const viewsByDay = db.prepare(`
+    SELECT
+      date(created_at) as date,
+      COUNT(*) as views,
+      COUNT(DISTINCT ip_hash) as unique_visitors
+    FROM page_views
+    WHERE created_at >= date('now', '-' || ? || ' days')
+    GROUP BY date(created_at)
+    ORDER BY date(created_at) ASC
+  `).all(days) as { date: string; views: number; unique_visitors: number }[];
+
+  const topPages = db.prepare(`
+    SELECT
+      path,
+      COUNT(*) as views
+    FROM page_views
+    WHERE created_at >= date('now', '-' || ? || ' days')
+    GROUP BY path
+    ORDER BY views DESC
+    LIMIT 10
+  `).all(days) as { path: string; views: number }[];
+
+  const topReferrers = db.prepare(`
+    SELECT
+      referrer,
+      COUNT(*) as count
+    FROM page_views
+    WHERE created_at >= date('now', '-' || ? || ' days')
+    AND referrer IS NOT NULL AND referrer != ''
+    GROUP BY referrer
+    ORDER BY count DESC
+    LIMIT 10
+  `).all(days) as { referrer: string; count: number }[];
+
+  return {
+    totalViews: totalViews.count,
+    uniqueVisitors: uniqueVisitors.count,
+    viewsByDay,
+    topPages,
+    topReferrers,
+  };
+}
+
 // Export the database instance for direct queries if needed
 export { db };
