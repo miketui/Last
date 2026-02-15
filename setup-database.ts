@@ -160,7 +160,7 @@ try {
   console.log("✅ Created indexes");
 
   console.log("\n✨ Database initialization complete!");
-  console.log("📊 Database location: ./website/curls-contemplation.db\n");
+  console.log("📊 Database location: ./curls.db\n");
 
 } catch (error) {
   console.error("❌ Database initialization failed:", error);

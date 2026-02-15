@@ -61,9 +61,9 @@ if [ ! -f "private/CurlsAndContemplation.epub" ]; then
     echo "📖 Book files not found in private/ directory"
 
     # Try to copy from parent directory
-    if [ -f "../CurlsAndContemplationV4.epub" ]; then
-        echo "   Copying EPUB from parent directory..."
-        cp "../CurlsAndContemplationV4.epub" "./private/CurlsAndContemplation.epub"
+    if [ -f "./CurlsAndContemplationV4.epub" ]; then
+        echo "   Copying EPUB from repository root..."
+        cp "./CurlsAndContemplationV4.epub" "./private/CurlsAndContemplation.epub"
         echo "   ✅ EPUB copied"
     else
         echo "   ⚠️  Please add CurlsAndContemplation.epub to private/ directory"
@@ -74,9 +74,9 @@ fi
 
 if [ ! -f "private/CurlsAndContemplation.pdf" ]; then
     # Try to copy from parent directory
-    if [ -f "../CurlsAndContemplation-POD-6x9.pdf" ]; then
-        echo "   Copying PDF from parent directory..."
-        cp "../CurlsAndContemplation-POD-6x9.pdf" "./private/CurlsAndContemplation.pdf"
+    if [ -f "./CurlsAndContemplation-POD-6x9.pdf" ]; then
+        echo "   Copying PDF from repository root..."
+        cp "./CurlsAndContemplation-POD-6x9.pdf" "./private/CurlsAndContemplation.pdf"
         echo "   ✅ PDF copied"
     else
         echo "   ⚠️  Please add CurlsAndContemplation.pdf to private/ directory"
@@ -91,9 +91,9 @@ if [ ! -f "public/downloads/pricing-confidence-kit.pdf" ]; then
     echo "🎁 Free resource PDF not found"
 
     # Use book PDF as placeholder
-    if [ -f "../CurlsAndContemplation-POD-6x9.pdf" ]; then
+    if [ -f "./CurlsAndContemplation-POD-6x9.pdf" ]; then
         echo "   Using book PDF as placeholder for free resource..."
-        cp "../CurlsAndContemplation-POD-6x9.pdf" "./public/downloads/pricing-confidence-kit.pdf"
+        cp "./CurlsAndContemplation-POD-6x9.pdf" "./public/downloads/pricing-confidence-kit.pdf"
         echo "   ✅ Placeholder created (replace with actual pricing kit PDF later)"
     else
         echo "   ⚠️  Please add pricing-confidence-kit.pdf to public/downloads/"

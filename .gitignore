@@ -2,18 +2,25 @@ node_modules/
 tmp/
 *.log
 .DS_Store
+Thumbs.db
 
-# Website private files (eBooks)
-website/private/*.epub
-website/private/*.pdf
-website/curls.db
-website/curls.db-wal
-website/curls.db-shm
+# Database
+curls.db
+*.db-journal
+*.db-wal
 
 # Environment files
 .env
 .env.local
+.env.production
 .env.*.local
 
+# Private assets (eBooks)
+private/*.epub
+private/*.pdf
+
 # Build output
-website/dist/
+dist/
+
+# Screenshots (regeneratable)
+screenshots/

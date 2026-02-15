@@ -15,7 +15,7 @@ This guide will help you get your book website up and running in under 30 minute
 ## 📦 Step 1: Install Dependencies
 
 ```bash
-cd website
+cd ~/Last
 bun install
 ```
 
@@ -77,9 +77,9 @@ mkdir -p private
 # private/CurlsAndContemplation.pdf
 ```
 
-Or use the files from the parent directory:
+Or use the files from the repository root:
 ```bash
-cp ../CurlsAndContemplationV4.epub ./private/CurlsAndContemplation.epub
+cp ./CurlsAndContemplationV4.epub ./private/CurlsAndContemplation.epub
 # Convert to PDF or use existing PDF
 ```
 
@@ -97,7 +97,7 @@ mkdir -p public/downloads
 
 **Temporary workaround:** You can use any PDF as a placeholder:
 ```bash
-cp ../CurlsAndContemplation-POD-6x9.pdf ./public/downloads/pricing-confidence-kit.pdf
+cp ./CurlsAndContemplation-POD-6x9.pdf ./public/downloads/pricing-confidence-kit.pdf
 ```
 
 ---

@@ -1,7 +1,7 @@
 // Screenshot generator for Pre-Order and Post-Launch states
 // Usage: bun scripts/screenshots.ts
 //
-// Generates 22 screenshots in website/screenshots/:
+// Generates 22 screenshots in screenshots/:
 // - 11 State A (Preorder): A_preorder_*.png
 // - 11 State B (Postlaunch): B_postlaunch_*.png
 
