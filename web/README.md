@@ -487,15 +487,15 @@ git push origin main
 
 #### Railway Configuration File
 
-The `railway.json` file is already configured:
+The `railway.json` file is in the repository root and configured to deploy from the `web/` directory:
 ```json
 {
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "curl -fsSL https://bun.sh/install | bash && bun install"
+    "buildCommand": "curl -fsSL https://bun.sh/install | bash && cd web && bun install"
   },
   "deploy": {
-    "startCommand": "bun run server.ts",
+    "startCommand": "cd web && bun run server.ts",
     "restartPolicyType": "ON_FAILURE"
   }
 }

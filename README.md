@@ -27,6 +27,8 @@ This repository contains all materials for *Curls & Contemplation: A Freelance H
 ├── bestseller-badge/         # 🏅 Badge & cover generation tools
 ├── media/                    # 🖼️  Media assets
 │
+├── railway.json              # 🚂 Railway deployment config
+├── vercel.json               # ▲ Vercel deployment config
 ├── CurlsAndContemplation.epub          # eBook files
 ├── CurlsAndContemplationV2.epub
 ├── CurlsAndContemplationV3.epub
