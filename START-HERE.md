@@ -10,15 +10,15 @@ Follow these steps **in order** to get your book website running.
 ## ✅ Step 1: Open Terminal and Navigate to Project
 
 ```bash
-cd ~/Last/website
+cd ~/Last
 ```
 
-**Expected Output:** You should be in the website directory.
+**Expected Output:** You should be in the project directory.
 
 **Verify:**
 ```bash
 pwd
-# Should show: /home/warrenm115/Last/website
+# Should show: /home/warrenm115/Last
 ```
 
 ---
@@ -478,7 +478,7 @@ Railway is perfect for deploying your book website! It's simple, affordable, and
 Make sure all your changes are pushed to GitHub:
 
 ```bash
-cd ~/Last/website
+cd ~/Last
 git add .
 git commit -m "Prepare for Railway deployment"
 git push origin main
@@ -505,19 +505,7 @@ git push origin main
 
 ---
 
-### Step 4: Configure Root Directory (Important!)
-
-Since your website is in a subfolder, you need to tell Railway:
-
-1. In your project dashboard, click on your service
-2. Click "**Settings**" tab
-3. Scroll to "**Root Directory**"
-4. Enter: `website`
-5. Click "**Update**"
-
----
-
-### Step 5: Add Environment Variables (5 minutes)
+### Step 4: Add Environment Variables (5 minutes)
 
 1. Click "**Variables**" tab in your Railway project
 2. Click "**+ New Variable**"
@@ -580,7 +568,7 @@ GA_MEASUREMENT_ID=G-...
 
 ---
 
-### Step 6: Generate Secure Keys (1 minute)
+### Step 5: Generate Secure Keys (1 minute)
 
 In your terminal, generate secure keys for admin and cron:
 
@@ -596,7 +584,7 @@ Copy these values and add them to Railway variables.
 
 ---
 
-### Step 7: Deploy! (2 minutes)
+### Step 6: Deploy! (2 minutes)
 
 1. Click "**Deploy**" button (if not already deploying)
 2. Railway will automatically:
@@ -610,7 +598,7 @@ Copy these values and add them to Railway variables.
 
 ---
 
-### Step 8: Get Your Railway URL
+### Step 7: Get Your Railway URL
 
 1. Go to "**Settings**" tab
 2. Scroll to "**Domains**"
@@ -625,7 +613,7 @@ Copy these values and add them to Railway variables.
 
 ---
 
-### Step 9: Update Stripe Webhook (Important!)
+### Step 8: Update Stripe Webhook (Important!)
 
 Your webhook endpoint has changed! Update it in Stripe:
 
@@ -644,7 +632,7 @@ Your webhook endpoint has changed! Update it in Stripe:
 
 ---
 
-### Step 10: Set Up Custom Domain (Optional, 5 minutes)
+### Step 9: Set Up Custom Domain (Optional, 5 minutes)
 
 1. In Railway, go to "**Settings**" → "**Domains**"
 2. Click "**+ Custom Domain**"
@@ -670,7 +658,7 @@ Value: [railway-provided-value].railway.app
 
 ---
 
-### Step 11: Set Up Cron Jobs (Optional but Recommended)
+### Step 10: Set Up Cron Jobs (Optional but Recommended)
 
 Railway doesn't have built-in cron, but you can use external services:
 
@@ -719,7 +707,7 @@ jobs:
 
 ---
 
-### Step 12: Monitor Your Deployment
+### Step 11: Monitor Your Deployment
 
 **Check Logs:**
 1. In Railway dashboard, click "**View Logs**"
@@ -741,7 +729,6 @@ Your SQLite database persists in Railway's volume storage automatically!
 - [ ] Repository pushed to GitHub
 - [ ] Railway account created
 - [ ] Project created from GitHub repo
-- [ ] Root directory set to `website`
 - [ ] All environment variables added
 - [ ] Secure keys generated for ADMIN_API_KEY and CRON_SECRET
 - [ ] Deployment successful
@@ -873,7 +860,6 @@ railway run sqlite3 curls-contemplation.db .dump > backup.sql
 
 **Deployment fails:**
 - Check "View Logs" in Railway for error details
-- Verify `Root Directory` is set to `website`
 - Make sure all environment variables are set
 
 **Database errors on Railway:**
@@ -956,7 +942,7 @@ railway login
 
 ### Link Your Project
 ```bash
-cd ~/Last/website
+cd ~/Last
 railway link
 ```
 
@@ -983,7 +969,6 @@ railway status
 ## 📚 Appendix D: File Locations Reference
 
 ```
-website/
 ├── .env                    ← Your API keys (created in Step 3)
 ├── curls-contemplation.db  ← Database (created in Step 2)
 ├── server.ts               ← Backend server
