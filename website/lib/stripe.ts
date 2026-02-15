@@ -171,6 +171,7 @@ export { stripe };
 export interface CheckoutConfig {
   publishableKey: string;
   amount: number;
+  priceFormatted: string;
   productName: string;
   productDescription: string;
   isPreOrder: boolean;
@@ -181,6 +182,7 @@ export function getCheckoutConfig(): CheckoutConfig {
   return {
     publishableKey: getPublishableKey(),
     amount: EBOOK_PRICE_CENTS,
+    priceFormatted: `$${(EBOOK_PRICE_CENTS / 100).toFixed(2)}`,
     productName: EBOOK_PRODUCT_NAME,
     productDescription: EBOOK_PRODUCT_DESCRIPTION,
     isPreOrder: isPreLaunch(),

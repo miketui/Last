@@ -796,7 +796,7 @@ const CTASection: React.FC = () => {
           <PODRetailerLinks />
           <div className="guarantee">
             <span className="guarantee-icon">🛡️</span>
-            <p><strong>100% Satisfaction Guarantee</strong> — If you don't love it, email us within 30 days for a full refund. No questions asked.</p>
+            <p><strong>100% Satisfaction Guarantee</strong> — If you don't love it, email us within 14 days for a full refund. No questions asked.</p>
           </div>
         </div>
       </div>
@@ -1608,7 +1608,7 @@ const CheckoutPage: React.FC = () => {
               </button>
 
               <div className="checkout-guarantee" style={{ marginTop: '16px' }}>
-                <p><strong>30-Day Money-Back Guarantee</strong></p>
+                <p><strong>14-Day Money-Back Guarantee</strong></p>
                 <p>Not satisfied? Email us for a full refund. No questions asked.</p>
               </div>
             </form>
@@ -1641,7 +1641,7 @@ const CheckoutPage: React.FC = () => {
               />
 
               <div className="checkout-guarantee" style={{ marginTop: '16px' }}>
-                <p><strong>30-Day Money-Back Guarantee</strong></p>
+                <p><strong>14-Day Money-Back Guarantee</strong></p>
                 <p>Not satisfied? Email us for a full refund. No questions asked.</p>
               </div>
             </div>
@@ -1988,8 +1988,8 @@ const TermsPage: React.FC = () => {
 
         <h2>3. Refund Policy</h2>
         <p>
-          We offer a 30-day money-back guarantee. If you're not satisfied with your
-          purchase, email refunds@curlsandcontemplation.com within 30 days of purchase
+          We offer a 14-day money-back guarantee. If you're not satisfied with your
+          purchase, email refunds@curlsandcontemplation.com within 14 days of purchase
           for a full refund. Upon refund, your download access will be revoked.
         </p>
 
@@ -2008,6 +2008,57 @@ const TermsPage: React.FC = () => {
         <h2>6. Contact</h2>
         <p>
           For questions about these terms, contact legal@curlsandcontemplation.com.
+        </p>
+      </div>
+    </section>
+  );
+};
+
+// Refund Policy Page
+const RefundPolicyPage: React.FC = () => {
+  return (
+    <section className="legal-page" style={{ paddingTop: '120px' }}>
+      <div className="container container-narrow">
+        <h1>Refund Policy</h1>
+        <p className="last-updated">Last updated: February 2026</p>
+
+        <h2>14-Day Money-Back Guarantee</h2>
+        <p>
+          We want you to be completely satisfied with your purchase of <em>Curls & Contemplation</em>.
+          If for any reason you're not happy with the eBook, you can request a full refund within
+          <strong>14 days</strong> of your purchase date. No questions asked.
+        </p>
+
+        <h2>How to Request a Refund</h2>
+        <ol>
+          <li>Email <a href="mailto:refunds@curlsandcontemplation.com">refunds@curlsandcontemplation.com</a> with your order number or the email address you used at checkout.</li>
+          <li>We'll process your refund within 1–2 business days.</li>
+          <li>The refund will appear on your original payment method within 5–10 business days, depending on your bank.</li>
+        </ol>
+
+        <h2>What Happens After a Refund</h2>
+        <ul>
+          <li>All download links associated with your order will be <strong>immediately deactivated</strong>.</li>
+          <li>Your order portal will reflect the refunded status.</li>
+          <li>Any pending email sequences related to your purchase will be cancelled.</li>
+        </ul>
+
+        <h2>Eligibility</h2>
+        <p>
+          Refund requests must be made within 14 days of the original purchase date. Requests
+          received after 14 days will be reviewed on a case-by-case basis but are not guaranteed.
+        </p>
+
+        <h2>Pre-Orders</h2>
+        <p>
+          Pre-orders can be refunded at any time before the release date, and within 14 days after
+          the eBook has been delivered.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          For refund-related inquiries, contact us at{' '}
+          <a href="mailto:refunds@curlsandcontemplation.com">refunds@curlsandcontemplation.com</a>.
         </p>
       </div>
     </section>
@@ -2055,6 +2106,7 @@ const Footer: React.FC = () => {
             <ul>
               <li><a href="/privacy" onClick={(e) => { e.preventDefault(); setPage('privacy'); }}>Privacy Policy</a></li>
               <li><a href="/terms" onClick={(e) => { e.preventDefault(); setPage('terms'); }}>Terms of Service</a></li>
+              <li><a href="/refund-policy" onClick={(e) => { e.preventDefault(); setPage('refund-policy'); }}>Refund Policy</a></li>
             </ul>
           </div>
         </div>
@@ -2145,6 +2197,8 @@ const App: React.FC = () => {
         return <PrivacyPage />;
       case 'terms':
         return <TermsPage />;
+      case 'refund-policy':
+        return <RefundPolicyPage />;
       case 'admin':
         return (
           <AdminAuthProvider>
