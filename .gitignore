@@ -18,9 +18,12 @@ curls.db
 # Private assets (eBooks)
 private/*.epub
 private/*.pdf
+web/private/*.epub
+web/private/*.pdf
 
 # Build output
 dist/
 
 # Screenshots (regeneratable)
 screenshots/
+web/screenshots/
