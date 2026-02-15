@@ -75,8 +75,11 @@ import {
 } from "./lib/email-automation";
 
 const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123"; // Change in production!
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+  console.warn("[Security] ADMIN_USERNAME and ADMIN_PASSWORD not set in .env — admin dashboard is disabled.");
+}
 
 // Email validation
 const isValidEmail = (email: string): boolean => {
@@ -627,7 +630,12 @@ const handleExtendToken = async (req: Request): Promise<Response> => {
 
 // API handler for checkout config (frontend)
 const handleCheckoutConfig = async (): Promise<Response> => {
-  return Response.json(getCheckoutConfig());
+  const config = getCheckoutConfig();
+  return Response.json({
+    ...config,
+    gaMeasurementId: process.env.GA_MEASUREMENT_ID || null,
+    turnstileSiteKey: process.env.TURNSTILE_SITE_KEY || null,
+  });
 };
 
 // API handler for portal data (order details and downloads)
@@ -785,15 +793,11 @@ const serveDownload = async (token: string, req?: Request): Promise<Response> =>
   const file = Bun.file(filePath);
 
   if (!(await file.exists())) {
-    // Try alternate path
-    const altPath = `../CurlsAndContemplation-v4.${fileExtension}`;
-    const altFile = Bun.file(altPath);
-    if (!(await altFile.exists())) {
-      return new Response(renderDownloadError("File not found", "The eBook file could not be located."), {
-        status: 404,
-        headers: { "Content-Type": "text/html" },
-      });
-    }
+    console.error(`[Download] eBook file not found: ${filePath}`);
+    return new Response(renderDownloadError("File not found", "The eBook file could not be located. Please contact support."), {
+      status: 404,
+      headers: { "Content-Type": "text/html" },
+    });
   }
 
   // Increment download count
@@ -863,6 +867,10 @@ const handleAdminLogin = async (req: Request): Promise<Response> => {
   try {
     const body = await req.json();
     const { username, password } = body;
+
+    if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+      return Response.json({ error: "Admin dashboard is not configured. Set ADMIN_USERNAME and ADMIN_PASSWORD in .env" }, { status: 503 });
+    }
 
     if (!username || !password) {
       return Response.json({ error: "Username and password required" }, { status: 400 });
@@ -1134,6 +1142,23 @@ ${urls}
 };
 
 // Start the server
+// Security headers applied to all responses
+const SECURITY_HEADERS: Record<string, string> = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "X-XSS-Protection": "1; mode=block",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+  ...(process.env.NODE_ENV === "production" ? { "Strict-Transport-Security": "max-age=31536000; includeSubDomains" } : {}),
+};
+
+const applySecurityHeaders = (response: Response): Response => {
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    response.headers.set(key, value);
+  }
+  return response;
+};
+
 const server = Bun.serve({
   port: 3000,
   routes: {
@@ -1305,30 +1330,27 @@ Sitemap: ${SITE_URL}/sitemap.xml`,
   },
 
   // Fallback for static files and SPA routing
-  fetch(req) {
+  async fetch(req) {
     const url = new URL(req.url);
     const pathname = url.pathname;
 
     // Handle download routes
     if (pathname.startsWith("/download/")) {
       const token = pathname.replace("/download/", "");
-      return serveDownload(token, req);
+      return applySecurityHeaders(await serveDownload(token, req));
     }
 
     // Try to serve static file
-    return serveStaticFile(pathname).then((response) => {
-      if (response) return response;
+    const staticResponse = await serveStaticFile(pathname);
+    if (staticResponse) return applySecurityHeaders(staticResponse);
 
-      // SPA fallback - serve bundled index.html for all other routes
-      // Use the same `index` handler that Bun bundles for the "/" route
-      if (typeof index === "function") {
-        return (index as Function)(req);
-      }
-      // Fallback: serve raw file (shouldn't normally reach here)
-      return new Response(Bun.file("./index.html"), {
-        headers: { "Content-Type": "text/html" },
-      });
-    });
+    // SPA fallback - serve bundled index.html for all other routes
+    if (typeof index === "function") {
+      return applySecurityHeaders(await (index as Function)(req));
+    }
+    return applySecurityHeaders(new Response(Bun.file("./index.html"), {
+      headers: { "Content-Type": "text/html" },
+    }));
   },
 
   development: {

@@ -103,19 +103,34 @@ const trackPageView = async (path: string) => {
   }
 };
 
+// Initialize Google Analytics from server config
+const initGA = (measurementId: string) => {
+  if (!measurementId || (window as any).gtag) return;
+  const script = document.createElement('script');
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  script.async = true;
+  document.head.appendChild(script);
+  (window as any).dataLayer = (window as any).dataLayer || [];
+  const gtag = (...args: any[]) => (window as any).dataLayer.push(args);
+  (window as any).gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', measurementId);
+};
+
 // POD Retailer Links by Region
+// UPDATE: Replace '#coming-soon' with actual product URLs once available from KDP/IngramSpark
 const POD_LINKS = {
   US: {
-    amazon: 'https://www.amazon.com/dp/PLACEHOLDER_ASIN?tag=curlscontemp-20',
-    barnesNoble: 'https://www.barnesandnoble.com/w/curls-and-contemplation-michael-david-warren/PLACEHOLDER',
+    amazon: '#coming-soon',       // https://www.amazon.com/dp/YOUR_ASIN?tag=curlscontemp-20
+    barnesNoble: '#coming-soon',  // https://www.barnesandnoble.com/w/curls-and-contemplation/YOUR_ID
   },
   UK: {
-    amazon: 'https://www.amazon.co.uk/dp/PLACEHOLDER_ASIN',
-    waterstones: 'https://www.waterstones.com/book/curls-and-contemplation/michael-david-warren/PLACEHOLDER',
+    amazon: '#coming-soon',       // https://www.amazon.co.uk/dp/YOUR_ASIN
+    waterstones: '#coming-soon',  // https://www.waterstones.com/book/.../YOUR_ISBN
   },
   CA: {
-    amazon: 'https://www.amazon.ca/dp/PLACEHOLDER_ASIN',
-    indigo: 'https://www.chapters.indigo.ca/en-ca/books/curls-and-contemplation-michael-david-warren/PLACEHOLDER-item.html',
+    amazon: '#coming-soon',       // https://www.amazon.ca/dp/YOUR_ASIN
+    indigo: '#coming-soon',       // https://www.chapters.indigo.ca/.../YOUR_ISBN-item.html
   },
 };
 
@@ -2158,6 +2173,16 @@ const App: React.FC = () => {
     handleNavigation();
     window.addEventListener('popstate', handleNavigation);
     return () => window.removeEventListener('popstate', handleNavigation);
+  }, []);
+
+  // Initialize Google Analytics from server config
+  useEffect(() => {
+    fetch('/api/checkout/config')
+      .then(r => r.json())
+      .then(config => {
+        if (config.gaMeasurementId) initGA(config.gaMeasurementId);
+      })
+      .catch(() => {});
   }, []);
 
   // Track page views
