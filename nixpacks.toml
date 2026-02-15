@@ -1,0 +1,15 @@
+[phases.setup]
+nixPkgs = [“nodejs_20”, “npm-10_x”, “unzip”, “curl”]
+
+[phases.install]
+cmds = [“npm i”]
+
+[phases.build]
+cmds = [
+“curl -fsSL https://bun.sh/install | bash”,
+“export PATH="$HOME/.bun/bin:$PATH"”,
+“cd web && bun install”
+]
+
+[start]
+cmd = “bash -lc ‘export PATH="$HOME/.bun/bin:$PATH" && cd web && bun run server.ts’”
