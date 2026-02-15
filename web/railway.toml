@@ -1,12 +1,12 @@
 [build]
-builder = "NIXPACKS"
-watchPatterns = ["/web/**"]
+builder = "RAILPACK"
+watchPatterns = ["/canvas/**"]
 buildEnvironment = "V3"
 
 [deploy]
 runtime = "V2"
 numReplicas = 1
-startCommand = "bash -lc 'export PATH=\"$HOME/.bun/bin:$PATH\" && cd web && bun run server.ts'"
+startCommand = "npm run start --workspace=@claude-canvas/canvas"
 sleepApplication = false
 useLegacyStacker = false
 multiRegionConfig = {"us-west2":{"numReplicas":1}}
