@@ -49,6 +49,7 @@ import {
   EBOOK_PRICE_CENTS,
 } from "./lib/stripe";
 import {
+  sendEmail,
   sendPreOrderConfirmation,
   sendEbookReady,
   sendFreeResourceDelivery,
@@ -594,6 +595,25 @@ const handleExtendToken = async (req: Request): Promise<Response> => {
       return Response.json({ error: "Failed to extend token" }, { status: 500 });
     }
 
+    // Send email with updated portal link
+    const customer = getCustomerById(order.customer_id);
+    if (customer) {
+      const portalUrl = `${SITE_URL}/portal/${portalToken}`;
+      await sendEmail({
+        to: customer.email,
+        subject: "Your download link has been extended",
+        html: `
+          <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <h1 style="color: #2B9999;">Download Link Extended</h1>
+            <p>Hi${customer.name ? ` ${customer.name}` : ""},</p>
+            <p>Your download link for <strong>Curls & Contemplation</strong> has been extended by 7 days.</p>
+            <p>New expiration: <strong>${new Date(extended.expires_at).toLocaleDateString()}</strong></p>
+            <p><a href="${portalUrl}" style="color: #2B9999;">Access your downloads here</a></p>
+          </div>`,
+        text: `Your download link has been extended by 7 days.\nNew expiration: ${new Date(extended.expires_at).toLocaleDateString()}\nAccess your downloads: ${portalUrl}`,
+      });
+    }
+
     return Response.json({
       message: "Token extended",
       expiresAt: extended.expires_at,
@@ -704,8 +724,44 @@ const serveStaticFile = async (path: string): Promise<Response | null> => {
   return null;
 };
 
+// Rate limiter for download endpoint (IP-based, 10 requests per 5 minutes)
+const downloadRateLimiter = new Map<string, { count: number; resetAt: number }>();
+const DOWNLOAD_RATE_LIMIT = 10;
+const DOWNLOAD_RATE_WINDOW_MS = 5 * 60 * 1000;
+
+function checkDownloadRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = downloadRateLimiter.get(ip);
+  if (!entry || now > entry.resetAt) {
+    downloadRateLimiter.set(ip, { count: 1, resetAt: now + DOWNLOAD_RATE_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= DOWNLOAD_RATE_LIMIT) return false;
+  entry.count++;
+  return true;
+}
+
+// Periodically clean up expired rate limit entries
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, entry] of downloadRateLimiter) {
+    if (now > entry.resetAt) downloadRateLimiter.delete(ip);
+  }
+}, 60_000);
+
 // Serve download files (EPUB/PDF) from private storage
-const serveDownload = async (token: string): Promise<Response> => {
+const serveDownload = async (token: string, req?: Request): Promise<Response> => {
+  // Rate limit check
+  const ip = req?.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || req?.headers.get("cf-connecting-ip")
+    || "unknown";
+  if (!checkDownloadRateLimit(ip)) {
+    return new Response(renderDownloadError("Too many requests", "Please wait a few minutes before downloading again."), {
+      status: 429,
+      headers: { "Content-Type": "text/html", "Retry-After": "300" },
+    });
+  }
+
   const downloadToken = getDownloadToken(token);
 
   if (!downloadToken) {
@@ -1256,7 +1312,7 @@ Sitemap: ${SITE_URL}/sitemap.xml`,
     // Handle download routes
     if (pathname.startsWith("/download/")) {
       const token = pathname.replace("/download/", "");
-      return serveDownload(token);
+      return serveDownload(token, req);
     }
 
     // Try to serve static file
