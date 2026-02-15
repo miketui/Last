@@ -11,7 +11,10 @@
     "build": "bun build index.html --outdir=./dist",
     "test": "bun test",
     "seed": "bun scripts/seed-test-data.ts",
-    "screenshots": "bun scripts/screenshots.ts"
+    "screenshots": "bun scripts/screenshots.ts",
+    "canvas": "bun run canvas/src/cli.ts",
+    "canvas:show": "bun run canvas/src/cli.ts show",
+    "canvas:spawn": "bun run canvas/src/cli.ts spawn"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
