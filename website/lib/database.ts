@@ -109,6 +109,10 @@ export function getCustomerByEmail(email: string) {
   return db.prepare("SELECT * FROM customers WHERE email = ?").get(email.toLowerCase()) as Customer | null;
 }
 
+export function getCustomerById(id: string) {
+  return db.prepare("SELECT * FROM customers WHERE id = ?").get(id) as Customer | null;
+}
+
 // Order operations
 export function createOrder(data: {
   stripePaymentIntentId: string;
@@ -184,6 +188,10 @@ export function createPortalToken(orderId: string) {
 
 export function getPortalToken(token: string) {
   return db.prepare("SELECT * FROM portal_tokens WHERE token = ?").get(token) as PortalToken | null;
+}
+
+export function getPortalTokenByOrderId(orderId: string) {
+  return db.prepare("SELECT * FROM portal_tokens WHERE order_id = ?").get(orderId) as PortalToken | null;
 }
 
 // Download token operations

@@ -314,6 +314,71 @@ Questions? Contact ${FROM_EMAIL}
   });
 }
 
+// Refund Notice Email
+export async function sendRefundNotice(data: {
+  email: string;
+  name?: string;
+  orderId: string;
+}): Promise<boolean> {
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Processed</title>
+</head>
+<body style="font-family: 'Georgia', serif; line-height: 1.6; color: #444; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <div style="text-align: center; margin-bottom: 30px;">
+    <h1 style="color: #2B9999; font-family: 'Georgia', serif; margin-bottom: 10px;">Curls & Contemplation</h1>
+    <p style="color: #C9A961; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">Refund Confirmation</p>
+  </div>
+
+  <div style="background: linear-gradient(135deg, #f9f7f2 0%, #fff 100%); border-radius: 8px; padding: 30px; margin-bottom: 20px;">
+    <h2 style="color: #2B9999; margin-top: 0;">Your refund has been processed</h2>
+    <p>Hi${data.name ? ` ${data.name}` : ""},</p>
+    <p>We've processed a refund for your order <strong>#${data.orderId.slice(0, 8).toUpperCase()}</strong>. The refund should appear on your statement within 5–10 business days, depending on your bank.</p>
+
+    <div style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 20px; margin: 20px 0;">
+      <h3 style="margin-top: 0; color: #1a1a1a;">What this means</h3>
+      <ul style="padding-left: 20px; margin-bottom: 0;">
+        <li>Your download links have been deactivated</li>
+        <li>Your order portal is no longer accessible</li>
+        <li>The full refund amount will be returned to your original payment method</li>
+      </ul>
+    </div>
+
+    <p>We're sorry to see you go. If there's anything we could have done better, we'd love to hear from you.</p>
+  </div>
+
+  <div style="text-align: center; padding: 20px; border-top: 1px solid #e0e0e0; font-size: 12px; color: #888;">
+    <p>Questions? Reply to this email or contact ${FROM_EMAIL}</p>
+    <p>&copy; ${new Date().getFullYear()} Michael David Warren. All rights reserved.</p>
+  </div>
+</body>
+</html>`;
+
+  const text = `Refund Processed
+
+Hi${data.name ? ` ${data.name}` : ""},
+
+We've processed a refund for your order #${data.orderId.slice(0, 8).toUpperCase()}. The refund should appear on your statement within 5-10 business days.
+
+What this means:
+- Your download links have been deactivated
+- Your order portal is no longer accessible
+- The full refund amount will be returned to your original payment method
+
+Questions? Contact ${FROM_EMAIL}`;
+
+  return sendEmail({
+    to: data.email,
+    subject: "Your refund has been processed",
+    html,
+    text,
+  });
+}
+
 // Mailchimp: Add/update subscriber with tags
 export async function addToMailchimp(data: {
   email: string;

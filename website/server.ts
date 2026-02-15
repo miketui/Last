@@ -13,7 +13,9 @@ import {
   recordWebhookEvent,
   wasWebhookProcessed,
   upsertCustomer,
+  getCustomerById,
   getOrdersWithoutDownloadTokens,
+  getPortalTokenByOrderId,
   getAllOrders,
   updateOrderStatus,
   revokeDownloadTokens,
@@ -50,6 +52,7 @@ import {
   sendPreOrderConfirmation,
   sendEbookReady,
   sendFreeResourceDelivery,
+  sendRefundNotice,
   addToMailchimp,
   MAILCHIMP_TAGS,
 } from "./lib/email";
@@ -346,9 +349,25 @@ const handleStripeWebhook = async (req: Request): Promise<Response> => {
           // Revoke download tokens
           revokeDownloadTokens(order.id);
 
-          // Update Mailchimp tag
-          const customerEmail = (await getOrderByPaymentIntent(paymentIntentId))?.customer_id;
-          // Note: Would need to fetch customer email here
+          // Look up customer and send refund email
+          const customer = getCustomerById(order.customer_id);
+          if (customer) {
+            await sendRefundNotice({
+              email: customer.email,
+              name: customer.name || undefined,
+              orderId: order.id,
+            });
+
+            // Cancel any queued emails for this customer
+            cancelQueuedEmails(customer.email);
+
+            // Update Mailchimp tag
+            await addToMailchimp({
+              email: customer.email,
+              name: customer.name || undefined,
+              tags: [MAILCHIMP_TAGS.REFUNDED],
+            });
+          }
 
           console.log(`[Webhook] Refund processed for order: ${order.id}`);
         }
@@ -393,7 +412,10 @@ const handleReleaseCron = async (req: Request): Promise<Response> => {
       const pdfToken = createDownloadToken(order.id, "pdf", 7);
 
       // Get portal token
-      const portalUrl = `${SITE_URL}/portal/${order.id}`; // We'd need to look up the actual portal token
+      const portalTokenRecord = getPortalTokenByOrderId(order.id);
+      const portalUrl = portalTokenRecord
+        ? `${SITE_URL}/portal/${portalTokenRecord.token}`
+        : `${SITE_URL}/portal/${order.id}`;
 
       // Send email
       await sendEbookReady({
@@ -998,9 +1020,22 @@ const generateSitemap = (): string => {
     { loc: "/chapters", changefreq: "monthly", priority: "0.8" },
     { loc: "/about", changefreq: "monthly", priority: "0.7" },
     { loc: "/resources", changefreq: "weekly", priority: "0.8" },
+    { loc: "/blog", changefreq: "weekly", priority: "0.8" },
+    { loc: "/faq", changefreq: "monthly", priority: "0.7" },
     { loc: "/privacy", changefreq: "yearly", priority: "0.3" },
     { loc: "/terms", changefreq: "yearly", priority: "0.3" },
+    { loc: "/refund-policy", changefreq: "yearly", priority: "0.3" },
   ];
+
+  // Add blog post pages
+  const blogSlugs = [
+    "pricing-strategy-for-freelance-hairstylists",
+    "networking-secrets-for-hairstylists",
+    "overcoming-creative-burnout",
+  ];
+  blogSlugs.forEach((slug) => {
+    pages.push({ loc: `/blog/${slug}`, changefreq: "monthly", priority: "0.6" });
+  });
 
   // Add chapter pages
   const chapters = [
@@ -1046,8 +1081,23 @@ ${urls}
 const server = Bun.serve({
   port: 3000,
   routes: {
-    // Homepage
+    // Homepage + SPA routes (all serve bundled index.html, React router handles page)
     "/": index,
+    "/book": index,
+    "/chapters": index,
+    "/chapter/:slug": index,
+    "/blog": index,
+    "/blog/:slug": index,
+    "/faq": index,
+    "/about": index,
+    "/resources": index,
+    "/checkout": index,
+    "/thank-you": index,
+    "/portal/:token": index,
+    "/privacy": index,
+    "/terms": index,
+    "/refund-policy": index,
+    "/admin": index,
 
     // API routes
     "/api/subscribe": {
@@ -1213,7 +1263,12 @@ Sitemap: ${SITE_URL}/sitemap.xml`,
     return serveStaticFile(pathname).then((response) => {
       if (response) return response;
 
-      // SPA fallback - serve index.html for all other routes
+      // SPA fallback - serve bundled index.html for all other routes
+      // Use the same `index` handler that Bun bundles for the "/" route
+      if (typeof index === "function") {
+        return (index as Function)(req);
+      }
+      // Fallback: serve raw file (shouldn't normally reach here)
       return new Response(Bun.file("./index.html"), {
         headers: { "Content-Type": "text/html" },
       });
