@@ -2,16 +2,16 @@
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
     "builder": "NIXPACKS",
-    "buildCommand": "curl -fsSL https://bun.sh/install | bash && export PATH=\"$HOME/.bun/bin:$PATH\" && cd web && bun install",
+    "buildEnvironment": "V3",
     "watchPatterns": [
-      "/web/**"
+      "web/**"
     ],
-    "buildEnvironment": "V3"
+    "buildCommand": "nix-env -iA nixpkgs.nodejs_20 nixpkgs.unzip nixpkgs.curl && curl -fsSL https://bun.sh/install | bash && export PATH=\"$HOME/.bun/bin:$PATH\" && cd web && bun install"
   },
   "deploy": {
     "runtime": "V2",
     "numReplicas": 1,
-    "startCommand": "cd web && bun run server.ts",
+    "startCommand": "bash -lc 'export PATH=\"$HOME/.bun/bin:$PATH\" && cd web && bun run server.ts'",
     "sleepApplication": false,
     "useLegacyStacker": false,
     "multiRegionConfig": {
