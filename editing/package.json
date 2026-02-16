@@ -1,0 +1,35 @@
+{
+  "name": "manuscript-editor",
+  "version": "1.0.0",
+  "description": "AI-powered book editing application for self-published authors",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --hot server.ts",
+    "start": "bun server.ts",
+    "build": "bun build index.html --outdir=./dist",
+    "test": "bun test",
+    "migrate": "bun lib/database.ts migrate",
+    "seed": "bun lib/seed.ts"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "stripe": "^14.0.0",
+    "mammoth": "^1.8.0",
+    "jszip": "^3.10.1",
+    "marked": "^15.0.0",
+    "turndown": "^7.2.0",
+    "sanitize-html": "^2.13.0",
+    "diff": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/sanitize-html": "^2.13.0",
+    "@types/diff": "^6.0.0",
+    "@types/turndown": "^5.0.5",
+    "typescript": "^5.0.0"
+  }
+}
