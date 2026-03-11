@@ -1,4 +1,4 @@
-// File parsing engine — accepts .docx, .txt, .md, .html, .epub, .zip
+// File parsing engine — accepts .docx, .txt, .md, .html, .xhtml, .epub, .zip
 // Extracts plain text + chapter structure from uploaded manuscripts
 // All content is sanitized before processing
 
@@ -119,13 +119,13 @@ async function parseMd(content: string, filename: string): Promise<ParsedManuscr
   };
 }
 
-/** Parse a .html file */
+/** Parse a .html or .xhtml file */
 function parseHtml(content: string, filename: string): ParsedManuscript {
   const clean = sanitize(content);
   const text = stripHtml(clean);
   const chapters = splitIntoChapters(text);
   return {
-    title: filename.replace(/\.html?$/i, ""),
+    title: filename.replace(/\.(xhtml|html?)$/i, ""),
     chapters,
     fullText: text,
     wordCount: countWords(text),
@@ -210,7 +210,7 @@ async function parseEpub(buffer: ArrayBuffer, filename: string): Promise<ParsedM
 /** Parse a .zip file — look for supported file inside */
 async function parseZip(buffer: ArrayBuffer, filename: string): Promise<ParsedManuscript> {
   const zip = await JSZip.loadAsync(buffer);
-  const supportedExts = [".docx", ".epub", ".txt", ".md", ".html", ".htm"];
+  const supportedExts = [".docx", ".epub", ".txt", ".md", ".html", ".htm", ".xhtml"];
 
   for (const [path, file] of Object.entries(zip.files)) {
     if (file.dir) continue;
@@ -241,7 +241,8 @@ export async function parseFile(
       return parseMd(text, filename);
     }
     case ".html":
-    case ".htm": {
+    case ".htm":
+    case ".xhtml": {
       const text = typeof content === "string" ? content : new TextDecoder().decode(content);
       return parseHtml(text, filename);
     }
@@ -259,6 +260,6 @@ export async function parseFile(
       return parseZip(buf as ArrayBuffer, filename);
     }
     default:
-      throw new Error(`Unsupported file format: ${ext}. Supported: .docx, .txt, .md, .html, .epub, .zip`);
+      throw new Error(`Unsupported file format: ${ext}. Supported: .docx, .txt, .md, .html, .xhtml, .epub, .zip`);
   }
 }

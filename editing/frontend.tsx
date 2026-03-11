@@ -152,11 +152,11 @@ function UploadPage({ onUploaded }: { onUploaded: (ms: any) => void }) {
           <>
             <div className="dropzone-icon">+</div>
             <p className="dropzone-text">Drop your manuscript here or click to browse</p>
-            <p className="dropzone-formats">Supported: .docx, .txt, .md, .html, .epub, .zip</p>
+            <p className="dropzone-formats">Supported: .docx, .txt, .md, .html, .xhtml, .epub, .zip</p>
           </>
         )}
       </div>
-      <input ref={fileRef} type="file" hidden accept=".docx,.txt,.md,.html,.htm,.epub,.zip" onChange={e => { if (e.target.files?.[0]) upload(e.target.files[0]); }} />
+      <input ref={fileRef} type="file" hidden accept=".docx,.txt,.md,.html,.htm,.xhtml,.epub,.zip" onChange={e => { if (e.target.files?.[0]) upload(e.target.files[0]); }} />
       {err && <p style={{ color: "var(--danger)", marginTop: "1rem" }}>{err}</p>}
     </div>
   );
