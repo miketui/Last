@@ -502,6 +502,68 @@ Bun.serve({
         });
       }
 
+      // --- Get chapter content ---
+      const chapterMatch = path.match(/^\/api\/manuscripts\/([^/]+)\/chapters\/([^/]+)$/);
+      if (chapterMatch && method === "GET") {
+        const user = requireAuth(req);
+        const [, msId, chapterId] = chapterMatch;
+        const ms = db.query("SELECT id FROM manuscripts WHERE id = ? AND user_id = ?").get(msId, user.id);
+        if (!ms) return error("Manuscript not found", 404);
+        const chapter = db.query(
+          "SELECT id, chapter_number, title, encrypted_content, word_count FROM chapters WHERE id = ? AND manuscript_id = ?"
+        ).get(chapterId, msId) as any;
+        if (!chapter) return error("Chapter not found", 404);
+        return json({
+          chapter: {
+            id: chapter.id,
+            chapter_number: chapter.chapter_number,
+            title: chapter.title,
+            content: decrypt(chapter.encrypted_content),
+            word_count: chapter.word_count,
+          },
+        });
+      }
+
+      // --- Update chapter content ---
+      if (chapterMatch && method === "PUT") {
+        const user = requireAuth(req);
+        const [, msId, chapterId] = chapterMatch;
+        const ms = db.query("SELECT id FROM manuscripts WHERE id = ? AND user_id = ?").get(msId, user.id);
+        if (!ms) return error("Manuscript not found", 404);
+        const chapter = db.query("SELECT id FROM chapters WHERE id = ? AND manuscript_id = ?").get(chapterId, msId);
+        if (!chapter) return error("Chapter not found", 404);
+
+        const { content, title } = await req.json();
+        if (typeof content !== "string") return error("content is required");
+
+        const wordCount = content.trim().split(/\s+/).filter(Boolean).length;
+
+        // Create version before editing
+        createVersion(msId, `Manual edit of chapter`);
+
+        db.run(
+          `UPDATE chapters SET encrypted_content = ?, word_count = ?, title = COALESCE(?, title) WHERE id = ?`,
+          [encrypt(content), wordCount, title || null, chapterId]
+        );
+
+        // Update manuscript total word count
+        const totalWords = db.query(
+          "SELECT SUM(word_count) as total FROM chapters WHERE manuscript_id = ?"
+        ).get(msId) as any;
+        db.run(
+          "UPDATE manuscripts SET word_count = ?, updated_at = datetime('now') WHERE id = ?",
+          [totalWords?.total || 0, msId]
+        );
+
+        return json({
+          chapter: {
+            id: chapterId,
+            word_count: wordCount,
+            title: title || undefined,
+          },
+        });
+      }
+
       // Fallback: serve SPA for client-side routing
       if (!path.startsWith("/api/")) {
         return new Response(Bun.file(new URL("./index.html", import.meta.url).pathname));

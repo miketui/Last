@@ -669,6 +669,165 @@ function ExportPage({ manuscriptId }: { manuscriptId: string }) {
   );
 }
 
+// === Chapter Editor ===
+function ChapterEditor({ manuscriptId }: { manuscriptId: string }) {
+  const [manuscript, setManuscript] = useState<any>(null);
+  const [chapters, setChapters] = useState<any[]>([]);
+  const [selectedChapterId, setSelectedChapterId] = useState<string | null>(null);
+  const [chapterContent, setChapterContent] = useState("");
+  const [chapterTitle, setChapterTitle] = useState("");
+  const [originalContent, setOriginalContent] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [loadingContent, setLoadingContent] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+  const { show, Toast } = useToast();
+
+  useEffect(() => {
+    api(`/api/manuscripts/${manuscriptId}`)
+      .then(d => {
+        setManuscript(d.manuscript);
+        setChapters(d.chapters || []);
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [manuscriptId]);
+
+  const loadChapter = async (chapterId: string) => {
+    if (hasChanges && !confirm("You have unsaved changes. Discard them?")) return;
+    setLoadingContent(true);
+    try {
+      const d = await api(`/api/manuscripts/${manuscriptId}/chapters/${chapterId}`);
+      setSelectedChapterId(chapterId);
+      setChapterContent(d.chapter.content);
+      setChapterTitle(d.chapter.title);
+      setOriginalContent(d.chapter.content);
+      setHasChanges(false);
+    } catch (e: any) { show(e.message); }
+    setLoadingContent(false);
+  };
+
+  const saveChapter = async () => {
+    if (!selectedChapterId) return;
+    setSaving(true);
+    try {
+      const d = await api(`/api/manuscripts/${manuscriptId}/chapters/${selectedChapterId}`, {
+        method: "PUT",
+        body: JSON.stringify({ content: chapterContent, title: chapterTitle }),
+      });
+      setOriginalContent(chapterContent);
+      setHasChanges(false);
+      // Update chapter word count in list
+      setChapters(prev => prev.map(c =>
+        c.id === selectedChapterId ? { ...c, word_count: d.chapter.word_count, title: chapterTitle || c.title } : c
+      ));
+      show("Chapter saved");
+    } catch (e: any) { show(e.message); }
+    setSaving(false);
+  };
+
+  const revertChanges = () => {
+    if (!confirm("Discard all changes to this chapter?")) return;
+    setChapterContent(originalContent);
+    setHasChanges(false);
+  };
+
+  const wordCount = chapterContent.trim().split(/\s+/).filter(Boolean).length;
+
+  if (loading) return <div className="empty-state"><div className="spinner" style={{ margin: "0 auto" }} /></div>;
+  if (!manuscript) return <div className="empty-state">Manuscript not found</div>;
+
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+        <div>
+          <h2>{manuscript.title}</h2>
+          <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
+            {chapters.length} chapters &middot; {manuscript.word_count?.toLocaleString()} words total
+          </p>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "240px 1fr", gap: "1rem" }}>
+        {/* Chapter list */}
+        <div>
+          <h3 style={{ fontSize: "0.9rem", marginBottom: "0.75rem", color: "var(--text-muted)" }}>CHAPTERS</h3>
+          {chapters.map(ch => (
+            <div
+              key={ch.id}
+              className={`chapter-item ${selectedChapterId === ch.id ? "active" : ""}`}
+              onClick={() => loadChapter(ch.id)}
+            >
+              <div className="chapter-number">{ch.chapter_number}</div>
+              <div className="chapter-info">
+                <div className="chapter-title">{ch.title || `Chapter ${ch.chapter_number}`}</div>
+                <div className="chapter-words">{ch.word_count?.toLocaleString()} words</div>
+              </div>
+            </div>
+          ))}
+          {chapters.length === 0 && (
+            <div className="empty-state" style={{ padding: "1rem" }}>No chapters found</div>
+          )}
+        </div>
+
+        {/* Editor panel */}
+        <div>
+          {selectedChapterId ? (
+            loadingContent ? (
+              <div className="empty-state"><div className="spinner" style={{ margin: "0 auto" }} /></div>
+            ) : (
+              <div className="chapter-editor-panel">
+                <div className="chapter-editor-toolbar">
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flex: 1 }}>
+                    <input
+                      className="form-input chapter-title-input"
+                      value={chapterTitle}
+                      onChange={e => { setChapterTitle(e.target.value); setHasChanges(true); }}
+                      placeholder="Chapter title"
+                    />
+                    <span style={{ fontSize: "0.8rem", color: "var(--text-muted)", whiteSpace: "nowrap" }}>
+                      {wordCount.toLocaleString()} words
+                    </span>
+                  </div>
+                  <div className="btn-group">
+                    {hasChanges && (
+                      <button className="btn btn-sm" onClick={revertChanges}>Discard</button>
+                    )}
+                    <button
+                      className="btn btn-sm btn-primary"
+                      onClick={saveChapter}
+                      disabled={saving || !hasChanges}
+                    >
+                      {saving ? "Saving..." : "Save"}
+                    </button>
+                  </div>
+                </div>
+                <textarea
+                  className="chapter-editor-textarea"
+                  value={chapterContent}
+                  onChange={e => { setChapterContent(e.target.value); setHasChanges(true); }}
+                  placeholder="Chapter content..."
+                  spellCheck
+                />
+                {hasChanges && (
+                  <div className="chapter-editor-status">Unsaved changes</div>
+                )}
+              </div>
+            )
+          ) : (
+            <div className="empty-state">
+              <div className="empty-state-icon">&#9997;</div>
+              <p>Select a chapter to start editing</p>
+              <p style={{ fontSize: "0.85rem", marginTop: "0.5rem" }}>Click any chapter from the list on the left</p>
+            </div>
+          )}
+        </div>
+      </div>
+      <Toast />
+    </div>
+  );
+}
+
 // === Billing Page ===
 function BillingPage() {
   const { user } = useContext(AuthContext);
@@ -841,7 +1000,7 @@ function SettingsPage() {
 }
 
 // === Main App ===
-type Page = "manuscripts" | "upload" | "consultation" | "editing" | "versions" | "export" | "billing" | "settings";
+type Page = "manuscripts" | "upload" | "consultation" | "editing" | "chapters" | "versions" | "export" | "billing" | "settings";
 
 function App() {
   const { user, loading, logout } = useContext(AuthContext);
@@ -883,6 +1042,7 @@ function App() {
             <>
               <hr style={{ border: "none", borderTop: "1px solid var(--border)", margin: "0.5rem 0" }} />
               <a className={page === "editing" ? "active" : ""} onClick={() => setPage("editing")} href="#">Editing Dashboard</a>
+              <a className={page === "chapters" ? "active" : ""} onClick={() => setPage("chapters")} href="#">Edit Chapters</a>
               <a className={page === "versions" ? "active" : ""} onClick={() => setPage("versions")} href="#">Version History</a>
               <a className={page === "export" ? "active" : ""} onClick={() => setPage("export")} href="#">Export</a>
             </>
@@ -944,6 +1104,10 @@ function App() {
 
         {page === "editing" && activeManuscript && (
           <EditingDashboard manuscriptId={activeManuscript} />
+        )}
+
+        {page === "chapters" && activeManuscript && (
+          <ChapterEditor manuscriptId={activeManuscript} />
         )}
 
         {page === "versions" && activeManuscript && (
