@@ -7,14 +7,14 @@
     <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
     <dc:language>en</dc:language>
     <dc:publisher>Michael David</dc:publisher>
-    <dc:date>2024</dc:date>
+    <dc:date>2026</dc:date>
     <dc:description>A comprehensive guide for freelance hairstylists to develop their creative skills, build professional practices, and achieve business success while maintaining wellness and ethical standards.</dc:description>
     <dc:subject>Hairstyling</dc:subject>
     <dc:subject>Beauty Industry</dc:subject>
     <dc:subject>Freelance Business</dc:subject>
     <dc:subject>Professional Development</dc:subject>
     <dc:rights>All rights reserved</dc:rights>
-    <meta property="dcterms:modified">2024-12-19T00:00:00Z</meta>
+    <meta property="dcterms:modified">2026-03-12T00:00:00Z</meta>
     <meta name="cover" content="cover-image"/>
   </metadata>
 
@@ -108,15 +108,15 @@
     <item id="continued-learning" href="xhtml/32-continued-learning-commitment.xhtml" media-type="application/xhtml+xml"/>
     <item id="acknowledgments" href="xhtml/33-Acknowledgments.xhtml" media-type="application/xhtml+xml"/>
     <item id="about-author" href="xhtml/34-AbouttheAuthor.xhtml" media-type="application/xhtml+xml"/>
-    <item id="journaling-start" href="xhtml/36-JournalingStart.xhtml" media-type="application/xhtml+xml"/>
-    <item id="manifesting-journal" href="xhtml/37-ManifestingJournal.xhtml" media-type="application/xhtml+xml"/>
-    <item id="journal-page" href="xhtml/38-journal-page.xhtml" media-type="application/xhtml+xml"/>
-    <item id="professional-dev" href="xhtml/39-professional-development.xhtml" media-type="application/xhtml+xml"/>
-    <item id="smart-goals" href="xhtml/40-SMARTGoals.xhtml" media-type="application/xhtml+xml"/>
-    <item id="self-care-journal" href="xhtml/41-self-care-journal.xhtml" media-type="application/xhtml+xml"/>
-    <item id="vision-journal" href="xhtml/42-VisionJournal.xhtml" media-type="application/xhtml+xml"/>
-    <item id="doodle-page" href="xhtml/43-DoodlePage.xhtml" media-type="application/xhtml+xml"/>
-    <item id="bibliography" href="xhtml/44-bibliography.xhtml" media-type="application/xhtml+xml"/>
+    <item id="journaling-start" href="xhtml/35-JournalingStart.xhtml" media-type="application/xhtml+xml"/>
+    <item id="manifesting-journal" href="xhtml/36-ManifestingJournal.xhtml" media-type="application/xhtml+xml"/>
+    <item id="journal-page" href="xhtml/37-journal-page.xhtml" media-type="application/xhtml+xml"/>
+    <item id="professional-dev" href="xhtml/38-professional-development.xhtml" media-type="application/xhtml+xml"/>
+    <item id="smart-goals" href="xhtml/39-SMARTGoals.xhtml" media-type="application/xhtml+xml"/>
+    <item id="self-care-journal" href="xhtml/40-self-care-journal.xhtml" media-type="application/xhtml+xml"/>
+    <item id="vision-journal" href="xhtml/41-VisionJournal.xhtml" media-type="application/xhtml+xml"/>
+    <item id="doodle-page" href="xhtml/42-DoodlePage.xhtml" media-type="application/xhtml+xml"/>
+    <item id="bibliography" href="xhtml/43-bibliography.xhtml" media-type="application/xhtml+xml"/>
   </manifest>
 
   <spine toc="ncx">
