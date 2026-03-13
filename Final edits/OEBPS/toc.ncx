@@ -161,44 +161,40 @@
       <content src="xhtml/34-AbouttheAuthor.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-35" playOrder="35">
-      <navLabel><text>Curls &amp; Contemplation Collective</text></navLabel>
-      <content src="xhtml/35-CurlsContempCollective.xhtml"/>
+      <navLabel><text>Journaling Start</text></navLabel>
+      <content src="xhtml/35-JournalingStart.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-36" playOrder="36">
-      <navLabel><text>Journaling Start</text></navLabel>
-      <content src="xhtml/36-JournalingStart.xhtml"/>
+      <navLabel><text>Manifesting Journal</text></navLabel>
+      <content src="xhtml/36-ManifestingJournal.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-37" playOrder="37">
-      <navLabel><text>Manifesting Journal</text></navLabel>
-      <content src="xhtml/37-ManifestingJournal.xhtml"/>
+      <navLabel><text>Journal Page</text></navLabel>
+      <content src="xhtml/37-journal-page.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-38" playOrder="38">
-      <navLabel><text>Journal Page</text></navLabel>
-      <content src="xhtml/38-journal-page.xhtml"/>
+      <navLabel><text>Professional Development</text></navLabel>
+      <content src="xhtml/38-professional-development.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-39" playOrder="39">
-      <navLabel><text>Professional Development</text></navLabel>
-      <content src="xhtml/39-professional-development.xhtml"/>
+      <navLabel><text>SMART Goals</text></navLabel>
+      <content src="xhtml/39-SMARTGoals.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-40" playOrder="40">
-      <navLabel><text>SMART Goals</text></navLabel>
-      <content src="xhtml/40-SMARTGoals.xhtml"/>
+      <navLabel><text>Self-Care Journal</text></navLabel>
+      <content src="xhtml/40-self-care-journal.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-41" playOrder="41">
-      <navLabel><text>Self-Care Journal</text></navLabel>
-      <content src="xhtml/41-self-care-journal.xhtml"/>
+      <navLabel><text>Vision Journal</text></navLabel>
+      <content src="xhtml/41-VisionJournal.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-42" playOrder="42">
-      <navLabel><text>Vision Journal</text></navLabel>
-      <content src="xhtml/42-VisionJournal.xhtml"/>
+      <navLabel><text>Doodle Page</text></navLabel>
+      <content src="xhtml/42-DoodlePage.xhtml"/>
     </navPoint>
     <navPoint id="navpoint-43" playOrder="43">
-      <navLabel><text>Doodle Page</text></navLabel>
-      <content src="xhtml/43-DoodlePage.xhtml"/>
-    </navPoint>
-    <navPoint id="navpoint-44" playOrder="44">
       <navLabel><text>Bibliography</text></navLabel>
-      <content src="xhtml/44-bibliography.xhtml"/>
+      <content src="xhtml/43-bibliography.xhtml"/>
     </navPoint>
   </navMap>
 </ncx>
