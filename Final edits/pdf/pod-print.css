@@ -101,19 +101,19 @@ body {
   padding: 0;
 }
 
-/* Chapter title pages start on recto (right-hand) page */
+/* Chapter title pages start on new page (no blank verso) */
 .chapter-page > main > .chap-title,
 section.chap-title {
-  break-before: right;
+  break-before: page;
   page: nofolio;
 }
 
-/* Part divider pages start on recto */
+/* Part divider pages start on new page (no blank verso) */
 .part-body,
 .part-page,
 div[class*="part-body"],
 section.part-container {
-  break-before: right;
+  break-before: page;
   page: nofolio;
 }
 
@@ -1197,6 +1197,21 @@ nav[role="doc-toc"] {
 
 .commitment-arrow {
   font-size: 14pt;
+}
+
+/* ====================================================================
+   BACKMATTER FLOW — compact short backmatter items onto fewer pages
+   ==================================================================== */
+
+/* Backmatter flow: each file starts on a new page, but no blank recto pages */
+.backmatter-flow .backmatter-item {
+  page-break-before: always;
+  break-before: page;
+}
+/* First backmatter item doesn't need a break (container already broke) */
+.backmatter-flow .backmatter-item:first-child {
+  page-break-before: auto;
+  break-before: auto;
 }
 
 /* ====================================================================
