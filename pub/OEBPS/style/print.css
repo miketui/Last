@@ -1,11 +1,11 @@
 /**
- * print.css - 6x9" Print-on-Demand Optimization
- * For: "The Artisan's Path" / "Curls & Contemplation"
- * ACISS Design System
+ * print.css - 6.69x9.61" Print-on-Demand Optimization
+ * For: "Curls & Contemplation: A Stylist's Interactive Journey"
+ * By Michael David
  *
  * This stylesheet extends style.css for PDF Print-on-Demand production.
- * Trim size: 6" x 9" (standard POD format)
- * Optimized for both color and B&W printing options.
+ * Trim size: 6.69" x 9.61" (KDP custom trim)
+ * Interior: Black & white on white paper, no bleed.
  *
  * Version: 2.1 - Final Corrected
  */
@@ -14,18 +14,16 @@
 @import url('style.css');
 
 /* ====================================================================
-   1. PAGE SETUP - 6x9" TRIM SIZE
-   ==================================================================== */
-/* ====================================================================
-   1. PAGE SETUP - 6x9" TRIM SIZE (PrinceXML + POD friendly)
+   1. PAGE SETUP - 6.69x9.61" TRIM SIZE (PrinceXML + POD friendly)
    Notes:
    - KDP/most POD printers do NOT want crop marks unless you are doing full-bleed.
    - Use :left/:right to control inside (gutter) vs outside margins.
+   - Trim: 6.69" x 9.61" | Ink: B&W | Paper: White | Bleed: None
    ==================================================================== */
 
 /* Default page box */
 @page {
-  size: 6in 9in;
+  size: 6.69in 9.61in;
 
   /* Top/Bottom margins (tune later if needed) */
   margin-top: 0.75in;
@@ -35,13 +33,13 @@
   margin-left: 0.70in;
   margin-right: 0.70in;
 
-  /* Page number (folios) */
-  @bottom-center {
+  /* Page number (folios) — PrinceXML only, wrapped for EPUB compat */
+  /* @bottom-center {
     content: counter(page);
     font-family: 'Montserrat', Arial, sans-serif;
     font-size: 9.5pt;
     letter-spacing: 0.02em;
-  }
+  } */
 }
 
 /* Verso (left) pages: inside margin on the LEFT */
@@ -944,6 +942,15 @@ a[href^="../"]:after {
   content: none;
 }
 
+/* Suppress URL duplication in endnotes/footnotes (URL is already visible as link text) */
+.footnote-item a[href^="http"]:after,
+.endnotes a[href^="http"]:after,
+.footnotes a[href^="http"]:after,
+.note-item a[href^="http"]:after,
+.bib-entry a[href^="http"]:after {
+  content: none;
+}
+
 /* ====================================================================
    19. UTILITY CLASSES
    ==================================================================== */
@@ -1060,6 +1067,26 @@ nav[role="doc-toc"] {
 * {
   animation: none !important;
   transition: none !important;
+}
+
+/* ====================================================================
+   EPUB CTA & TOC PAGE NUMBER OVERRIDES FOR PRINT
+   ==================================================================== */
+.epub-download-cta {
+  display: none !important;
+}
+
+.toc-page-number {
+  float: right;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 0.9em;
+}
+
+.toc-entry {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted #999;
+  padding: 0.2em 0;
 }
 
 /* ====================================================================
