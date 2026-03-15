@@ -1,0 +1,1192 @@
+/**
+ * pod-print.css — Standalone Print-on-Demand Stylesheet
+ * For: "Curls & Contemplation: A Stylist's Interactive Journey"
+ * By Michael David
+ *
+ * TRIM SIZE: 6.69" x 9.61" (KDP custom trim)
+ * Interior: Black & white on white paper, no bleed
+ * Binding: Perfect bound softcover
+ *
+ * This is a STANDALONE stylesheet for PDF generation.
+ * It does NOT import the EPUB style.css.
+ * Font faces are injected by the build script.
+ *
+ * Live area: 6.69" - margins = ~4.99" wide text block
+ * Gutter: 0.95" (binding side), Outside: 0.70"
+ * Top: 0.75", Bottom: 0.75"
+ */
+
+/* ====================================================================
+   1. PAGE SETUP — 6×9 TRIM
+   ==================================================================== */
+@page {
+  size: 6.69in 9.61in;
+  margin-top: 0.75in;
+  margin-bottom: 0.75in;
+  margin-left: 0.70in;
+  margin-right: 0.70in;
+
+  @bottom-center {
+    content: counter(page);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9pt;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Verso (left/even) pages: gutter on LEFT */
+@page :left {
+  margin-left: 0.95in;
+  margin-right: 0.70in;
+}
+
+/* Recto (right/odd) pages: gutter on RIGHT */
+@page :right {
+  margin-left: 0.70in;
+  margin-right: 0.95in;
+}
+
+/* First page of document: suppress folio */
+@page :first {
+  @bottom-center { content: ""; }
+}
+
+/* Blank pages inserted for recto chapter starts */
+@page :blank {
+  @bottom-center { content: ""; }
+}
+
+/* Named page: suppress folio on openers/standalone pages */
+@page nofolio {
+  @bottom-center { content: ""; }
+}
+
+/* ====================================================================
+   2. BASE TYPOGRAPHY
+   ==================================================================== */
+html {
+  font-size: 11pt;
+}
+
+body {
+  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  font-size: 11pt;
+  line-height: 1.5;
+  color: #000;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  orphans: 3;
+  widows: 3;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ====================================================================
+   3. FILE / SECTION BREAKS
+   The build script wraps each XHTML file in a <div class="...">.
+   We need page breaks between files and for key section types.
+   ==================================================================== */
+
+/* Break between concatenated files */
+.file-break {
+  break-after: page;
+  page-break-after: always;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Chapter title pages start on recto (right-hand) page */
+.chapter-page > main > .chap-title,
+section.chap-title {
+  break-before: right;
+  page: nofolio;
+}
+
+/* Part divider pages start on recto */
+.part-body,
+.part-page,
+div[class*="part-body"],
+section.part-container {
+  break-before: right;
+  page: nofolio;
+}
+
+/* Standalone quote pages */
+.quote-page,
+section.image-quote,
+div.quote-page {
+  break-before: page;
+  page: nofolio;
+}
+
+/* Frontmatter pages: suppress folio */
+.title-page-body,
+.copyright-body,
+.toc-body,
+.frontmatter-shell,
+div[class*="title-page"],
+div[class*="copyright"] {
+  page: nofolio;
+}
+
+/* Force page breaks before these major sections */
+.frontmatter-shell,
+.backmatter-card,
+.certificate-border,
+.bib-container,
+.key-container,
+.chapter-opener,
+section[class*="chap-body"],
+.image-quote,
+.quote-page {
+  page-break-before: always;
+  break-before: page;
+}
+
+/* Chapter body, endnotes, quiz, worksheet — each starts on new page */
+.endnotes,
+.quiz-section,
+.worksheet-card {
+  page-break-before: always;
+  break-before: page;
+}
+
+/* ====================================================================
+   4. HEADINGS
+   ==================================================================== */
+h1, .frontmatter-title, .main-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 24pt;
+  line-height: 1.2;
+  color: #000;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0.5in;
+  page-break-after: avoid;
+}
+
+h1.main-title {
+  font-size: 28pt;
+  margin-bottom: 0.25in;
+}
+
+h1.part-title {
+  font-size: 22pt;
+  margin-bottom: 0.35in;
+}
+
+h2, .subtitle, .toc-title {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 14pt;
+  font-weight: 700;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  page-break-after: avoid;
+  margin-top: 0.5in;
+  margin-bottom: 0.25in;
+}
+
+h3 {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: #000;
+  page-break-after: avoid;
+  margin-top: 0.35in;
+  margin-bottom: 0.15in;
+}
+
+h4, h5, h6 {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 11pt;
+  font-weight: 700;
+  color: #000;
+  page-break-after: avoid;
+  margin-top: 0.25in;
+  margin-bottom: 0.1in;
+}
+
+/* Prevent orphaned headings */
+h1, h2, h3, h4, h5, h6 {
+  page-break-after: avoid;
+  page-break-inside: avoid;
+}
+
+/* ====================================================================
+   5. PARAGRAPHS & BODY TEXT
+   ==================================================================== */
+p {
+  text-align: justify;
+  text-indent: 0.25in;
+  margin: 0;
+  margin-bottom: 0.1in;
+}
+
+/* First paragraph after heading — no indent */
+h1 + p, h2 + p, h3 + p, h4 + p,
+.chapter-opener + p,
+blockquote + p,
+.action-steps + p,
+.case-study + p {
+  text-indent: 0;
+}
+
+/* ====================================================================
+   6. FRONTMATTER
+   ==================================================================== */
+
+/* Title Page */
+.title-page-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 7.5in;
+  text-align: center;
+  border: 2pt solid #000;
+  padding: 0.5in;
+}
+
+/* Copyright Page */
+.copyright-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 7.5in;
+  padding-bottom: 1in;
+}
+
+.copyright-notice,
+.copyright-statement,
+.rights-text,
+.isbn-info,
+.isbn-block,
+.publisher-info {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 9pt;
+  line-height: 1.4;
+  text-align: left;
+  margin-bottom: 0.15in;
+}
+
+.isbn-info,
+.isbn-block {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+}
+
+/* Dedication */
+.dedication-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 7.5in;
+  text-align: center;
+}
+
+.dedication-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  margin-bottom: 0.35in;
+}
+
+.dedication-verse {
+  font-style: italic;
+  font-size: 12pt;
+  line-height: 1.6;
+  max-width: 3.5in;
+  margin: 0 auto;
+}
+
+.dedication-section {
+  margin-bottom: 0.25in;
+}
+
+.dedication-section strong {
+  font-weight: 700;
+}
+
+/* ====================================================================
+   7. TABLE OF CONTENTS
+   ==================================================================== */
+.toc-container,
+.toc-list {
+  max-width: 100%;
+}
+
+.toc-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 20pt;
+  text-align: center;
+  margin-bottom: 0.35in;
+}
+
+.toc-part-title {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 11pt;
+  font-weight: 700;
+  margin-top: 0.35in;
+  margin-bottom: 0.15in;
+  border-bottom: 1pt solid #000;
+  padding-bottom: 0.05in;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.toc-item,
+.toc-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.1in;
+  font-size: 10pt;
+  border-bottom: 1px dotted #999;
+  padding-bottom: 0.05in;
+}
+
+.toc-link {
+  text-decoration: none;
+  color: #000;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.toc-chapter-num {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-weight: bold;
+  min-width: 0.4in;
+  display: inline-block;
+  margin-right: 0.15in;
+}
+
+.toc-page-number {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 10pt;
+  min-width: 0.3in;
+  text-align: right;
+}
+
+/* ====================================================================
+   8. CHAPTER TITLE PAGES (Black background opener)
+   ==================================================================== */
+.chap-title,
+section.chap-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 7.5in;
+  text-align: center;
+  page-break-after: always;
+  background: #000;
+  color: #fff;
+  padding: 0.5in;
+}
+
+.chap-title h1,
+.chap-title h2,
+.chap-title .title-line,
+.chap-title .introduction-heading,
+.chap-title .bible-quote-text,
+.chap-title .bible-quote-reference {
+  color: #fff;
+}
+
+.chapter-number-figure {
+  position: relative;
+  width: 1.5in;
+  height: 1in;
+  margin-bottom: 0.35in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chapter-number-brush {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.chapter-number-roman {
+  position: relative;
+  z-index: 2;
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 24pt;
+  color: #fff;
+  font-style: normal;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.title-stack {
+  margin-bottom: 0.35in;
+}
+
+.title-bar {
+  width: 0.5in;
+  height: 3pt;
+  background: #fff;
+  margin: 0 auto 0.2in;
+}
+
+.title-line {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 16pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  color: #fff;
+}
+
+/* Bible quote on chapter opener */
+.bible-quote-container {
+  max-width: 3.5in;
+  margin: 0.35in auto;
+  padding-left: 0.2in;
+  border-left: 2pt solid #999;
+  text-align: left;
+}
+
+.bible-quote-text {
+  font-style: italic;
+  font-size: 10pt;
+  line-height: 1.5;
+  margin-bottom: 0.1in;
+  color: #ccc;
+}
+
+.bible-quote-reference {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 9pt;
+  font-weight: 600;
+  color: #ccc;
+}
+
+/* Introduction heading and drop cap on chapter opener */
+.introduction-heading {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.2in;
+  color: #fff;
+}
+
+.introduction-paragraph {
+  max-width: 4in;
+  text-align: justify;
+  color: #ddd;
+}
+
+.introduction-paragraph p {
+  color: #ddd;
+  text-indent: 0;
+}
+
+/* Drop cap — using initial-letter (avoids WeasyPrint float bug) */
+.introduction-paragraph p:first-of-type strong:first-child,
+.dropcap-first-letter p:first-of-type strong:first-child {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 24pt;
+  line-height: 1;
+  padding-right: 0.05in;
+  color: #fff;
+  vertical-align: baseline;
+}
+
+/* ====================================================================
+   9. PART DIVIDER PAGES
+   ==================================================================== */
+.part-body,
+.part-page,
+div[class*="part-body"] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 7.5in;
+  text-align: center;
+  page-break-after: always;
+}
+
+.part-container {
+  max-width: 4.5in;
+  padding: 0.5in;
+  border-top: 4pt solid #000;
+}
+
+.part-number {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 10pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.15in;
+}
+
+h2.part-subtitle {
+  font-size: 10pt;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.35in;
+}
+
+p.intro-text {
+  font-size: 10pt;
+  line-height: 1.6;
+  text-align: justify;
+  margin-bottom: 0.2in;
+  text-indent: 0;
+}
+
+p.intro-text:first-of-type::first-letter {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 24pt;
+  line-height: 1;
+  margin-right: 0.05in;
+  vertical-align: baseline;
+}
+
+/* ====================================================================
+   10. CHAPTER BODY (after the opener page)
+   ==================================================================== */
+.chap-body,
+section.chap-body,
+.content-area {
+  color: #000;
+  background: #fff;
+}
+
+.chap-body h2,
+.content-area h2 {
+  color: #000;
+}
+
+/* Page break helper used in XHTML */
+.page-break {
+  page-break-after: always;
+  break-after: page;
+  height: 0;
+}
+
+/* ====================================================================
+   11. BLOCKQUOTES & QUOTES
+   ==================================================================== */
+blockquote, .quote-figure {
+  margin: 0.35in 0.5in;
+  padding: 0;
+  font-style: italic;
+  font-size: 10.5pt;
+  border-left: 2pt solid #666;
+  padding-left: 0.25in;
+}
+
+blockquote cite,
+.quote-attribution {
+  display: block;
+  font-style: normal;
+  font-size: 9pt;
+  text-align: right;
+  margin-top: 0.1in;
+}
+
+/* Full-page image quote pages */
+.quote-page,
+.image-quote,
+section.image-quote {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 7.5in;
+  text-align: center;
+  padding: 0.5in;
+  page-break-before: always;
+  page-break-after: always;
+}
+
+.quote-figure img {
+  max-width: 100%;
+  max-height: 7.5in;
+  object-fit: contain;
+}
+
+/* ====================================================================
+   12. ACTION STEPS & CASE STUDIES
+   ==================================================================== */
+.action-steps {
+  border: 1pt solid #000;
+  border-left: 4pt solid #000;
+  padding: 0.2in;
+  margin: 0.25in 0;
+  background: #f9f9f9;
+  page-break-inside: avoid;
+}
+
+.action-steps h2 {
+  font-size: 10pt;
+  margin-top: 0;
+  margin-bottom: 0.15in;
+  border-bottom: none;
+}
+
+.action-steps ol, .action-steps ul {
+  margin: 0;
+  padding-left: 0.3in;
+}
+
+.action-steps li {
+  margin-bottom: 0.1in;
+  font-size: 10pt;
+}
+
+.case-study {
+  border: 1pt solid #666;
+  padding: 0.2in;
+  margin: 0.25in 0;
+  background: #fafafa;
+  page-break-inside: avoid;
+}
+
+/* ====================================================================
+   13. WORKSHEETS & INTERACTIVE ELEMENTS
+   ==================================================================== */
+.worksheet-card {
+  border: 1pt solid #000;
+  padding: 0.25in;
+  margin: 0.25in 0;
+  background: #fff;
+  page-break-inside: avoid;
+}
+
+.worksheet-header {
+  margin-bottom: 0.2in;
+  text-align: center;
+}
+
+.worksheet-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 14pt;
+  text-align: center;
+  margin-bottom: 0.2in;
+}
+
+.worksheet-instructions {
+  font-size: 9pt;
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 0.2in;
+}
+
+.question-card {
+  margin-bottom: 0.25in;
+  page-break-inside: avoid;
+}
+
+.question-header {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 0.1in;
+}
+
+.question-number {
+  width: 0.2in;
+  height: 0.2in;
+  border: 1pt solid #000;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 0.2in;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 8pt;
+  margin-right: 0.1in;
+  flex-shrink: 0;
+}
+
+.question-text,
+.prompt-text {
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+/* Writing lines for journals and worksheets */
+.answer-lines,
+.writing-lines,
+.writing-area {
+  margin-top: 0.15in;
+}
+
+.answer-line,
+.writing-line,
+.line {
+  border-bottom: 0.5pt solid #000;
+  height: 0.35in;
+  margin-bottom: 0;
+}
+
+/* Ruled paper effect for journal pages */
+.ruled-paper-bg {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 0.30in,
+    #ccc 0.305in
+  );
+  line-height: 0.305in;
+  min-height: 4in;
+}
+
+/* Rating scales */
+.rating-circles {
+  display: flex;
+  gap: 0.15in;
+  margin-top: 0.1in;
+}
+
+.rating-circle {
+  width: 0.25in;
+  height: 0.25in;
+  border: 1pt solid #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8pt;
+}
+
+/* Checkboxes */
+.checkbox-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.1in;
+}
+
+.checkbox {
+  width: 0.15in;
+  height: 0.15in;
+  border: 1pt solid #000;
+  margin-right: 0.1in;
+  flex-shrink: 0;
+}
+
+/* Prompt cards */
+.prompt-card {
+  margin-bottom: 0.25in;
+  page-break-inside: avoid;
+}
+
+.prompt-badge {
+  display: inline-block;
+  padding: 0.03in 0.1in;
+  border: 1pt solid #000;
+  border-radius: 0.1in;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 7pt;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: #f0f0f0;
+}
+
+/* ====================================================================
+   14. TABLES
+   ==================================================================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.25in 0;
+  font-size: 9pt;
+}
+
+th {
+  background: #e0e0e0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 9pt;
+  padding: 0.1in;
+  border: 1pt solid #000;
+  text-align: left;
+}
+
+td {
+  padding: 0.08in;
+  border: 0.5pt solid #666;
+  vertical-align: top;
+}
+
+tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+/* Quiz Answer Key */
+.answer-table th {
+  background-color: #e0e0e0;
+  color: #000;
+  text-align: center;
+}
+
+.answer-table td {
+  text-align: center;
+}
+
+.chapter-col {
+  font-weight: bold;
+}
+
+/* ====================================================================
+   15. BIBLIOGRAPHY
+   ==================================================================== */
+.bib-container {
+  max-width: 100%;
+}
+
+.bib-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 18pt;
+  text-align: center;
+  margin-bottom: 0.35in;
+}
+
+.bib-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bib-entry {
+  padding-left: 0.35in;
+  text-indent: -0.35in;
+  margin-bottom: 0.12in;
+  font-size: 9pt;
+  line-height: 1.4;
+}
+
+.bib-entry a {
+  color: #000;
+  text-decoration: none;
+  word-break: break-word;
+}
+
+/* ====================================================================
+   16. FOOTNOTES & ENDNOTES
+   ==================================================================== */
+.footnotes, .endnotes {
+  margin-top: 0.5in;
+  padding-top: 0.2in;
+  border-top: 0.5pt solid #000;
+  font-size: 9pt;
+}
+
+.footnotes h2, .endnotes h2 {
+  font-size: 10pt;
+  margin-bottom: 0.15in;
+}
+
+.footnotes ol, .endnotes ol {
+  padding-left: 0.3in;
+  margin: 0;
+}
+
+.footnotes li, .endnotes li {
+  margin-bottom: 0.1in;
+  line-height: 1.4;
+}
+
+sup {
+  font-size: 7pt;
+  vertical-align: super;
+}
+
+sup a {
+  color: #000;
+  text-decoration: none;
+}
+
+/* ====================================================================
+   17. CERTIFICATES & SPECIAL PAGES
+   ==================================================================== */
+.certificate-border {
+  border: 4pt double #000;
+  padding: 0.5in;
+  margin: 0.5in 0;
+  text-align: center;
+  background: #fff;
+  position: relative;
+  page-break-inside: avoid;
+}
+
+.certificate-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 18pt;
+  margin-bottom: 0.35in;
+}
+
+.corner-deco {
+  position: absolute;
+  width: 0.5in;
+  height: 0.5in;
+  border-style: solid;
+  border-color: #000;
+  border-width: 2pt;
+}
+
+.tl, .top-left { top: 0.15in; left: 0.15in; border-right: 0; border-bottom: 0; }
+.tr, .top-right { top: 0.15in; right: 0.15in; border-left: 0; border-bottom: 0; }
+.bl, .bottom-left { bottom: 0.15in; left: 0.15in; border-right: 0; border-top: 0; }
+.br, .bottom-right { bottom: 0.15in; right: 0.15in; border-left: 0; border-top: 0; }
+
+.signature-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5in;
+}
+
+.signature-field {
+  width: 2in;
+  text-align: center;
+}
+
+.signature-line {
+  border-bottom: 1pt solid #000;
+  height: 0.35in;
+  margin-bottom: 0.05in;
+}
+
+.signature-label {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ====================================================================
+   18. IMAGES & FIGURES
+   ==================================================================== */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  margin: 0.25in 0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+
+figcaption {
+  font-size: 9pt;
+  font-style: italic;
+  margin-top: 0.1in;
+}
+
+.cover-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.author-photo {
+  max-width: 2in;
+  border: 1pt solid #000;
+}
+
+/* ====================================================================
+   19. LINKS — PRINT TREATMENT
+   ==================================================================== */
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+/* Show URLs after external links */
+a[href^="http"]:after {
+  content: " (" attr(href) ")";
+  font-size: 8pt;
+  word-break: break-all;
+}
+
+/* Suppress for internal links */
+a[href^="#"]:after,
+a[href^="xhtml/"]:after,
+a[href^="../"]:after {
+  content: none;
+}
+
+/* ====================================================================
+   20. ABOUT THE AUTHOR
+   ==================================================================== */
+.about-author-section {
+  display: flex;
+  gap: 0.35in;
+  align-items: flex-start;
+}
+
+.author-bio {
+  flex: 1;
+  font-size: 10pt;
+  line-height: 1.5;
+}
+
+/* Author name on title page */
+.author-name {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 14pt;
+  margin-top: 0.5in;
+}
+
+/* ====================================================================
+   21. JOURNAL & DOODLE PAGES
+   ==================================================================== */
+.journal-page,
+.doodle-page {
+  min-height: 7.5in;
+  page-break-inside: avoid;
+}
+
+.journal-page .writing-area {
+  min-height: 5.5in;
+}
+
+.doodle-page {
+  border: 1pt dashed #999;
+  padding: 0.25in;
+}
+
+/* ====================================================================
+   22. DECORATIVE ELEMENTS
+   ==================================================================== */
+.decorative-line {
+  height: 1pt;
+  width: 1.5in;
+  background: #000;
+  margin: 0.25in auto;
+  border: none;
+}
+
+.elegant-divider {
+  height: 2pt;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #000, transparent);
+  margin: 0.35in 0;
+  opacity: 0.5;
+}
+
+.rule-gold {
+  border: none;
+  height: 1pt;
+  background: #999;
+  margin: 0.25in 0;
+}
+
+/* ====================================================================
+   23. LISTS
+   ==================================================================== */
+ol, ul {
+  padding-left: 0.35in;
+  margin: 0.1in 0;
+}
+
+li {
+  margin-bottom: 0.08in;
+  page-break-inside: avoid;
+}
+
+/* Keep list items together with their content */
+.question-card,
+.prompt-card,
+.journal-entry,
+.bib-entry,
+.toc-item,
+.signature-section,
+.rating-section,
+.checklist-item,
+.action-steps,
+.case-study,
+blockquote,
+figure,
+table {
+  page-break-inside: avoid;
+}
+
+/* ====================================================================
+   24. HIDE WEB/EPUB-ONLY ELEMENTS
+   ==================================================================== */
+.cta-section,
+.btn-join,
+.video-link,
+.web-only,
+.epub-download-cta,
+nav[role="doc-toc"] {
+  display: none !important;
+}
+
+/* ====================================================================
+   25. PRINT RESETS
+   ==================================================================== */
+* {
+  box-shadow: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Ensure backgrounds print correctly (for chapter openers) */
+* {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* ====================================================================
+   26. FOOTER (from XHTML)
+   ==================================================================== */
+.footer-section {
+  margin-top: 0.5in;
+  padding-top: 0.15in;
+  border-top: 0.5pt solid #000;
+  text-align: center;
+}
+
+.footer-text {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ====================================================================
+   27. BACKMATTER-SPECIFIC
+   ==================================================================== */
+.backmatter-card {
+  padding: 0.25in;
+}
+
+.key-container {
+  max-width: 100%;
+}
+
+.key-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 18pt;
+  text-align: center;
+  margin-bottom: 0.35in;
+}
+
+/* Affirmation / commitment sections */
+.affirmation-item,
+.commitment-item {
+  margin-bottom: 0.2in;
+}
+
+.commitment-arrow {
+  font-size: 14pt;
+}
+
+/* ====================================================================
+   END OF POD PRINT STYLESHEET — 6.69" x 9.61"
+   ==================================================================== */
