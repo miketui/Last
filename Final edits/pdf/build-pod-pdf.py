@@ -198,6 +198,10 @@ def build_combined_html(xhtml_dir: Path, fonts_dir: Path, pod_css_path: Path) ->
     font_css = build_font_css(fonts_dir)
     pod_css = pod_css_path.read_text(encoding="utf-8")
 
+    # Backmatter files that should flow together without forced page breaks
+    BACKMATTER_START = "29-QuizKey.xhtml"
+    backmatter_started = False
+
     sections = []
     for i, fname in enumerate(SPINE_ORDER):
         fpath = xhtml_dir / fname
@@ -209,12 +213,28 @@ def build_combined_html(xhtml_dir: Path, fonts_dir: Path, pod_css_path: Path) ->
         if not body:
             continue
 
-        # Add page-break div between documents (not before the first)
-        if i > 0:
-            sections.append('<div class="file-break"></div>')
+        # Detect start of backmatter
+        if fname == BACKMATTER_START:
+            backmatter_started = True
+            # Add file-break before backmatter wrapper, then open wrapper
+            if i > 0:
+                sections.append('<div class="file-break"></div>')
+            sections.append('<!-- ===== BACKMATTER FLOW ===== -->')
+            sections.append('<div class="backmatter-flow">')
+
+        if not backmatter_started:
+            # Add page-break div between documents (not before the first)
+            if i > 0:
+                sections.append('<div class="file-break"></div>')
 
         sections.append(f'<!-- ===== {fname} ===== -->')
+        sections.append(f'<div class="backmatter-item">' if backmatter_started else '')
         sections.append(body)
+        sections.append('</div>' if backmatter_started else '')
+
+    # Close backmatter wrapper
+    if backmatter_started:
+        sections.append('</div><!-- /backmatter-flow -->')
 
     joined = "\n\n".join(sections)
 

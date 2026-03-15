@@ -165,19 +165,19 @@ body {
   padding: 0;
 }
 
-/* Chapter title pages start on recto (right-hand) page */
+/* Chapter title pages start on new page (no blank verso) */
 .chapter-page > main > .chap-title,
 section.chap-title {
-  break-before: right;
+  break-before: page;
   page: nofolio;
 }
 
-/* Part divider pages start on recto */
+/* Part divider pages start on new page (no blank verso) */
 .part-body,
 .part-page,
 div[class*="part-body"],
 section.part-container {
-  break-before: right;
+  break-before: page;
   page: nofolio;
 }
 
@@ -1264,6 +1264,21 @@ nav[role="doc-toc"] {
 }
 
 /* ====================================================================
+   BACKMATTER FLOW — compact short backmatter items onto fewer pages
+   ==================================================================== */
+
+/* Backmatter flow: each file starts on a new page, but no blank recto pages */
+.backmatter-flow .backmatter-item {
+  page-break-before: always;
+  break-before: page;
+}
+/* First backmatter item doesn't need a break (container already broke) */
+.backmatter-flow .backmatter-item:first-child {
+  page-break-before: auto;
+  break-before: auto;
+}
+
+/* ====================================================================
    END OF POD PRINT STYLESHEET — 6.69" x 9.61"
    ==================================================================== */
 
@@ -1271,6 +1286,8 @@ nav[role="doc-toc"] {
 </head>
 <body>
 <!-- ===== 1-TitlePage.xhtml ===== -->
+
+
 
 <div class="title-page-body" data-source="1-TitlePage.xhtml">
 <section class="frontmatter-shell title-page" aria-label="Title Page">
@@ -1284,9 +1301,13 @@ nav[role="doc-toc"] {
   </section>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 2-Copyright.xhtml ===== -->
+
+
 
 <div class="copyright-body" data-source="2-Copyright.xhtml">
 <section class="frontmatter-shell copyright-page" aria-label="Copyright Page">
@@ -1313,9 +1334,13 @@ nav[role="doc-toc"] {
   </section>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 3-TableOfContents.xhtml ===== -->
+
+
 
 <div class="toc-body" data-source="3-TableOfContents.xhtml">
 <nav role="doc-toc">
@@ -1375,9 +1400,13 @@ nav[role="doc-toc"] {
   </nav>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 4-Dedication.xhtml ===== -->
+
+
 
 <div class="dedication-body" data-source="4-Dedication.xhtml">
 <section class="frontmatter-shell dedication-page" aria-label="Dedication">
@@ -1405,9 +1434,13 @@ nav[role="doc-toc"] {
   </section>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 5-SelfAssessment.xhtml ===== -->
+
+
 
 <div data-source="5-SelfAssessment.xhtml">
 <div class="epub-download-cta">
@@ -1467,9 +1500,13 @@ nav[role="doc-toc"] {
   </div>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 6-AffirmationOdyssey.xhtml ===== -->
+
+
 
 <div data-source="6-AffirmationOdyssey.xhtml">
 <div class="worksheet-page">
@@ -1524,9 +1561,13 @@ nav[role="doc-toc"] {
   </div>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 7-Preface.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="7-Preface.xhtml">
 <main role="main">
@@ -1568,9 +1609,13 @@ nav[role="doc-toc"] {
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 7a-preface-quote.xhtml ===== -->
+
+
 
 <div class="quote-page" data-source="7a-preface-quote.xhtml">
 <main role="main">
@@ -1583,9 +1628,13 @@ nav[role="doc-toc"] {
   </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 8-Part-I-Foundations-of-Creative-Hairstyling.xhtml ===== -->
+
+
 
 <div class="part-body" data-source="8-Part-I-Foundations-of-Creative-Hairstyling.xhtml">
 <section class="part-container" aria-label="Part I Divider">
@@ -1599,9 +1648,13 @@ nav[role="doc-toc"] {
   </section>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 9-chapter-i-unveiling-your-creative-odyssey.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="9-chapter-i-unveiling-your-creative-odyssey.xhtml">
 <main role="main">
@@ -2086,9 +2139,13 @@ nav[role="doc-toc"] {
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 10-chapter-ii-refining-your-creative-toolkit.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="10-chapter-ii-refining-your-creative-toolkit.xhtml">
 <main role="main">
@@ -2537,9 +2594,13 @@ Pay attention to what clients notice: smoother finishes, healthier-looking hair,
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 11-chapter-iii-reigniting-your-creative-fire.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="11-chapter-iii-reigniting-your-creative-fire.xhtml">
 <main role="main">
@@ -2892,9 +2953,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 12-Part-II-Building-Your-Professional-Practice.xhtml ===== -->
+
+
 
 <div class="part-body" data-source="12-Part-II-Building-Your-Professional-Practice.xhtml">
 <section class="part-container" aria-label="Part II Divider">
@@ -2908,9 +2973,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </section>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml">
 <main role="main">
@@ -3381,9 +3450,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml">
 <main role="main">
@@ -3707,9 +3780,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 15-chapter-vi-mastering-the-business-of-hairstyling.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="15-chapter-vi-mastering-the-business-of-hairstyling.xhtml">
 <main role="main">
@@ -4083,9 +4160,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 16-chapter-vii-embracing-wellness-and-self-care.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="16-chapter-vii-embracing-wellness-and-self-care.xhtml">
 <main role="main">
@@ -4381,9 +4462,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 17-chapter-viii-advancing-skills-through-continuous-education.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="17-chapter-viii-advancing-skills-through-continuous-education.xhtml">
 <main role="main">
@@ -4873,9 +4958,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 18-Part-III-Advanced-Business-Strategies.xhtml ===== -->
+
+
 
 <div class="part-body" data-source="18-Part-III-Advanced-Business-Strategies.xhtml">
 <section class="part-container" aria-label="Part III Divider">
@@ -4889,9 +4978,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </section>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 19-chapter-ix-stepping-into-leadership.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="19-chapter-ix-stepping-into-leadership.xhtml">
 <main role="main">
@@ -5392,9 +5485,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 20-chapter-x-crafting-enduring-legacies.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="20-chapter-x-crafting-enduring-legacies.xhtml">
 <main role="main">
@@ -5785,9 +5882,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml">
 <main role="main">
@@ -6215,9 +6316,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml">
 <main role="main">
@@ -6677,9 +6782,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml">
 <main role="main">
@@ -7273,9 +7382,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 24-Part-IV-Future-Focused-Growth.xhtml ===== -->
+
+
 
 <div class="part-body" data-source="24-Part-IV-Future-Focused-Growth.xhtml">
 <section class="part-container" aria-label="Part IV Divider">
@@ -7289,9 +7402,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </section>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml">
 <main role="main">
@@ -7746,9 +7863,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml">
 <main role="main">
@@ -8127,9 +8248,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml">
 <main role="main">
@@ -8527,9 +8652,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 28-Conclusion.xhtml ===== -->
+
+
 
 <div class="chapter-page" data-source="28-Conclusion.xhtml">
 <main role="main">
@@ -8575,9 +8704,13 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </main>
 </div>
 
+
+
 <div class="file-break"></div>
 
 <!-- ===== 28a-conclusion-quote.xhtml ===== -->
+
+
 
 <div class="quote-page" data-source="28a-conclusion-quote.xhtml">
 <div class="page-break"></div>
@@ -8588,9 +8721,17 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </section>
 </div>
 
+
+
 <div class="file-break"></div>
 
+<!-- ===== BACKMATTER FLOW ===== -->
+
+<div class="backmatter-flow">
+
 <!-- ===== 29-QuizKey.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div class="key-body" data-source="29-QuizKey.xhtml">
 <section class="key-container" aria-label="Quiz Answer Key">
@@ -8636,9 +8777,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </section>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 30-SelfAssessment.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="30-SelfAssessment.xhtml">
 <div class="epub-download-cta">
@@ -8706,9 +8849,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 31-affirmations-close.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="31-affirmations-close.xhtml">
 <div class="worksheet-page">
@@ -8764,9 +8909,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 32-continued-learning-commitment.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div class="certificate-body" data-source="32-continued-learning-commitment.xhtml">
 <div class="certificate-border">
@@ -8802,9 +8949,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 33-Acknowledgments.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div class="ack-body" data-source="33-Acknowledgments.xhtml">
 <section class="ack-container" aria-label="Acknowledgments">
@@ -8828,9 +8977,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </section>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 34-AbouttheAuthor.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div class="bio-body" data-source="34-AbouttheAuthor.xhtml">
 <section class="profile-card" aria-label="About the Author">
@@ -8875,9 +9026,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </section>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 35-JournalingStart.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div class="journal-body" data-source="35-JournalingStart.xhtml">
 <div class="epub-download-cta">
@@ -8956,9 +9109,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </main>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 36-ManifestingJournal.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="36-ManifestingJournal.xhtml">
 <div class="epub-download-cta">
@@ -9025,9 +9180,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 37-journal-page.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="37-journal-page.xhtml">
 <div class="epub-download-cta">
@@ -9067,9 +9224,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 38-professional-development.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="38-professional-development.xhtml">
 <div class="epub-download-cta">
@@ -9130,9 +9289,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 39-SMARTGoals.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="39-SMARTGoals.xhtml">
 <div class="epub-download-cta">
@@ -9210,9 +9371,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 40-self-care-journal.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="40-self-care-journal.xhtml">
 <div class="epub-download-cta">
@@ -9284,9 +9447,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 41-VisionJournal.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="41-VisionJournal.xhtml">
 <div class="epub-download-cta">
@@ -9343,9 +9508,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 42-DoodlePage.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div data-source="42-DoodlePage.xhtml">
 <div class="epub-download-cta">
@@ -9392,9 +9559,11 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
   </div>
 </div>
 
-<div class="file-break"></div>
+</div>
 
 <!-- ===== 43-bibliography.xhtml ===== -->
+
+<div class="backmatter-item">
 
 <div class="bib-body" data-source="43-bibliography.xhtml">
 <section class="bib-container" aria-label="Bibliography">
@@ -9528,5 +9697,9 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
   </section>
 </div>
+
+</div>
+
+</div><!-- /backmatter-flow -->
 </body>
 </html>
