@@ -1,5 +1,5 @@
 /*
-  style.css — ACISS Design System for The Artisan's Path
+  style.css — ACISS Design System for Curls & Contemplation
   Complete Stylesheet with All Corrections
   
   Colors: Teal (#2B9999) & Gold (#C9A961)
@@ -1674,28 +1674,6 @@ body.about-author-body {
   margin-bottom: 2rem;
 }
 
-/* Collective/CTA Page Styles */
-body.collective-body {
-  margin: 0;
-  padding: 3rem 2rem;
-  font-family: var(--font-sans);
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  min-height: 100vh;
-}
-
-.collective-container {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.collective-container h1 {
-  font-family: 'Playfair Display', var(--font-body);
-  font-size: 2.2rem;
-  color: var(--clr-teal-dark);
-  margin-bottom: 1rem;
-}
-
 /* Journal Start & Doodle Page Styles */
 body.journal-start-body,
 body.doodle-body {
@@ -2422,40 +2400,6 @@ body.doodle-body {
   margin: 0;
 }
 
-/* Collective Page */
-.collective-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--clr-cream) 0%, var(--clr-paper) 100%);
-}
-
-.collective-container {
-  max-width: 650px;
-  padding: 3rem 2rem;
-  text-align: center;
-  page-break-before: always;
-  page-break-after: always;
-}
-
-.collective-container h1 {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  color: var(--clr-teal-dark);
-  margin-bottom: var(--space-md);
-}
-
-.collective-container p {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--clr-text);
-  margin-bottom: var(--space-md);
-}
-
 /* Journal Lines for Reflection Pages */
 .journal-lines {
   flex: 1;
@@ -2513,6 +2457,24 @@ body.doodle-body {
   font-size: 1rem;
   min-width: 150px;
   background: transparent;
+}
+
+/* ====================================================================
+   EPUB WORKSHEET CTA & TOC PAGE NUMBER RULES
+   ==================================================================== */
+.epub-download-cta {
+  background: var(--clr-teal-faint);
+  border-left: 3px solid var(--clr-teal-primary);
+  padding: 0.75em 1em;
+  margin-bottom: 1.5em;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--clr-text);
+}
+
+.toc-page-number {
+  display: none;
 }
 
 /* ====================================================================
