@@ -444,9 +444,12 @@ section.chap-title {
   font-family: 'Cinzel Decorative', Georgia, serif;
   font-size: 16pt;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
+  word-spacing: 0.15em;
+  font-kerning: normal;
   line-height: 1.3;
   color: #fff;
+  white-space: nowrap;
 }
 
 /* Bible quote on chapter opener */
@@ -1016,6 +1019,15 @@ a[href^="http"]:after {
 a[href^="#"]:after,
 a[href^="xhtml/"]:after,
 a[href^="../"]:after {
+  content: none;
+}
+
+/* Suppress URL duplication in endnotes/footnotes (URL is already visible as link text) */
+.footnote-item a[href^="http"]:after,
+.endnotes a[href^="http"]:after,
+.footnotes a[href^="http"]:after,
+.note-item a[href^="http"]:after,
+.bib-entry a[href^="http"]:after {
   content: none;
 }
 

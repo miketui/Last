@@ -508,9 +508,12 @@ section.chap-title {
   font-family: 'Cinzel Decorative', Georgia, serif;
   font-size: 16pt;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
+  word-spacing: 0.15em;
+  font-kerning: normal;
   line-height: 1.3;
   color: #fff;
+  white-space: nowrap;
 }
 
 /* Bible quote on chapter opener */
@@ -1080,6 +1083,15 @@ a[href^="http"]:after {
 a[href^="#"]:after,
 a[href^="xhtml/"]:after,
 a[href^="../"]:after {
+  content: none;
+}
+
+/* Suppress URL duplication in endnotes/footnotes (URL is already visible as link text) */
+.footnote-item a[href^="http"]:after,
+.endnotes a[href^="http"]:after,
+.footnotes a[href^="http"]:after,
+.note-item a[href^="http"]:after,
+.bib-entry a[href^="http"]:after {
   content: none;
 }
 
@@ -3561,6 +3573,30 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 <!-- PAGE BREAK -->
 <div class="page-break"></div>
 
+<!-- ENDNOTES -->
+      <section class="footnotes footnotes-end-of-document" role="complementary">
+<ol class="footnotes-list">
+<li  class="footnote-item" id="fn-1"><p>T. D. Allen, L. T. Eby, M. L. Poteet, E. Lentz, and L. Lima, "Career Benefits Associated with Mentoring for Protégés: A Meta-Analysis," <em>Journal of Applied Psychology</em>, 2004, <a href="https://psycnet.apa.org/fulltext/2004-15660-007.html">https://psycnet.apa.org/fulltext/2004-15660-007.html</a>.  <a aria-label="Return to reference 1" class="backlink" href="#fnref-1">↩</a></p>
+</li>
+<li  class="footnote-item" id="fn-2"><p>Catie Pusateri, "How Rihanna's Hairstylist Yusef Williams Is Building His Legacy," <em>Fashionista</em>, February 13, 2025, <a href="https://fashionista.com/2025/02/yusef-williams-hairstylist-career-interview">https://fashionista.com/2025/02/yusef-williams-hairstylist-career-interview</a>; Hairbrained, "Hairbrained Q and A: Naeemah LaFond, Global Artistic Director for Amika," <em>American Salon</em>, January 17, 2017, <a href="https://www.americansalon.com/business-career/hairbrained-q-and-a-naeemah-lafond-global-artistic-director-for-amika">https://www.americansalon.com/business-career/hairbrained-q-and-a-naeemah-lafond-global-artistic-director-for-amika</a>; Gina Escandon, "How Vernon François Went From Braiding Mops to Brand Founder," <em>Modern Salon</em>, May 25, 2021, <a href="https://www.modernsalon.com/1075057/how-vernon-francois-went-from-braiding-mops-to-brand-founder">https://www.modernsalon.com/1075057/how-vernon-francois-went-from-braiding-mops-to-brand-founder</a>.  <a aria-label="Return to reference 2" class="backlink" href="#fnref-2">↩</a></p>
+</li>
+<li  class="footnote-item" id="fn-3"><p>Bernard R. Ragins and K. E. Kram, eds., <em>The Handbook of Mentoring at Work: Theory, Research, and Practice</em> (Thousand Oaks, CA: Sage Publications, 2007).  <a aria-label="Return to reference 3" class="backlink" href="#fnref-3">↩</a></p>
+</li>
+<li  class="footnote-item" id="fn-4"><p>Kathy E. Kram, <em>Mentoring at Work: Developmental Relationships in Organizational Life</em> (Glenview, IL: Scott, Foresman, 1985).  <a aria-label="Return to reference 4" class="backlink" href="#fnref-4">↩</a></p>
+</li>
+<li  class="footnote-item" id="fn-5"><p>Peter M. Senge, <em>The Fifth Discipline: The Art &amp; Practice of The Learning Organization</em> (New York: Doubleday, 1990).  <a aria-label="Return to reference 5" class="backlink" href="#fnref-5">↩</a></p>
+</li>
+<li  class="footnote-item" id="fn-6"><p>Author's composite case study based on editorial-industry mentorship patterns and representative mentor-mentee trajectories in fashion and beauty work.  <a aria-label="Return to reference 6" class="backlink" href="#fnref-6">↩</a></p>
+</li>
+<li  class="footnote-item" id="fn-7"><p>Vidal Sassoon, <em>Vidal: The Autobiography</em> (London: Pan Macmillan, 2010).  <a aria-label="Return to reference 7" class="backlink" href="#fnref-7">↩</a></p>
+</li>
+<li  class="footnote-item" id="fn-8"><p>HAIR HAS NO GENDER™, "About HAIR HAS NO GENDER™," accessed March 12, 2026, <a href="https://hairhasnogender.org/about/">https://hairhasnogender.org/about/</a>; HAIR HAS NO GENDER™, "Affirming Service Finder," accessed March 12, 2026, <a href="https://www.hairhasnogender.com/affirming-service-finder/">https://www.hairhasnogender.com/affirming-service-finder/</a>.  <a aria-label="Return to reference 8" class="backlink" href="#fnref-8">↩</a></p>
+</li>
+</ol>
+</section>
+
+<div class="page-break"></div>
+
 <!-- PAGE 6: QUIZ & WORKSHEET -->
 <section aria-labelledby="quiz-title" class="quiz-container chap-quiz avoid-break page-break-before" role="region">
 <header class="quiz-header">
@@ -3665,27 +3701,6 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
       Print this page for journaling and reflection
     </p>
 </footer>
-</section>
-      
-      <section class="footnotes footnotes-end-of-document" role="complementary">
-<ol class="footnotes-list">
-<li  class="footnote-item" id="fn-1"><p>T. D. Allen, L. T. Eby, M. L. Poteet, E. Lentz, and L. Lima, "Career Benefits Associated with Mentoring for Protégés: A Meta-Analysis," <em>Journal of Applied Psychology</em>, 2004, <a href="https://psycnet.apa.org/fulltext/2004-15660-007.html">https://psycnet.apa.org/fulltext/2004-15660-007.html</a>.  <a aria-label="Return to reference 1" class="backlink" href="#fnref-1">↩</a></p>
-</li>
-<li  class="footnote-item" id="fn-2"><p>Catie Pusateri, "How Rihanna's Hairstylist Yusef Williams Is Building His Legacy," <em>Fashionista</em>, February 13, 2025, <a href="https://fashionista.com/2025/02/yusef-williams-hairstylist-career-interview">https://fashionista.com/2025/02/yusef-williams-hairstylist-career-interview</a>; Hairbrained, "Hairbrained Q and A: Naeemah LaFond, Global Artistic Director for Amika," <em>American Salon</em>, January 17, 2017, <a href="https://www.americansalon.com/business-career/hairbrained-q-and-a-naeemah-lafond-global-artistic-director-for-amika">https://www.americansalon.com/business-career/hairbrained-q-and-a-naeemah-lafond-global-artistic-director-for-amika</a>; Gina Escandon, "How Vernon François Went From Braiding Mops to Brand Founder," <em>Modern Salon</em>, May 25, 2021, <a href="https://www.modernsalon.com/1075057/how-vernon-francois-went-from-braiding-mops-to-brand-founder">https://www.modernsalon.com/1075057/how-vernon-francois-went-from-braiding-mops-to-brand-founder</a>.  <a aria-label="Return to reference 2" class="backlink" href="#fnref-2">↩</a></p>
-</li>
-<li  class="footnote-item" id="fn-3"><p>Bernard R. Ragins and K. E. Kram, eds., <em>The Handbook of Mentoring at Work: Theory, Research, and Practice</em> (Thousand Oaks, CA: Sage Publications, 2007).  <a aria-label="Return to reference 3" class="backlink" href="#fnref-3">↩</a></p>
-</li>
-<li  class="footnote-item" id="fn-4"><p>Kathy E. Kram, <em>Mentoring at Work: Developmental Relationships in Organizational Life</em> (Glenview, IL: Scott, Foresman, 1985).  <a aria-label="Return to reference 4" class="backlink" href="#fnref-4">↩</a></p>
-</li>
-<li  class="footnote-item" id="fn-5"><p>Peter M. Senge, <em>The Fifth Discipline: The Art &amp; Practice of The Learning Organization</em> (New York: Doubleday, 1990).  <a aria-label="Return to reference 5" class="backlink" href="#fnref-5">↩</a></p>
-</li>
-<li  class="footnote-item" id="fn-6"><p>Author's composite case study based on editorial-industry mentorship patterns and representative mentor-mentee trajectories in fashion and beauty work.  <a aria-label="Return to reference 6" class="backlink" href="#fnref-6">↩</a></p>
-</li>
-<li  class="footnote-item" id="fn-7"><p>Vidal Sassoon, <em>Vidal: The Autobiography</em> (London: Pan Macmillan, 2010).  <a aria-label="Return to reference 7" class="backlink" href="#fnref-7">↩</a></p>
-</li>
-<li  class="footnote-item" id="fn-8"><p>HAIR HAS NO GENDER™, "About HAIR HAS NO GENDER™," accessed March 12, 2026, <a href="https://hairhasnogender.org/about/">https://hairhasnogender.org/about/</a>; HAIR HAS NO GENDER™, "Affirming Service Finder," accessed March 12, 2026, <a href="https://www.hairhasnogender.com/affirming-service-finder/">https://www.hairhasnogender.com/affirming-service-finder/</a>.  <a aria-label="Return to reference 8" class="backlink" href="#fnref-8">↩</a></p>
-</li>
-</ol>
 </section>
     </section>
 
@@ -4232,8 +4247,22 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 <li>Self-care is a commitment to yourself and your career, creating a positive impact on clients, colleagues, and the industry at large.</li>
 </ol>
 </div>
-<aside class="endnotes page-break-after" role="complementary">
-</aside>
+<!-- ENDNOTES -->
+<section class="footnotes footnotes-end-of-document" role="complementary">
+<ol class="footnotes-list">
+<li class="footnote-item"  id="fn-1"><p>U.S. Occupational Safety and Health Administration, "Ergonomics in the Workplace," 2020, accessed March 8, 2025, <a href="https://www.osha.gov/ergonomics">https://www.osha.gov/ergonomics</a>.  <a aria-label="Return to reference 1" class="backlink" href="#fnref-1">↩</a></p>
+</li>
+<li class="footnote-item"  id="fn-2"><p>Jen Atkin, "Glamour Columnist and Hair Stylist to the Stars Jen Atkin Shares Her Self-Care Tips," Hoffman Institute, accessed July 21, 2025, <a href="https://www.hoffmaninstitute.org/glamour-columnist-and-hair-stylist-to-the-stars-jen-atkin-shares-her-self-care-tips-to-get-us-through-lockdown/">https://www.hoffmaninstitute.org/glamour-columnist-and-hair-stylist-to-the-stars-jen-atkin-shares-her-self-care-tips-to-get-us-through-lockdown/</a>.  <a aria-label="Return to reference 2" class="backlink" href="#fnref-2">↩</a></p>
+</li>
+<li class="footnote-item"  id="fn-3"><p>National Center for Biotechnology Information, "Work-related musculoskeletal disorders and associated risk factors among urban metropolitan hairdressers in India," PMC, accessed July 21, 2025, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7883474/">https://pmc.ncbi.nlm.nih.gov/articles/PMC7883474/</a>.  <a aria-label="Return to reference 3" class="backlink" href="#fnref-3">↩</a></p>
+</li>
+<li class="footnote-item"  id="fn-4"><p>Healthline, "Quick Self‑Care Tips," 2021, accessed March 8, 2025, <a href="https://www.healthline.com">https://www.healthline.com</a>.  <a aria-label="Return to reference 4" class="backlink" href="#fnref-4">↩</a></p>
+</li>
+<li class="footnote-item"  id="fn-5"><p>Freelancers Union, "Health Insurance Options for Freelancers," 2023, accessed March 8, 2025, <a href="https://www.freelancersunion.org">https://www.freelancersunion.org</a>.  <a aria-label="Return to reference 5" class="backlink" href="#fnref-5">↩</a></p>
+</li>
+</ol>
+</section>
+
 <!-- PAGE BREAK -->
 <div class="page-break"></div>
 <!-- PAGE 6: QUIZ & WORKSHEET -->
@@ -4340,20 +4369,6 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
       Print this page for journaling and reflection
     </p>
 </footer>
-</section>
-<section class="footnotes footnotes-end-of-document" role="complementary">
-<ol class="footnotes-list">
-<li class="footnote-item"  id="fn-1"><p>U.S. Occupational Safety and Health Administration, "Ergonomics in the Workplace," 2020, accessed March 8, 2025, <a href="https://www.osha.gov/ergonomics">https://www.osha.gov/ergonomics</a>.  <a aria-label="Return to reference 1" class="backlink" href="#fnref-1">↩</a></p>
-</li>
-<li class="footnote-item"  id="fn-2"><p>Jen Atkin, "Glamour Columnist and Hair Stylist to the Stars Jen Atkin Shares Her Self-Care Tips," Hoffman Institute, accessed July 21, 2025, <a href="https://www.hoffmaninstitute.org/glamour-columnist-and-hair-stylist-to-the-stars-jen-atkin-shares-her-self-care-tips-to-get-us-through-lockdown/">https://www.hoffmaninstitute.org/glamour-columnist-and-hair-stylist-to-the-stars-jen-atkin-shares-her-self-care-tips-to-get-us-through-lockdown/</a>.  <a aria-label="Return to reference 2" class="backlink" href="#fnref-2">↩</a></p>
-</li>
-<li class="footnote-item"  id="fn-3"><p>National Center for Biotechnology Information, "Work-related musculoskeletal disorders and associated risk factors among urban metropolitan hairdressers in India," PMC, accessed July 21, 2025, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7883474/">https://pmc.ncbi.nlm.nih.gov/articles/PMC7883474/</a>.  <a aria-label="Return to reference 3" class="backlink" href="#fnref-3">↩</a></p>
-</li>
-<li class="footnote-item"  id="fn-4"><p>Healthline, "Quick Self‑Care Tips," 2021, accessed March 8, 2025, <a href="https://www.healthline.com">https://www.healthline.com</a>.  <a aria-label="Return to reference 4" class="backlink" href="#fnref-4">↩</a></p>
-</li>
-<li class="footnote-item"  id="fn-5"><p>Freelancers Union, "Health Insurance Options for Freelancers," 2023, accessed March 8, 2025, <a href="https://www.freelancersunion.org">https://www.freelancersunion.org</a>.  <a aria-label="Return to reference 5" class="backlink" href="#fnref-5">↩</a></p>
-</li>
-</ol>
 </section>
 </section>
 
@@ -4717,9 +4732,30 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 </li>
 </ol>
 </div>
-<aside class="endnotes page-break-after" role="complementary">
-</aside>
-<!-- PAGE BREAK -->
+<!-- ENDNOTES -->
+<section class="footnotes footnotes-end-of-document" role="complementary">
+<ol class="footnotes-list">
+<li class="footnote-item" id="fn-1"><p>Clayton M. Christensen, <em>The Innovator's Dilemma: When New Technologies Cause Great Firms to Fail</em> (Boston: Harvard Business Review Press, 1997). ↩︎</p></li>
+<li class="footnote-item" id="fn-2"><p>Aveda, "Become a professional hair stylist at our Institute," accessed March 12, 2026, <a href="https://www.aveda.com/hair-stylist-education">https://www.aveda.com/hair-stylist-education</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-3"><p>Kathy E. Kram, <em>Mentoring at Work: Developmental Relationships in Organizational Life</em> (Glenview, IL: Scott, Foresman, 1985). ↩︎</p></li>
+<li class="footnote-item" id="fn-4"><p>Ayana D. Byrd and Lori L. Tharps, <em>Hair Story: Untangling the Roots of Black Hair in America</em> (New York: St. Martin's Press, 2014). ↩︎</p></li>
+<li class="footnote-item" id="fn-5"><p>UNESCO, "National training in traditional craftsmanship, design and entrepreneurships for safeguarding of intangible cultural heritage and development of creative industries in Uzbekistan," April 2, 2024, <a href="https://www.unesco.org/en/articles/national-training-traditional-craftsmanship-design-and-entrepreneurships-safeguarding-intangible">https://www.unesco.org/en/articles/national-training-traditional-craftsmanship-design-and-entrepreneurships-safeguarding-intangible</a>; UNESCO Intangible Cultural Heritage, "Regional Centres for Craftsmanship: a strategy for safeguarding the cultural heritage of traditional handicraft," accessed March 12, 2026, <a href="https://ich.unesco.org/en/BSP/regional-centres-for-craftsmanship-a-strategy-for-safeguarding-the-cultural-heritage-of-traditional-handicraft-01169">https://ich.unesco.org/en/BSP/regional-centres-for-craftsmanship-a-strategy-for-safeguarding-the-cultural-heritage-of-traditional-handicraft-01169</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-6"><p>T. D. Allen, L. T. Eby, M. L. Poteet, E. Lentz, and L. Lima, "Career Benefits Associated with Mentoring for Protégés: A Meta-Analysis," <em>Journal of Applied Psychology</em> 89, no. 1 (2004): 127–136. ↩︎</p></li>
+<li class="footnote-item" id="fn-7"><p>Aveda, "Become a professional hair stylist at our Institute," accessed March 12, 2026, <a href="https://www.aveda.com/hair-stylist-education">https://www.aveda.com/hair-stylist-education</a>; Eileen Loh, "Sam Villa: Education IS Self-Care," <em>American Salon</em>, May 9, 2024, <a href="https://www.americansalon.com/education/sam-villa-education-self-care">https://www.americansalon.com/education/sam-villa-education-self-care</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-8"><p>American Salon Staff, "Adir Abergel Offers Education with Adir Presents Academy," <em>American Salon</em>, December 5, 2019, <a href="https://www.americansalon.com/hair/adir-abergel-offers-education-adir-presents-academy">https://www.americansalon.com/hair/adir-abergel-offers-education-adir-presents-academy</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-9"><p>John Hattie and Helen Timperley, "The Power of Feedback," <em>Review of Educational Research</em> 77, no. 1 (2007): 81–112, doi:10.3102/003465430298487. ↩︎</p></li>
+<li class="footnote-item" id="fn-10"><p>American Salon Staff, "Adir Abergel Offers Education with Adir Presents Academy," <em>American Salon</em>, December 5, 2019, <a href="https://www.americansalon.com/hair/adir-abergel-offers-education-adir-presents-academy">https://www.americansalon.com/hair/adir-abergel-offers-education-adir-presents-academy</a>; North American Hairstyling Awards, "North American Hairstyling Awards," accessed March 12, 2026, <a href="https://www.nahaawards.com/">https://www.nahaawards.com/</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-11"><p>North American Hairstyling Awards, "North American Hairstyling Awards," accessed March 12, 2026, <a href="https://www.nahaawards.com/">https://www.nahaawards.com/</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-12"><p>YouTube, "YouTube," accessed March 12, 2026, <a href="https://www.youtube.com/">https://www.youtube.com/</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-13"><p>U.S. Small Business Administration, "Get local assistance," accessed March 12, 2026, <a href="https://www.sba.gov/local-assistance">https://www.sba.gov/local-assistance</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-14"><p>Wella Professionals, "Education &amp; Events," accessed March 12, 2026, <a href="https://www.wella.com/professional/en-UK/educationevents">https://www.wella.com/professional/en-UK/educationevents</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-15"><p>LinkedIn Help, "Find courses with assessments in Learning," accessed March 12, 2026, <a href="https://www.linkedin.com/help/linkedin/answer/a701847">https://www.linkedin.com/help/linkedin/answer/a701847</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-16"><p>LinkedIn Learning, "Measuring Learning Effectiveness," accessed March 12, 2026, <a href="https://www.linkedin.com/learning/measuring-learning-effectiveness">https://www.linkedin.com/learning/measuring-learning-effectiveness</a>. ↩︎</p></li>
+<li class="footnote-item" id="fn-17"><p>Author's scheduling and microlearning framework. ↩︎</p></li>
+<li class="footnote-item" id="fn-18"><p>Eileen Loh, "Sam Villa: Education IS Self-Care," <em>American Salon</em>, May 9, 2024, <a href="https://www.americansalon.com/education/sam-villa-education-self-care">https://www.americansalon.com/education/sam-villa-education-self-care</a>. ↩︎</p></li>
+</ol>
+</section>
+
 <div class="page-break"></div>
 <!-- PAGE 6: QUIZ & WORKSHEET -->
 <section aria-labelledby="quiz-title" class="quiz-container chap-quiz avoid-break page-break-before" role="region">
@@ -4825,28 +4861,6 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
       Print this page for journaling and reflection
     </p>
 </footer>
-</section>
-<section class="footnotes footnotes-end-of-document" role="complementary">
-<ol class="footnotes-list">
-<li class="footnote-item" id="fn-1"><p>Clayton M. Christensen, <em>The Innovator's Dilemma: When New Technologies Cause Great Firms to Fail</em> (Boston: Harvard Business Review Press, 1997). ↩︎</p></li>
-<li class="footnote-item" id="fn-2"><p>Aveda, "Become a professional hair stylist at our Institute," accessed March 12, 2026, <a href="https://www.aveda.com/hair-stylist-education">https://www.aveda.com/hair-stylist-education</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-3"><p>Kathy E. Kram, <em>Mentoring at Work: Developmental Relationships in Organizational Life</em> (Glenview, IL: Scott, Foresman, 1985). ↩︎</p></li>
-<li class="footnote-item" id="fn-4"><p>Ayana D. Byrd and Lori L. Tharps, <em>Hair Story: Untangling the Roots of Black Hair in America</em> (New York: St. Martin's Press, 2014). ↩︎</p></li>
-<li class="footnote-item" id="fn-5"><p>UNESCO, "National training in traditional craftsmanship, design and entrepreneurships for safeguarding of intangible cultural heritage and development of creative industries in Uzbekistan," April 2, 2024, <a href="https://www.unesco.org/en/articles/national-training-traditional-craftsmanship-design-and-entrepreneurships-safeguarding-intangible">https://www.unesco.org/en/articles/national-training-traditional-craftsmanship-design-and-entrepreneurships-safeguarding-intangible</a>; UNESCO Intangible Cultural Heritage, "Regional Centres for Craftsmanship: a strategy for safeguarding the cultural heritage of traditional handicraft," accessed March 12, 2026, <a href="https://ich.unesco.org/en/BSP/regional-centres-for-craftsmanship-a-strategy-for-safeguarding-the-cultural-heritage-of-traditional-handicraft-01169">https://ich.unesco.org/en/BSP/regional-centres-for-craftsmanship-a-strategy-for-safeguarding-the-cultural-heritage-of-traditional-handicraft-01169</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-6"><p>T. D. Allen, L. T. Eby, M. L. Poteet, E. Lentz, and L. Lima, "Career Benefits Associated with Mentoring for Protégés: A Meta-Analysis," <em>Journal of Applied Psychology</em> 89, no. 1 (2004): 127–136. ↩︎</p></li>
-<li class="footnote-item" id="fn-7"><p>Aveda, "Become a professional hair stylist at our Institute," accessed March 12, 2026, <a href="https://www.aveda.com/hair-stylist-education">https://www.aveda.com/hair-stylist-education</a>; Eileen Loh, "Sam Villa: Education IS Self-Care," <em>American Salon</em>, May 9, 2024, <a href="https://www.americansalon.com/education/sam-villa-education-self-care">https://www.americansalon.com/education/sam-villa-education-self-care</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-8"><p>American Salon Staff, "Adir Abergel Offers Education with Adir Presents Academy," <em>American Salon</em>, December 5, 2019, <a href="https://www.americansalon.com/hair/adir-abergel-offers-education-adir-presents-academy">https://www.americansalon.com/hair/adir-abergel-offers-education-adir-presents-academy</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-9"><p>John Hattie and Helen Timperley, "The Power of Feedback," <em>Review of Educational Research</em> 77, no. 1 (2007): 81–112, doi:10.3102/003465430298487. ↩︎</p></li>
-<li class="footnote-item" id="fn-10"><p>American Salon Staff, "Adir Abergel Offers Education with Adir Presents Academy," <em>American Salon</em>, December 5, 2019, <a href="https://www.americansalon.com/hair/adir-abergel-offers-education-adir-presents-academy">https://www.americansalon.com/hair/adir-abergel-offers-education-adir-presents-academy</a>; North American Hairstyling Awards, "North American Hairstyling Awards," accessed March 12, 2026, <a href="https://www.nahaawards.com/">https://www.nahaawards.com/</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-11"><p>North American Hairstyling Awards, "North American Hairstyling Awards," accessed March 12, 2026, <a href="https://www.nahaawards.com/">https://www.nahaawards.com/</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-12"><p>YouTube, "YouTube," accessed March 12, 2026, <a href="https://www.youtube.com/">https://www.youtube.com/</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-13"><p>U.S. Small Business Administration, "Get local assistance," accessed March 12, 2026, <a href="https://www.sba.gov/local-assistance">https://www.sba.gov/local-assistance</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-14"><p>Wella Professionals, "Education &amp; Events," accessed March 12, 2026, <a href="https://www.wella.com/professional/en-UK/educationevents">https://www.wella.com/professional/en-UK/educationevents</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-15"><p>LinkedIn Help, "Find courses with assessments in Learning," accessed March 12, 2026, <a href="https://www.linkedin.com/help/linkedin/answer/a701847">https://www.linkedin.com/help/linkedin/answer/a701847</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-16"><p>LinkedIn Learning, "Measuring Learning Effectiveness," accessed March 12, 2026, <a href="https://www.linkedin.com/learning/measuring-learning-effectiveness">https://www.linkedin.com/learning/measuring-learning-effectiveness</a>. ↩︎</p></li>
-<li class="footnote-item" id="fn-17"><p>Author's scheduling and microlearning framework. ↩︎</p></li>
-<li class="footnote-item" id="fn-18"><p>Eileen Loh, "Sam Villa: Education IS Self-Care," <em>American Salon</em>, May 9, 2024, <a href="https://www.americansalon.com/education/sam-villa-education-self-care">https://www.americansalon.com/education/sam-villa-education-self-care</a>. ↩︎</p></li>
-</ol>
 </section>
 </section>
 
