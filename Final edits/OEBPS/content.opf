@@ -43,6 +43,7 @@
     <!-- Images -->
     <item id="img-michael" href="images/Michael.jpeg" media-type="image/jpeg"/>
     <item id="img-brushstroke" href="images/brushstroke.svg" media-type="image/svg+xml"/>
+    <item id="img-brushstroke-png" href="images/brushstroke.png" media-type="image/png"/>
     <item id="img-preface-quote" href="images/preface-quote.jpeg" media-type="image/jpeg"/>
     <item id="img-conclusion-quote" href="images/conclusion-quote.jpeg" media-type="image/jpeg"/>
     <item id="img-chapter-i-quote" href="images/chapter-i-quote.jpeg" media-type="image/jpeg"/>
