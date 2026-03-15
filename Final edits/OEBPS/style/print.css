@@ -1063,5 +1063,25 @@ nav[role="doc-toc"] {
 }
 
 /* ====================================================================
+   EPUB CTA & TOC PAGE NUMBER OVERRIDES FOR PRINT
+   ==================================================================== */
+.epub-download-cta {
+  display: none !important;
+}
+
+.toc-page-number {
+  float: right;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 0.9em;
+}
+
+.toc-entry {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted #999;
+  padding: 0.2em 0;
+}
+
+/* ====================================================================
    END OF PRINT STYLESHEET
    ==================================================================== */

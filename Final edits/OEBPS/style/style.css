@@ -2516,5 +2516,23 @@ body.doodle-body {
 }
 
 /* ====================================================================
+   EPUB WORKSHEET CTA & TOC PAGE NUMBER RULES
+   ==================================================================== */
+.epub-download-cta {
+  background: var(--clr-teal-faint);
+  border-left: 3px solid var(--clr-teal-primary);
+  padding: 0.75em 1em;
+  margin-bottom: 1.5em;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--clr-text);
+}
+
+.toc-page-number {
+  display: none;
+}
+
+/* ====================================================================
    END OF STYLESHEET
    ==================================================================== */

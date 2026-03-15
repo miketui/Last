@@ -2,19 +2,20 @@
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" xml:lang="en">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
     <dc:identifier id="bookid">urn:uuid:c8d4e5f6-a1b2-4c3d-9e8f-0a1b2c3d4e5f</dc:identifier>
-    <dc:title>Curls &amp; Contemplation: A Freelance Hairstylist's Guide to Creative Excellence</dc:title>
+    <dc:identifier id="isbn-epub">urn:isbn:PENDING-EPUB</dc:identifier>
+    <dc:title>Curls &amp; Contemplation: A Stylist's Interactive Journey</dc:title>
     <dc:creator id="creator">Michael David</dc:creator>
     <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
     <dc:language>en</dc:language>
     <dc:publisher>Michael David</dc:publisher>
     <dc:date>2026</dc:date>
-    <dc:description>A comprehensive guide for freelance hairstylists to develop their creative skills, build professional practices, and achieve business success while maintaining wellness and ethical standards.</dc:description>
+    <dc:description>A stylist's interactive journey through creative hairstyling, professional development, business strategies, and personal wellness.</dc:description>
     <dc:subject>Hairstyling</dc:subject>
     <dc:subject>Beauty Industry</dc:subject>
     <dc:subject>Freelance Business</dc:subject>
     <dc:subject>Professional Development</dc:subject>
     <dc:rights>All rights reserved</dc:rights>
-    <meta property="dcterms:modified">2026-03-12T00:00:00Z</meta>
+    <meta property="dcterms:modified">2026-03-15T00:00:00Z</meta>
     <meta name="cover" content="cover-image"/>
   </metadata>
 
