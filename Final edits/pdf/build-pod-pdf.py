@@ -123,10 +123,12 @@ def extract_body(xhtml_path: Path) -> str:
     inner = re.sub(r'\s*xmlns:epub="[^"]*"', '', inner)
 
     # Wrap in a div with the body class for styling
+    # Add id based on filename for anchor-based page number extraction
+    file_id = xhtml_path.stem  # e.g. "9-chapter-i-unveiling-your-creative-odyssey"
     if body_attrs:
-        return f'<div {body_attrs} data-source="{xhtml_path.name}">\n{inner}\n</div>'
+        return f'<div id="src-{file_id}" {body_attrs} data-source="{xhtml_path.name}">\n{inner}\n</div>'
     else:
-        return f'<div data-source="{xhtml_path.name}">\n{inner}\n</div>'
+        return f'<div id="src-{file_id}" data-source="{xhtml_path.name}">\n{inner}\n</div>'
 
 
 def build_font_css(fonts_dir: Path) -> str:
