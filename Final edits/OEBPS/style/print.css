@@ -1,11 +1,11 @@
 /**
- * print.css - 6x9" Print-on-Demand Optimization
- * For: "The Artisan's Path" / "Curls & Contemplation"
- * ACISS Design System
+ * print.css - 6.69x9.61" Print-on-Demand Optimization
+ * For: "Curls & Contemplation: A Stylist's Interactive Journey"
+ * By Michael David
  *
  * This stylesheet extends style.css for PDF Print-on-Demand production.
- * Trim size: 6" x 9" (standard POD format)
- * Optimized for both color and B&W printing options.
+ * Trim size: 6.69" x 9.61" (KDP custom trim)
+ * Interior: Black & white on white paper, no bleed.
  *
  * Version: 2.1 - Final Corrected
  */
@@ -14,18 +14,16 @@
 @import url('style.css');
 
 /* ====================================================================
-   1. PAGE SETUP - 6x9" TRIM SIZE
-   ==================================================================== */
-/* ====================================================================
-   1. PAGE SETUP - 6x9" TRIM SIZE (PrinceXML + POD friendly)
+   1. PAGE SETUP - 6.69x9.61" TRIM SIZE (PrinceXML + POD friendly)
    Notes:
    - KDP/most POD printers do NOT want crop marks unless you are doing full-bleed.
    - Use :left/:right to control inside (gutter) vs outside margins.
+   - Trim: 6.69" x 9.61" | Ink: B&W | Paper: White | Bleed: None
    ==================================================================== */
 
 /* Default page box */
 @page {
-  size: 6in 9in;
+  size: 6.69in 9.61in;
 
   /* Top/Bottom margins (tune later if needed) */
   margin-top: 0.75in;
