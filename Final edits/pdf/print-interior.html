@@ -85,28 +85,28 @@
    ==================================================================== */
 @page {
   size: 6.69in 9.61in;
-  margin-top: 0.75in;
-  margin-bottom: 0.75in;
-  margin-left: 0.70in;
-  margin-right: 0.70in;
+  margin-top: 0.80in;
+  margin-bottom: 0.80in;
+  margin-left: 0.80in;
+  margin-right: 0.80in;
 
   @bottom-center {
     content: counter(page);
     font-family: 'Montserrat', Arial, sans-serif;
-    font-size: 9pt;
-    letter-spacing: 0.02em;
+    font-size: 8pt;
+    letter-spacing: 0.08em;
   }
 }
 
 /* Verso (left/even) pages: gutter on LEFT */
 @page :left {
   margin-left: 0.95in;
-  margin-right: 0.70in;
+  margin-right: 0.80in;
 }
 
 /* Recto (right/odd) pages: gutter on RIGHT */
 @page :right {
-  margin-left: 0.70in;
+  margin-left: 0.80in;
   margin-right: 0.95in;
 }
 
@@ -135,7 +135,7 @@ html {
 body {
   font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
   font-size: 11pt;
-  line-height: 1.5;
+  line-height: 1.65;
   color: #000;
   background: #fff;
   margin: 0;
@@ -156,64 +156,68 @@ body {
    We need page breaks between files and for key section types.
    ==================================================================== */
 
-/* Break between concatenated files */
+/* Break between concatenated files — purely semantic separator.
+   All page breaks are handled by wrapper-div classes below. */
 .file-break {
-  break-after: page;
-  page-break-after: always;
   height: 0;
   margin: 0;
   padding: 0;
 }
 
-/* Chapter title pages start on new page (no blank verso) */
-.chapter-page > main > .chap-title,
-section.chap-title {
+/* ---- WRAPPER-LEVEL page breaks (exactly one break per section) ----
+   NOTE: We intentionally do NOT use "page: nofolio" on any element.
+   Named-page changes cause WeasyPrint to insert implicit blank pages.
+   Folio suppression is handled via @page :first instead. */
+
+/* Chapter wrappers */
+.chapter-page {
   break-before: page;
-  page: nofolio;
+  page-break-before: always;
 }
 
-/* Part divider pages start on new page (no blank verso) */
+/* Part divider wrappers */
 .part-body,
 .part-page,
 div[class*="part-body"],
 section.part-container {
   break-before: page;
-  page: nofolio;
+  page-break-before: always;
 }
 
-/* Standalone quote pages */
+/* Standalone quote page wrappers */
 .quote-page,
 section.image-quote,
 div.quote-page {
   break-before: page;
-  page: nofolio;
+  page-break-before: always;
 }
 
-/* Frontmatter pages: suppress folio */
-.title-page-body,
+/* Frontmatter wrappers */
 .copyright-body,
 .toc-body,
-.frontmatter-shell,
-div[class*="title-page"],
-div[class*="copyright"] {
-  page: nofolio;
+.dedication-body {
+  break-before: page;
+  page-break-before: always;
 }
 
-/* Force page breaks before these major sections */
-.frontmatter-shell,
+/* Worksheet page wrappers (frontmatter worksheets) */
+.worksheet-page-body {
+  break-before: page;
+  page-break-before: always;
+}
+
+/* ---- Backmatter & in-chapter sections that need their own breaks ---- */
 .backmatter-card,
 .certificate-border,
 .bib-container,
-.key-container,
-.chapter-opener,
-section[class*="chap-body"],
-.image-quote,
-.quote-page {
+.key-container {
   page-break-before: always;
   break-before: page;
 }
 
 /* Chapter body, endnotes, quiz, worksheet — each starts on new page */
+.chapter-opener,
+section[class*="chap-body"],
 .endnotes,
 .quiz-section,
 .worksheet-card {
@@ -226,23 +230,25 @@ section[class*="chap-body"],
    ==================================================================== */
 h1, .frontmatter-title, .main-title {
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: 24pt;
-  line-height: 1.2;
+  font-size: 28pt;
+  line-height: 1.15;
   color: #000;
   text-align: center;
+  letter-spacing: 0.04em;
   margin-top: 0;
-  margin-bottom: 0.5in;
+  margin-bottom: 0.6in;
   page-break-after: avoid;
 }
 
 h1.main-title {
-  font-size: 28pt;
-  margin-bottom: 0.25in;
+  font-size: 34pt;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.35in;
 }
 
 h1.part-title {
-  font-size: 22pt;
-  margin-bottom: 0.35in;
+  font-size: 26pt;
+  margin-bottom: 0.4in;
 }
 
 h2, .subtitle, .toc-title {
@@ -251,10 +257,10 @@ h2, .subtitle, .toc-title {
   font-weight: 700;
   color: #000;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   page-break-after: avoid;
-  margin-top: 0.5in;
-  margin-bottom: 0.25in;
+  margin-top: 0.6in;
+  margin-bottom: 0.3in;
 }
 
 h3 {
@@ -262,9 +268,10 @@ h3 {
   font-size: 12pt;
   font-weight: 700;
   color: #000;
+  letter-spacing: 0.05em;
   page-break-after: avoid;
-  margin-top: 0.35in;
-  margin-bottom: 0.15in;
+  margin-top: 0.45in;
+  margin-bottom: 0.2in;
 }
 
 h4, h5, h6 {
@@ -273,8 +280,8 @@ h4, h5, h6 {
   font-weight: 700;
   color: #000;
   page-break-after: avoid;
-  margin-top: 0.25in;
-  margin-bottom: 0.1in;
+  margin-top: 0.3in;
+  margin-bottom: 0.15in;
 }
 
 /* Prevent orphaned headings */
@@ -290,7 +297,7 @@ p {
   text-align: justify;
   text-indent: 0.25in;
   margin: 0;
-  margin-bottom: 0.1in;
+  margin-bottom: 0.15in;
 }
 
 /* First paragraph after heading — no indent */
@@ -306,24 +313,24 @@ blockquote + p,
    6. FRONTMATTER
    ==================================================================== */
 
-/* Title Page */
+/* Title Page — luxury editorial style */
 .title-page-body {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 7.5in;
+  min-height: 8in;
   text-align: center;
   border: 2pt solid #000;
-  padding: 0.5in;
+  padding: 0.8in 0.6in;
 }
 
-/* Copyright Page */
+/* Copyright Page — left-aligned publishing format, airy spacing */
 .copyright-body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 7.5in;
+  min-height: 6.5in;
   padding-bottom: 1in;
 }
 
@@ -335,24 +342,28 @@ blockquote + p,
 .publisher-info {
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 9pt;
-  line-height: 1.4;
+  line-height: 1.6;
   text-align: left;
-  margin-bottom: 0.15in;
+  margin-bottom: 0.25in;
 }
 
 .isbn-info,
 .isbn-block {
   font-family: 'Courier New', monospace;
   font-weight: bold;
+  margin-bottom: 0.3in;
 }
 
-/* Dedication */
+/* Dedication — narrow centered column, elegant */
 .dedication-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 7.5in;
+  align-items: center;
+  min-height: 8in;
   text-align: center;
+  max-width: 3in;
+  margin: 0 auto;
 }
 
 .dedication-title {
@@ -363,8 +374,8 @@ blockquote + p,
 .dedication-verse {
   font-style: italic;
   font-size: 12pt;
-  line-height: 1.6;
-  max-width: 3.5in;
+  line-height: 1.8;
+  max-width: 3in;
   margin: 0 auto;
 }
 
@@ -386,21 +397,22 @@ blockquote + p,
 
 .toc-title {
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: 20pt;
+  font-size: 24pt;
   text-align: center;
-  margin-bottom: 0.35in;
+  margin-bottom: 0.5in;
+  letter-spacing: 0.06em;
 }
 
 .toc-part-title {
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 11pt;
   font-weight: 700;
-  margin-top: 0.35in;
-  margin-bottom: 0.15in;
+  margin-top: 0.4in;
+  margin-bottom: 0.2in;
   border-bottom: 1pt solid #000;
-  padding-bottom: 0.05in;
+  padding-bottom: 0.08in;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
 }
 
 .toc-item,
@@ -408,10 +420,10 @@ blockquote + p,
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0.1in;
+  margin-bottom: 0.15in;
   font-size: 10pt;
-  border-bottom: 1px dotted #999;
-  padding-bottom: 0.05in;
+  border-bottom: 1px dotted #bbb;
+  padding-bottom: 0.08in;
 }
 
 .toc-link {
@@ -444,12 +456,11 @@ section.chap-title {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 7.5in;
+  min-height: 8in;
   text-align: center;
-  page-break-after: always;
   background: #000;
   color: #fff;
-  padding: 0.5in;
+  padding: 0.6in 0.5in;
 }
 
 .chap-title h1,
@@ -463,9 +474,9 @@ section.chap-title {
 
 .chapter-number-figure {
   position: relative;
-  width: 1.5in;
-  height: 1in;
-  margin-bottom: 0.35in;
+  width: 2in;
+  height: 1.3in;
+  margin-bottom: 0.5in;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -485,33 +496,34 @@ section.chap-title {
   position: relative;
   z-index: 2;
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: 24pt;
+  font-size: 30pt;
   color: #fff;
   font-style: normal;
   margin: 0;
   padding: 0;
   line-height: 1;
+  letter-spacing: 0.05em;
 }
 
 .title-stack {
-  margin-bottom: 0.35in;
+  margin-bottom: 0.5in;
 }
 
 .title-bar {
-  width: 0.5in;
-  height: 3pt;
+  width: 0.8in;
+  height: 2pt;
   background: #fff;
-  margin: 0 auto 0.2in;
+  margin: 0 auto 0.3in;
 }
 
 .title-line {
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: 16pt;
+  font-size: 20pt;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
   word-spacing: 0.15em;
   font-kerning: normal;
-  line-height: 1.3;
+  line-height: 1.4;
   color: #fff;
   white-space: nowrap;
 }
@@ -583,23 +595,23 @@ div[class*="part-body"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 7.5in;
+  min-height: 8in;
   text-align: center;
-  page-break-after: always;
 }
 
 .part-container {
-  max-width: 4.5in;
-  padding: 0.5in;
-  border-top: 4pt solid #000;
+  max-width: 4in;
+  padding: 0.6in;
+  border-top: 3pt solid #000;
+  border-bottom: 1pt solid #000;
 }
 
 .part-number {
   font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 10pt;
-  letter-spacing: 0.2em;
+  font-size: 11pt;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  margin-bottom: 0.15in;
+  margin-bottom: 0.25in;
 }
 
 h2.part-subtitle {
@@ -639,17 +651,31 @@ section.chap-body,
   color: #000;
 }
 
-/* Page break helper used in XHTML */
+/* Drop cap on first paragraph of chapter body (Royal style) —
+   uses initial-letter instead of float (WeasyPrint compatible) */
+.chap-body .content-area > h2:first-child + p:first-letter,
+.chap-body .content-area > p:first-child:first-letter {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 36pt;
+  line-height: 1;
+  padding-right: 0.06in;
+  vertical-align: baseline;
+  color: #000;
+}
+
+/* Page break helper used in XHTML source files.
+   DISABLED in POD print: element-level break-before rules handle all breaks.
+   Keeping the div inert prevents double-breaks with wrapper/element rules. */
 .page-break {
-  page-break-after: always;
-  break-after: page;
   height: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* ====================================================================
    11. BLOCKQUOTES & QUOTES
    ==================================================================== */
-blockquote, .quote-figure {
+blockquote {
   margin: 0.35in 0.5in;
   padding: 0;
   font-style: italic;
@@ -667,7 +693,7 @@ blockquote cite,
   margin-top: 0.1in;
 }
 
-/* Full-page image quote pages */
+/* Full-page image quote pages — breaks handled by .quote-page wrapper */
 .quote-page,
 .image-quote,
 section.image-quote {
@@ -675,16 +701,20 @@ section.image-quote {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 7.5in;
+  min-height: 8in;
   text-align: center;
-  padding: 0.5in;
-  page-break-before: always;
-  page-break-after: always;
+  padding: 0.25in;
+}
+
+.quote-figure {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .quote-figure img {
-  max-width: 100%;
-  max-height: 7.5in;
+  width: 100%;
+  max-height: 8.5in;
   object-fit: contain;
 }
 
@@ -694,8 +724,8 @@ section.image-quote {
 .action-steps {
   border: 1pt solid #000;
   border-left: 4pt solid #000;
-  padding: 0.2in;
-  margin: 0.25in 0;
+  padding: 0.3in;
+  margin: 0.4in 0;
   background: #f9f9f9;
   page-break-inside: avoid;
 }
@@ -729,41 +759,46 @@ section.image-quote {
    13. WORKSHEETS & INTERACTIVE ELEMENTS
    ==================================================================== */
 .worksheet-card {
-  border: 1pt solid #000;
-  padding: 0.25in;
-  margin: 0.25in 0;
+  border: 2pt solid #000;
+  padding: 0.35in;
+  margin: 0.35in 0;
   background: #fff;
   page-break-inside: avoid;
 }
 
 .worksheet-header {
-  margin-bottom: 0.2in;
+  margin-bottom: 0.3in;
   text-align: center;
+  padding-bottom: 0.2in;
+  border-bottom: 1pt solid #ccc;
 }
 
 .worksheet-title {
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: 14pt;
+  font-size: 16pt;
   text-align: center;
-  margin-bottom: 0.2in;
+  margin-bottom: 0.15in;
+  letter-spacing: 0.04em;
 }
 
 .worksheet-instructions {
   font-size: 9pt;
   font-style: italic;
   text-align: center;
-  margin-bottom: 0.2in;
+  margin-bottom: 0.25in;
 }
 
 .question-card {
-  margin-bottom: 0.25in;
+  margin-bottom: 0.35in;
   page-break-inside: avoid;
+  padding-bottom: 0.15in;
+  border-bottom: 0.5pt solid #e0e0e0;
 }
 
 .question-header {
   display: flex;
   align-items: baseline;
-  margin-bottom: 0.1in;
+  margin-bottom: 0.15in;
 }
 
 .question-number {
@@ -1110,11 +1145,12 @@ a[href^="../"]:after {
   line-height: 1.5;
 }
 
-/* Author name on title page */
+/* Author name on title page — positioned in bottom third */
 .author-name {
   font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: 14pt;
-  margin-top: 0.5in;
+  font-size: 16pt;
+  margin-top: auto;
+  letter-spacing: 0.08em;
 }
 
 /* ====================================================================
@@ -1289,7 +1325,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="title-page-body" data-source="1-TitlePage.xhtml">
+<div id="src-1-TitlePage" class="title-page-body" data-source="1-TitlePage.xhtml">
 <section class="frontmatter-shell title-page" aria-label="Title Page">
     <div class="corner-deco top-right" aria-hidden="true"></div>
     <div class="corner-deco bottom-left" aria-hidden="true"></div>
@@ -1309,7 +1345,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="copyright-body" data-source="2-Copyright.xhtml">
+<div id="src-2-Copyright" class="copyright-body" data-source="2-Copyright.xhtml">
 <section class="frontmatter-shell copyright-page" aria-label="Copyright Page">
     <div class="divider" aria-hidden="true"></div>
 
@@ -1342,7 +1378,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="toc-body" data-source="3-TableOfContents.xhtml">
+<div id="src-3-TableOfContents" class="toc-body" data-source="3-TableOfContents.xhtml">
 <nav role="doc-toc">
     <h1 class="toc-title">CONTENTS</h1>
     <div class="decorative-line" aria-hidden="true"></div>
@@ -1350,52 +1386,52 @@ nav[role="doc-toc"] {
     <div class="toc-list">
 
       <div class="toc-part-title">Frontmatter</div>
-      <div class="toc-item toc-entry"><a href="4-Dedication.xhtml" class="toc-link">Dedication</a><span class="toc-page-number">iv</span></div>
-      <div class="toc-item toc-entry"><a href="5-SelfAssessment.xhtml" class="toc-link">First Self-Assessment Worksheet</a><span class="toc-page-number">v</span></div>
-      <div class="toc-item toc-entry"><a href="6-AffirmationOdyssey.xhtml" class="toc-link">Affirmation Odyssey Worksheet</a><span class="toc-page-number">vi</span></div>
-      <div class="toc-item toc-entry"><a href="7-Preface.xhtml" class="toc-link">Preface</a><span class="toc-page-number">vii</span></div>
+      <div class="toc-item toc-entry"><a href="4-Dedication.xhtml" class="toc-link">Dedication</a><span class="toc-page-number">4</span></div>
+      <div class="toc-item toc-entry"><a href="5-SelfAssessment.xhtml" class="toc-link">First Self-Assessment Worksheet</a><span class="toc-page-number">6</span></div>
+      <div class="toc-item toc-entry"><a href="6-AffirmationOdyssey.xhtml" class="toc-link">Affirmation Odyssey Worksheet</a><span class="toc-page-number">8</span></div>
+      <div class="toc-item toc-entry"><a href="7-Preface.xhtml" class="toc-link">Preface</a><span class="toc-page-number">10</span></div>
 
       <div class="toc-part-title">Part I: Foundations of Creative Hairstyling</div>
-      <div class="toc-item toc-entry"><a href="9-chapter-i-unveiling-your-creative-odyssey.xhtml" class="toc-link"><span class="toc-chapter-num">I</span>Unveiling Your Creative Odyssey</a><span class="toc-page-number">3</span></div>
-      <div class="toc-item toc-entry"><a href="10-chapter-ii-refining-your-creative-toolkit.xhtml" class="toc-link"><span class="toc-chapter-num">II</span>Refining Your Creative Toolkit</a><span class="toc-page-number">23</span></div>
-      <div class="toc-item toc-entry"><a href="11-chapter-iii-reigniting-your-creative-fire.xhtml" class="toc-link"><span class="toc-chapter-num">III</span>Reigniting Your Creative Fire</a><span class="toc-page-number">43</span></div>
+      <div class="toc-item toc-entry"><a href="9-chapter-i-unveiling-your-creative-odyssey.xhtml" class="toc-link"><span class="toc-chapter-num">I</span>Unveiling Your Creative Odyssey</a><span class="toc-page-number">16</span></div>
+      <div class="toc-item toc-entry"><a href="10-chapter-ii-refining-your-creative-toolkit.xhtml" class="toc-link"><span class="toc-chapter-num">II</span>Refining Your Creative Toolkit</a><span class="toc-page-number">48</span></div>
+      <div class="toc-item toc-entry"><a href="11-chapter-iii-reigniting-your-creative-fire.xhtml" class="toc-link"><span class="toc-chapter-num">III</span>Reigniting Your Creative Fire</a><span class="toc-page-number">72</span></div>
 
       <div class="toc-part-title">Part II: Building Your Professional Practice</div>
-      <div class="toc-item toc-entry"><a href="13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">IV</span>The Art of Networking</a><span class="toc-page-number">65</span></div>
-      <div class="toc-item toc-entry"><a href="14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml" class="toc-link"><span class="toc-chapter-num">V</span>Cultivating Creative Excellence Through Mentorship</a><span class="toc-page-number">87</span></div>
-      <div class="toc-item toc-entry"><a href="15-chapter-vi-mastering-the-business-of-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">VI</span>Mastering the Business of Hairstyling</a><span class="toc-page-number">107</span></div>
-      <div class="toc-item toc-entry"><a href="16-chapter-vii-embracing-wellness-and-self-care.xhtml" class="toc-link"><span class="toc-chapter-num">VII</span>Embracing Wellness and Self-Care</a><span class="toc-page-number">129</span></div>
-      <div class="toc-item toc-entry"><a href="17-chapter-viii-advancing-skills-through-continuous-education.xhtml" class="toc-link"><span class="toc-chapter-num">VIII</span>Advancing Skills Through Continuous Education</a><span class="toc-page-number">149</span></div>
+      <div class="toc-item toc-entry"><a href="13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">IV</span>The Art of Networking</a><span class="toc-page-number">92</span></div>
+      <div class="toc-item toc-entry"><a href="14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml" class="toc-link"><span class="toc-chapter-num">V</span>Cultivating Creative Excellence Through Mentorship</a><span class="toc-page-number">123</span></div>
+      <div class="toc-item toc-entry"><a href="15-chapter-vi-mastering-the-business-of-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">VI</span>Mastering the Business of Hairstyling</a><span class="toc-page-number">154</span></div>
+      <div class="toc-item toc-entry"><a href="16-chapter-vii-embracing-wellness-and-self-care.xhtml" class="toc-link"><span class="toc-chapter-num">VII</span>Embracing Wellness and Self-Care</a><span class="toc-page-number">183</span></div>
+      <div class="toc-item toc-entry"><a href="17-chapter-viii-advancing-skills-through-continuous-education.xhtml" class="toc-link"><span class="toc-chapter-num">VIII</span>Advancing Skills Through Continuous Education</a><span class="toc-page-number">202</span></div>
 
       <div class="toc-part-title">Part III: Advanced Business Strategies</div>
-      <div class="toc-item toc-entry"><a href="19-chapter-ix-stepping-into-leadership.xhtml" class="toc-link"><span class="toc-chapter-num">IX</span>Stepping Into Leadership</a><span class="toc-page-number">173</span></div>
-      <div class="toc-item toc-entry"><a href="20-chapter-x-crafting-enduring-legacies.xhtml" class="toc-link"><span class="toc-chapter-num">X</span>Crafting Enduring Legacies</a><span class="toc-page-number">195</span></div>
-      <div class="toc-item toc-entry"><a href="21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml" class="toc-link"><span class="toc-chapter-num">XI</span>Advanced Digital Strategies</a><span class="toc-page-number">217</span></div>
-      <div class="toc-item toc-entry"><a href="22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml" class="toc-link"><span class="toc-chapter-num">XII</span>Financial Wisdom</a><span class="toc-page-number">239</span></div>
-      <div class="toc-item toc-entry"><a href="23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">XIII</span>Embracing Ethics and Sustainability</a><span class="toc-page-number">261</span></div>
+      <div class="toc-item toc-entry"><a href="19-chapter-ix-stepping-into-leadership.xhtml" class="toc-link"><span class="toc-chapter-num">IX</span>Stepping Into Leadership</a><span class="toc-page-number">244</span></div>
+      <div class="toc-item toc-entry"><a href="20-chapter-x-crafting-enduring-legacies.xhtml" class="toc-link"><span class="toc-chapter-num">X</span>Crafting Enduring Legacies</a><span class="toc-page-number">279</span></div>
+      <div class="toc-item toc-entry"><a href="21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml" class="toc-link"><span class="toc-chapter-num">XI</span>Advanced Digital Strategies</a><span class="toc-page-number">311</span></div>
+      <div class="toc-item toc-entry"><a href="22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml" class="toc-link"><span class="toc-chapter-num">XII</span>Financial Wisdom</a><span class="toc-page-number">344</span></div>
+      <div class="toc-item toc-entry"><a href="23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">XIII</span>Embracing Ethics and Sustainability</a><span class="toc-page-number">378</span></div>
 
       <div class="toc-part-title">Part IV: Future-Focused Growth</div>
-      <div class="toc-item toc-entry"><a href="25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml" class="toc-link"><span class="toc-chapter-num">XIV</span>The Impact of AI on the Beauty Industry</a><span class="toc-page-number">285</span></div>
-      <div class="toc-item toc-entry"><a href="26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">XV</span>Cultivating Resilience and Well-Being</a><span class="toc-page-number">307</span></div>
-      <div class="toc-item toc-entry"><a href="27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">XVI</span>Tresses and Textures</a><span class="toc-page-number">329</span></div>
+      <div class="toc-item toc-entry"><a href="25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml" class="toc-link"><span class="toc-chapter-num">XIV</span>The Impact of AI on the Beauty Industry</a><span class="toc-page-number">425</span></div>
+      <div class="toc-item toc-entry"><a href="26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">XV</span>Cultivating Resilience and Well-Being</a><span class="toc-page-number">461</span></div>
+      <div class="toc-item toc-entry"><a href="27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml" class="toc-link"><span class="toc-chapter-num">XVI</span>Tresses and Textures</a><span class="toc-page-number">488</span></div>
 
       <div class="toc-part-title">Backmatter</div>
-      <div class="toc-item toc-entry"><a href="28-Conclusion.xhtml" class="toc-link">Conclusion</a><span class="toc-page-number">351</span></div>
-      <div class="toc-item toc-entry"><a href="29-QuizKey.xhtml" class="toc-link">Quiz Key</a><span class="toc-page-number">357</span></div>
-      <div class="toc-item toc-entry"><a href="30-SelfAssessment.xhtml" class="toc-link">Self-Assessment Worksheet</a><span class="toc-page-number">361</span></div>
-      <div class="toc-item toc-entry"><a href="31-affirmations-close.xhtml" class="toc-link">Affirmations Close Worksheet</a><span class="toc-page-number">363</span></div>
-      <div class="toc-item toc-entry"><a href="32-continued-learning-commitment.xhtml" class="toc-link">Continued Learning Commitment</a><span class="toc-page-number">365</span></div>
-      <div class="toc-item toc-entry"><a href="33-Acknowledgments.xhtml" class="toc-link">Acknowledgments</a><span class="toc-page-number">367</span></div>
-      <div class="toc-item toc-entry"><a href="34-AbouttheAuthor.xhtml" class="toc-link">About the Author</a><span class="toc-page-number">369</span></div>
-      <div class="toc-item toc-entry"><a href="35-JournalingStart.xhtml" class="toc-link">Journaling Start</a><span class="toc-page-number">371</span></div>
-      <div class="toc-item toc-entry"><a href="36-ManifestingJournal.xhtml" class="toc-link">Manifesting Journal</a><span class="toc-page-number">373</span></div>
-      <div class="toc-item toc-entry"><a href="37-journal-page.xhtml" class="toc-link">Journal Page</a><span class="toc-page-number">375</span></div>
-      <div class="toc-item toc-entry"><a href="38-professional-development.xhtml" class="toc-link">Professional Development Worksheet</a><span class="toc-page-number">377</span></div>
-      <div class="toc-item toc-entry"><a href="39-SMARTGoals.xhtml" class="toc-link">SMART Goals Worksheet</a><span class="toc-page-number">379</span></div>
-      <div class="toc-item toc-entry"><a href="40-self-care-journal.xhtml" class="toc-link">Self-Care Journal</a><span class="toc-page-number">381</span></div>
-      <div class="toc-item toc-entry"><a href="41-VisionJournal.xhtml" class="toc-link">Vision Journal</a><span class="toc-page-number">383</span></div>
-      <div class="toc-item toc-entry"><a href="42-DoodlePage.xhtml" class="toc-link">Doodle Page</a><span class="toc-page-number">385</span></div>
-      <div class="toc-item toc-entry"><a href="43-bibliography.xhtml" class="toc-link">Bibliography</a><span class="toc-page-number">387</span></div>
+      <div class="toc-item toc-entry"><a href="28-Conclusion.xhtml" class="toc-link">Conclusion</a><span class="toc-page-number">519</span></div>
+      <div class="toc-item toc-entry"><a href="29-QuizKey.xhtml" class="toc-link">Quiz Key</a><span class="toc-page-number">523</span></div>
+      <div class="toc-item toc-entry"><a href="30-SelfAssessment.xhtml" class="toc-link">Self-Assessment Worksheet</a><span class="toc-page-number">525</span></div>
+      <div class="toc-item toc-entry"><a href="31-affirmations-close.xhtml" class="toc-link">Affirmations Close Worksheet</a><span class="toc-page-number">527</span></div>
+      <div class="toc-item toc-entry"><a href="32-continued-learning-commitment.xhtml" class="toc-link">Continued Learning Commitment</a><span class="toc-page-number">529</span></div>
+      <div class="toc-item toc-entry"><a href="33-Acknowledgments.xhtml" class="toc-link">Acknowledgments</a><span class="toc-page-number">531</span></div>
+      <div class="toc-item toc-entry"><a href="34-AbouttheAuthor.xhtml" class="toc-link">About the Author</a><span class="toc-page-number">533</span></div>
+      <div class="toc-item toc-entry"><a href="35-JournalingStart.xhtml" class="toc-link">Journaling Start</a><span class="toc-page-number">537</span></div>
+      <div class="toc-item toc-entry"><a href="36-ManifestingJournal.xhtml" class="toc-link">Manifesting Journal</a><span class="toc-page-number">540</span></div>
+      <div class="toc-item toc-entry"><a href="37-journal-page.xhtml" class="toc-link">Journal Page</a><span class="toc-page-number">542</span></div>
+      <div class="toc-item toc-entry"><a href="38-professional-development.xhtml" class="toc-link">Professional Development Worksheet</a><span class="toc-page-number">543</span></div>
+      <div class="toc-item toc-entry"><a href="39-SMARTGoals.xhtml" class="toc-link">SMART Goals Worksheet</a><span class="toc-page-number">545</span></div>
+      <div class="toc-item toc-entry"><a href="40-self-care-journal.xhtml" class="toc-link">Self-Care Journal</a><span class="toc-page-number">547</span></div>
+      <div class="toc-item toc-entry"><a href="41-VisionJournal.xhtml" class="toc-link">Vision Journal</a><span class="toc-page-number">549</span></div>
+      <div class="toc-item toc-entry"><a href="42-DoodlePage.xhtml" class="toc-link">Doodle Page</a><span class="toc-page-number">551</span></div>
+      <div class="toc-item toc-entry"><a href="43-bibliography.xhtml" class="toc-link">Bibliography</a><span class="toc-page-number">552</span></div>
     </div>
   </nav>
 </div>
@@ -1408,7 +1444,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="dedication-body" data-source="4-Dedication.xhtml">
+<div id="src-4-Dedication" class="dedication-body" data-source="4-Dedication.xhtml">
 <section class="frontmatter-shell dedication-page" aria-label="Dedication">
     <div class="dedication-container">
       <h1 class="dedication-heading">DEDICATION</h1>
@@ -1442,7 +1478,7 @@ nav[role="doc-toc"] {
 
 
 
-<div data-source="5-SelfAssessment.xhtml">
+<div id="src-5-SelfAssessment" class="worksheet-page-body" data-source="5-SelfAssessment.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -1508,7 +1544,7 @@ nav[role="doc-toc"] {
 
 
 
-<div data-source="6-AffirmationOdyssey.xhtml">
+<div id="src-6-AffirmationOdyssey" class="worksheet-page-body" data-source="6-AffirmationOdyssey.xhtml">
 <div class="worksheet-page">
     <header class="worksheet-header">
       <span class="badge">Mindset</span>
@@ -1569,7 +1605,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="chapter-page" data-source="7-Preface.xhtml">
+<div id="src-7-Preface" class="chapter-page" data-source="7-Preface.xhtml">
 <main role="main">
 <section class="chap-title" role="region">
 <figure aria-label="Preface" class="chapter-number-figure" role="group">
@@ -1617,7 +1653,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="quote-page" data-source="7a-preface-quote.xhtml">
+<div id="src-7a-preface-quote" class="quote-page" data-source="7a-preface-quote.xhtml">
 <main role="main">
     <section class="image-quote page" role="region" aria-label="Preface Inspirational Quote">
       <figure class="quote-figure">
@@ -1636,7 +1672,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="part-body" data-source="8-Part-I-Foundations-of-Creative-Hairstyling.xhtml">
+<div id="src-8-Part-I-Foundations-of-Creative-Hairstyling" class="part-body" data-source="8-Part-I-Foundations-of-Creative-Hairstyling.xhtml">
 <section class="part-container" aria-label="Part I Divider">
     <h1 class="part-title">Part I: Foundations of Creative Hairstyling</h1>
     <h2 class="part-subtitle">Chapters I–III</h2>
@@ -1656,7 +1692,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="chapter-page" data-source="9-chapter-i-unveiling-your-creative-odyssey.xhtml">
+<div id="src-9-chapter-i-unveiling-your-creative-odyssey" class="chapter-page" data-source="9-chapter-i-unveiling-your-creative-odyssey.xhtml">
 <main role="main">
 <section class="chap-title" role="region">
 <figure aria-label="Chapter number I" class="chapter-number-figure" role="group">
@@ -2147,7 +2183,7 @@ nav[role="doc-toc"] {
 
 
 
-<div class="chapter-page" data-source="10-chapter-ii-refining-your-creative-toolkit.xhtml">
+<div id="src-10-chapter-ii-refining-your-creative-toolkit" class="chapter-page" data-source="10-chapter-ii-refining-your-creative-toolkit.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -2602,7 +2638,7 @@ Pay attention to what clients notice: smoother finishes, healthier-looking hair,
 
 
 
-<div class="chapter-page" data-source="11-chapter-iii-reigniting-your-creative-fire.xhtml">
+<div id="src-11-chapter-iii-reigniting-your-creative-fire" class="chapter-page" data-source="11-chapter-iii-reigniting-your-creative-fire.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -2961,7 +2997,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="part-body" data-source="12-Part-II-Building-Your-Professional-Practice.xhtml">
+<div id="src-12-Part-II-Building-Your-Professional-Practice" class="part-body" data-source="12-Part-II-Building-Your-Professional-Practice.xhtml">
 <section class="part-container" aria-label="Part II Divider">
     <h1 class="part-title">Part II: Building Your Professional Practice</h1>
     <h2 class="part-subtitle">Chapters IV–VIII</h2>
@@ -2981,7 +3017,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml">
+<div id="src-13-chapter-iv-the-art-of-networking-in-freelance-hairstyling" class="chapter-page" data-source="13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -3458,7 +3494,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml">
+<div id="src-14-chapter-v-cultivating-creative-excellence-through-mentorship" class="chapter-page" data-source="14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml">
 <main role="main">
     <section class="chap-title" role="region">
       <figure class="chapter-number-figure" role="group" aria-label="Chapter number V">
@@ -3788,7 +3824,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="15-chapter-vi-mastering-the-business-of-hairstyling.xhtml">
+<div id="src-15-chapter-vi-mastering-the-business-of-hairstyling" class="chapter-page" data-source="15-chapter-vi-mastering-the-business-of-hairstyling.xhtml">
 <main role="main">
 <section class="chap-title" role="region">
 <figure aria-label="Chapter number VI" class="chapter-number-figure" role="group">
@@ -4168,7 +4204,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="16-chapter-vii-embracing-wellness-and-self-care.xhtml">
+<div id="src-16-chapter-vii-embracing-wellness-and-self-care" class="chapter-page" data-source="16-chapter-vii-embracing-wellness-and-self-care.xhtml">
 <main role="main">
 <section class="chap-title" role="region">
 <figure aria-label="Chapter number VII" class="chapter-number-figure" role="group">
@@ -4470,7 +4506,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="17-chapter-viii-advancing-skills-through-continuous-education.xhtml">
+<div id="src-17-chapter-viii-advancing-skills-through-continuous-education" class="chapter-page" data-source="17-chapter-viii-advancing-skills-through-continuous-education.xhtml">
 <main role="main">
 <section class="chap-title" role="region">
 <figure aria-label="Chapter number VIII" class="chapter-number-figure" role="group">
@@ -4966,7 +5002,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="part-body" data-source="18-Part-III-Advanced-Business-Strategies.xhtml">
+<div id="src-18-Part-III-Advanced-Business-Strategies" class="part-body" data-source="18-Part-III-Advanced-Business-Strategies.xhtml">
 <section class="part-container" aria-label="Part III Divider">
     <h1 class="part-title">Part III: Advanced Business Strategies</h1>
     <h2 class="part-subtitle">Chapters IX–XIII</h2>
@@ -4986,7 +5022,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="19-chapter-ix-stepping-into-leadership.xhtml">
+<div id="src-19-chapter-ix-stepping-into-leadership" class="chapter-page" data-source="19-chapter-ix-stepping-into-leadership.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -5493,7 +5529,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="20-chapter-x-crafting-enduring-legacies.xhtml">
+<div id="src-20-chapter-x-crafting-enduring-legacies" class="chapter-page" data-source="20-chapter-x-crafting-enduring-legacies.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -5890,7 +5926,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml">
+<div id="src-21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists" class="chapter-page" data-source="21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -6324,7 +6360,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml">
+<div id="src-22-chapter-xii-financial-wisdom-building-sustainable-ventures" class="chapter-page" data-source="22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -6790,7 +6826,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml">
+<div id="src-23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling" class="chapter-page" data-source="23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -7390,7 +7426,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="part-body" data-source="24-Part-IV-Future-Focused-Growth.xhtml">
+<div id="src-24-Part-IV-Future-Focused-Growth" class="part-body" data-source="24-Part-IV-Future-Focused-Growth.xhtml">
 <section class="part-container" aria-label="Part IV Divider">
     <h1 class="part-title">Part IV: Future-Focused Growth</h1>
     <h2 class="part-subtitle">Chapters XIV–XVI</h2>
@@ -7410,7 +7446,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml">
+<div id="src-25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry" class="chapter-page" data-source="25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -7871,7 +7907,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml">
+<div id="src-26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling" class="chapter-page" data-source="26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -8256,7 +8292,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml">
+<div id="src-27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling" class="chapter-page" data-source="27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml">
 <main role="main">
 
     <!-- ================================================================
@@ -8660,7 +8696,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="chapter-page" data-source="28-Conclusion.xhtml">
+<div id="src-28-Conclusion" class="chapter-page" data-source="28-Conclusion.xhtml">
 <main role="main">
 <section class="chap-title" role="region">
 <figure aria-label="Conclusion" class="chapter-number-figure" role="group">
@@ -8712,7 +8748,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 
 
-<div class="quote-page" data-source="28a-conclusion-quote.xhtml">
+<div id="src-28a-conclusion-quote" class="quote-page" data-source="28a-conclusion-quote.xhtml">
 <div class="page-break"></div>
   <section class="image-quote" role="region" aria-label="Conclusion Inspirational Quote">
     <figure class="quote-figure">
@@ -8733,7 +8769,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div class="key-body" data-source="29-QuizKey.xhtml">
+<div id="src-29-QuizKey" class="key-body" data-source="29-QuizKey.xhtml">
 <section class="key-container" aria-label="Quiz Answer Key">
     
     <h1 class="key-title">CHAPTER QUIZ ANSWER KEY</h1>
@@ -8783,7 +8819,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="30-SelfAssessment.xhtml">
+<div id="src-30-SelfAssessment" data-source="30-SelfAssessment.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -8855,7 +8891,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="31-affirmations-close.xhtml">
+<div id="src-31-affirmations-close" data-source="31-affirmations-close.xhtml">
 <div class="worksheet-page">
     <header class="worksheet-header">
       <span class="badge">Closing</span>
@@ -8915,7 +8951,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div class="certificate-body" data-source="32-continued-learning-commitment.xhtml">
+<div id="src-32-continued-learning-commitment" class="certificate-body" data-source="32-continued-learning-commitment.xhtml">
 <div class="certificate-border">
     <div class="corner-deco tl" aria-hidden="true"></div><div class="corner-deco tr" aria-hidden="true"></div>
     <div class="corner-deco bl" aria-hidden="true"></div><div class="corner-deco br" aria-hidden="true"></div>
@@ -8955,7 +8991,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div class="ack-body" data-source="33-Acknowledgments.xhtml">
+<div id="src-33-Acknowledgments" class="ack-body" data-source="33-Acknowledgments.xhtml">
 <section class="ack-container" aria-label="Acknowledgments">
     <h1 class="ack-title">From My Heart to Yours</h1>
     
@@ -8983,7 +9019,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div class="bio-body" data-source="34-AbouttheAuthor.xhtml">
+<div id="src-34-AbouttheAuthor" class="bio-body" data-source="34-AbouttheAuthor.xhtml">
 <section class="profile-card" aria-label="About the Author">
     
     <h1 class="section-heading">About the Author</h1>
@@ -9032,7 +9068,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div class="journal-body" data-source="35-JournalingStart.xhtml">
+<div id="src-35-JournalingStart" class="journal-body" data-source="35-JournalingStart.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -9115,7 +9151,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="36-ManifestingJournal.xhtml">
+<div id="src-36-ManifestingJournal" data-source="36-ManifestingJournal.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -9186,7 +9222,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="37-journal-page.xhtml">
+<div id="src-37-journal-page" data-source="37-journal-page.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -9230,7 +9266,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="38-professional-development.xhtml">
+<div id="src-38-professional-development" data-source="38-professional-development.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -9295,7 +9331,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="39-SMARTGoals.xhtml">
+<div id="src-39-SMARTGoals" data-source="39-SMARTGoals.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -9377,7 +9413,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="40-self-care-journal.xhtml">
+<div id="src-40-self-care-journal" data-source="40-self-care-journal.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -9453,7 +9489,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="41-VisionJournal.xhtml">
+<div id="src-41-VisionJournal" data-source="41-VisionJournal.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -9514,7 +9550,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div data-source="42-DoodlePage.xhtml">
+<div id="src-42-DoodlePage" data-source="42-DoodlePage.xhtml">
 <div class="epub-download-cta">
     <p>This worksheet is designed for print. For the best experience, download the printable version.</p>
   </div>
@@ -9565,7 +9601,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="backmatter-item">
 
-<div class="bib-body" data-source="43-bibliography.xhtml">
+<div id="src-43-bibliography" class="bib-body" data-source="43-bibliography.xhtml">
 <section class="bib-container" aria-label="Bibliography">
     <h1 class="bib-title">BIBLIOGRAPHY</h1>
     <div class="decorative-line" aria-hidden="true"></div>
