@@ -92,64 +92,68 @@ body {
    We need page breaks between files and for key section types.
    ==================================================================== */
 
-/* Break between concatenated files */
+/* Break between concatenated files — purely semantic separator.
+   All page breaks are handled by wrapper-div classes below. */
 .file-break {
-  break-after: page;
-  page-break-after: always;
   height: 0;
   margin: 0;
   padding: 0;
 }
 
-/* Chapter title pages start on new page (no blank verso) */
-.chapter-page > main > .chap-title,
-section.chap-title {
+/* ---- WRAPPER-LEVEL page breaks (exactly one break per section) ----
+   NOTE: We intentionally do NOT use "page: nofolio" on any element.
+   Named-page changes cause WeasyPrint to insert implicit blank pages.
+   Folio suppression is handled via @page :first instead. */
+
+/* Chapter wrappers */
+.chapter-page {
   break-before: page;
-  page: nofolio;
+  page-break-before: always;
 }
 
-/* Part divider pages start on new page (no blank verso) */
+/* Part divider wrappers */
 .part-body,
 .part-page,
 div[class*="part-body"],
 section.part-container {
   break-before: page;
-  page: nofolio;
+  page-break-before: always;
 }
 
-/* Standalone quote pages */
+/* Standalone quote page wrappers */
 .quote-page,
 section.image-quote,
 div.quote-page {
   break-before: page;
-  page: nofolio;
+  page-break-before: always;
 }
 
-/* Frontmatter pages: suppress folio */
-.title-page-body,
+/* Frontmatter wrappers */
 .copyright-body,
 .toc-body,
-.frontmatter-shell,
-div[class*="title-page"],
-div[class*="copyright"] {
-  page: nofolio;
+.dedication-body {
+  break-before: page;
+  page-break-before: always;
 }
 
-/* Force page breaks before these major sections */
-.frontmatter-shell,
+/* Worksheet page wrappers (frontmatter worksheets) */
+.worksheet-page-body {
+  break-before: page;
+  page-break-before: always;
+}
+
+/* ---- Backmatter & in-chapter sections that need their own breaks ---- */
 .backmatter-card,
 .certificate-border,
 .bib-container,
-.key-container,
-.chapter-opener,
-section[class*="chap-body"],
-.image-quote,
-.quote-page {
+.key-container {
   page-break-before: always;
   break-before: page;
 }
 
 /* Chapter body, endnotes, quiz, worksheet — each starts on new page */
+.chapter-opener,
+section[class*="chap-body"],
 .endnotes,
 .quiz-section,
 .worksheet-card {
@@ -382,7 +386,6 @@ section.chap-title {
   justify-content: center;
   min-height: 7.5in;
   text-align: center;
-  page-break-after: always;
   background: #000;
   color: #fff;
   padding: 0.5in;
@@ -521,7 +524,6 @@ div[class*="part-body"] {
   align-items: center;
   min-height: 7.5in;
   text-align: center;
-  page-break-after: always;
 }
 
 .part-container {
@@ -575,17 +577,19 @@ section.chap-body,
   color: #000;
 }
 
-/* Page break helper used in XHTML */
+/* Page break helper used in XHTML source files.
+   DISABLED in POD print: element-level break-before rules handle all breaks.
+   Keeping the div inert prevents double-breaks with wrapper/element rules. */
 .page-break {
-  page-break-after: always;
-  break-after: page;
   height: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* ====================================================================
    11. BLOCKQUOTES & QUOTES
    ==================================================================== */
-blockquote, .quote-figure {
+blockquote {
   margin: 0.35in 0.5in;
   padding: 0;
   font-style: italic;
@@ -603,7 +607,7 @@ blockquote cite,
   margin-top: 0.1in;
 }
 
-/* Full-page image quote pages */
+/* Full-page image quote pages — breaks handled by .quote-page wrapper */
 .quote-page,
 .image-quote,
 section.image-quote {
@@ -611,16 +615,20 @@ section.image-quote {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 7.5in;
+  min-height: 8in;
   text-align: center;
-  padding: 0.5in;
-  page-break-before: always;
-  page-break-after: always;
+  padding: 0.25in;
+}
+
+.quote-figure {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .quote-figure img {
-  max-width: 100%;
-  max-height: 7.5in;
+  width: 100%;
+  max-height: 8.5in;
   object-fit: contain;
 }
 
