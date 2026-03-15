@@ -942,6 +942,15 @@ a[href^="../"]:after {
   content: none;
 }
 
+/* Suppress URL duplication in endnotes/footnotes (URL is already visible as link text) */
+.footnote-item a[href^="http"]:after,
+.endnotes a[href^="http"]:after,
+.footnotes a[href^="http"]:after,
+.note-item a[href^="http"]:after,
+.bib-entry a[href^="http"]:after {
+  content: none;
+}
+
 /* ====================================================================
    19. UTILITY CLASSES
    ==================================================================== */
