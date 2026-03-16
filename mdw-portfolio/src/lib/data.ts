@@ -62,6 +62,9 @@ export const PORTFOLIO_CATEGORIES: Category[] = [
       { id: "e15", title: "Under Cover: Big Sky", client: "Television Academy", year: "2021", imageUrl: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?q=80&w=1000&auto=format&fit=crop", imageAlt: "Big Sky Television Academy", publication: "Television Academy", link: "https://www.televisionacademy.com/video/under-cover-big-sky" },
       { id: "e16", title: "ContentMode Feature", client: "Editorial", year: "2022", imageUrl: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=1000&auto=format&fit=crop", imageAlt: "ContentMode editorial", publication: "ContentMode", link: "https://contentmode.com/10196-2/" },
       { id: "e17", title: "ELLE UK Feature", client: "Magazine Feature", year: "2019", imageUrl: "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1000&auto=format&fit=crop", imageAlt: "ELLE UK feature", publication: "ELLE UK", link: "https://gb.readly.com/magazines/elle-uk/2019-08-08/5d4d07ac11cba3b7e745f866" },
+      { id: "e18", title: "Editorial", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1000&auto=format&fit=crop", imageAlt: "Editorial" },
+      { id: "e19", title: "Editorial", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1000&auto=format&fit=crop", imageAlt: "Editorial" },
+      { id: "e20", title: "Editorial", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?q=80&w=1000&auto=format&fit=crop", imageAlt: "Editorial" },
     ]
   },
   {
@@ -85,6 +88,10 @@ export const PORTFOLIO_CATEGORIES: Category[] = [
       { id: "rc12", title: "Deadline Contenders", client: "Liesl Tommy", year: "2022", imageUrl: "https://images.unsplash.com/photo-1516053641324-4f05ba7b55f1?q=80&w=1000&auto=format&fit=crop", imageAlt: "Liesl Tommy Deadline Contenders" },
       { id: "rc13", title: "City of Hope Gala", client: "Billy Porter", year: "2022", imageUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1000&auto=format&fit=crop", imageAlt: "Billy Porter City of Hope" },
       { id: "rc14", title: "Event Appearance", client: "Meena Harris", year: "2022", imageUrl: "https://images.unsplash.com/photo-1512413914439-011853f0cc57?q=80&w=1000&auto=format&fit=crop", imageAlt: "Meena Harris red carpet" },
+      { id: "rc15", title: "Grammy Awards", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1000&auto=format&fit=crop", imageAlt: "Grammy Awards red carpet" },
+      { id: "rc16", title: "Emmy Awards", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1550614000-4b95d4edaa3b?q=80&w=1000&auto=format&fit=crop", imageAlt: "Emmy Awards red carpet" },
+      { id: "rc17", title: "Film Premiere", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=1000&auto=format&fit=crop", imageAlt: "Film premiere red carpet" },
+      { id: "rc18", title: "Award Show", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?q=80&w=1000&auto=format&fit=crop", imageAlt: "Award show red carpet" },
     ]
   },
   {
@@ -100,6 +107,10 @@ export const PORTFOLIO_CATEGORIES: Category[] = [
       { id: "b4", title: "Studio Portrait II", client: "Carmen Solomons", year: "2022", imageUrl: "https://images.unsplash.com/photo-1512413914439-011853f0cc57?q=80&w=1000&auto=format&fit=crop", imageAlt: "Carmen Solomons studio portrait II" },
       { id: "b5", title: "Underground Railroad", client: "Thuso Mbedu", year: "2021", imageUrl: "https://images.unsplash.com/photo-1515347619362-75fe3f0e08f2?q=80&w=1000&auto=format&fit=crop", imageAlt: "Thuso Mbedu Underground Railroad" },
       { id: "b6", title: "Gunpowder Milkshake", client: "Chloe Coleman", year: "2022", imageUrl: "https://images.unsplash.com/photo-1550614000-4b95d4edaa3b?q=80&w=1000&auto=format&fit=crop", imageAlt: "Chloe Coleman Gunpowder Milkshake" },
+      { id: "b7", title: "Beauty Portrait", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=1000&auto=format&fit=crop", imageAlt: "Beauty portrait" },
+      { id: "b8", title: "Natural Texture Study", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop", imageAlt: "Natural texture beauty" },
+      { id: "b9", title: "Beauty Campaign", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1000&auto=format&fit=crop", imageAlt: "Beauty campaign" },
+      { id: "b10", title: "Close-Up Series", client: "TBD", year: "2022", imageUrl: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?q=80&w=1000&auto=format&fit=crop", imageAlt: "Close-up beauty series" },
     ]
   },
   {
@@ -354,6 +365,6 @@ export const CAREER_TIMELINE = [
   { year: "2010s", event: "Joined Rihanna's creative team", detail: "Worked with Rihanna and her creative circle for nearly four years, contributing to campaigns, editorials, performances, and red-carpet moments seen around the world." },
   { year: "2015–2019", event: "Global editorial expansion", detail: "Built a portfolio spanning Vogue, Vanity Fair, W Magazine, and international editions — working across New York, London, Los Angeles, Paris, Tokyo, and beyond." },
   { year: "2019–2020", event: "Major brand campaigns", detail: "Directed hair for Savage X Fenty, Nike's Greatest Dynasty Ever, and the Christian Cowan x Le Specs campaign — marking a transition into luxury commercial work." },
-  { year: "2020–2022", event: "Published Curls & Contemplation", detail: "Authored Curls & Contemplation, a book exploring the intersection of Black identity, beauty culture, and self-expression — cementing Michael's role as a creative thinker and cultural voice." },
+  { year: "2020–2022", event: "Industry Recognition & Global Reach", detail: "Expanded a global creative practice spanning fashion, entertainment, and editorial storytelling — working across New York, London, Paris, Tokyo, and beyond." },
   { year: "2022–Present", event: "Founder / Author / Creative Director", detail: "Now operating as a creative entrepreneur — providing hair direction, consulting, and creative vision for top-tier editorial, celebrity, and commercial clients globally." },
 ];

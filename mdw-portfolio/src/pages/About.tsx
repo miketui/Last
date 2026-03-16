@@ -77,10 +77,7 @@ export default function About() {
 
             <div className="mt-8 space-y-6 text-muted-foreground font-sans leading-relaxed text-lg">
               <p>
-                That experience sparked the beginning of his book, <span className="italic text-accent">Curls & Contemplation</span>, a reflective and practical guide for hairstylists navigating the emotional, creative, and entrepreneurial realities of freelance life in the beauty industry.
-              </p>
-              <p>
-                Through both his work and his writing, Michael continues to explore the deeper relationship between beauty and identity — how something as simple as a haircut, a texture, or a style can help someone reconnect with themselves.
+                Michael continues to explore the deeper relationship between beauty and identity — how something as simple as a haircut, a texture, or a style can help someone reconnect with who they are.
               </p>
               <p>
                 Today he works globally across fashion editorials, campaigns, and creative collaborations while developing new ventures in beauty innovation and education.
@@ -107,12 +104,12 @@ export default function About() {
           transition={{ duration: 0.8 }}
           className="mb-32"
         >
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-display mb-4">Career Highlights</h2>
-            <div className="w-12 h-px bg-primary mx-auto"></div>
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-display mb-3 tracking-wide">Career Highlights</h2>
+            <div className="w-8 h-px bg-primary mx-auto"></div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {CAREER_TIMELINE.map((item, idx) => (
               <motion.div
                 key={idx}
@@ -120,10 +117,10 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: (idx % 3) * 0.1 }}
-                className="group p-8 bg-card/30 border border-border hover:border-accent/40 transition-all duration-500"
+                className="group p-6 bg-card/30 border border-border hover:border-accent/40 transition-all duration-500"
               >
-                <span className="text-accent text-xs font-medium tracking-[0.3em] uppercase block mb-4">{item.year}</span>
-                <h3 className="text-xl font-display text-foreground mb-3 group-hover:text-primary transition-colors">{item.event}</h3>
+                <span className="text-accent text-xs font-medium tracking-[0.3em] uppercase block mb-3">{item.year}</span>
+                <h3 className="text-base font-display text-foreground mb-2 group-hover:text-primary transition-colors">{item.event}</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">{item.detail}</p>
               </motion.div>
             ))}

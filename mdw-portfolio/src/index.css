@@ -64,13 +64,13 @@
   --primary: 37 32% 52%; /* Antique Gold */
   --primary-foreground: 0 0% 7%;
   
-  --secondary: 157 19% 82%; /* Soft Jade Mist #C7D9D2 */
+  --secondary: 157 52% 76%; /* Jade Mist — vivid */
   --secondary-foreground: 0 0% 7%;
   
   --muted: 0 0% 14%;
   --muted-foreground: 40 8% 55%;
   
-  --accent: 160 65% 22%; /* Deep Jade #145B4B */
+  --accent: 158 78% 36%; /* Vivid Jade */
   --accent-foreground: 40 20% 87%;
   
   --destructive: 0 65% 45%;
