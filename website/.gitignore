@@ -17,8 +17,9 @@ private/
 # Build output
 dist/
 
-# Screenshots (regeneratable)
-screenshots/
+# Screenshots (regeneratable; keep PNGs in version control)
+screenshots/*
+!screenshots/*.png
 
 # OS
 .DS_Store

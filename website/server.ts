@@ -354,7 +354,7 @@ const handleStripeWebhook = async (req: Request): Promise<Response> => {
           revokeDownloadTokens(order.id);
 
           // Look up customer and send refund email
-          const customer = getCustomerById(order.customer_id);
+          const customer = await getCustomerById(order.customer_id);
           if (customer) {
             await sendRefundNotice({
               email: customer.email,
@@ -599,7 +599,7 @@ const handleExtendToken = async (req: Request): Promise<Response> => {
     }
 
     // Send email with updated portal link
-    const customer = getCustomerById(order.customer_id);
+    const customer = await getCustomerById(order.customer_id);
     if (customer) {
       const portalUrl = `${SITE_URL}/portal/${portalToken}`;
       await sendEmail({
@@ -737,16 +737,19 @@ const downloadRateLimiter = new Map<string, { count: number; resetAt: number }>(
 const DOWNLOAD_RATE_LIMIT = 10;
 const DOWNLOAD_RATE_WINDOW_MS = 5 * 60 * 1000;
 
-function checkDownloadRateLimit(ip: string): boolean {
+function checkDownloadRateLimit(ip: string): { allowed: boolean; resetAt: number; remaining: number } {
   const now = Date.now();
   const entry = downloadRateLimiter.get(ip);
   if (!entry || now > entry.resetAt) {
-    downloadRateLimiter.set(ip, { count: 1, resetAt: now + DOWNLOAD_RATE_WINDOW_MS });
-    return true;
+    const resetAt = now + DOWNLOAD_RATE_WINDOW_MS;
+    downloadRateLimiter.set(ip, { count: 1, resetAt });
+    return { allowed: true, resetAt, remaining: DOWNLOAD_RATE_LIMIT - 1 };
   }
-  if (entry.count >= DOWNLOAD_RATE_LIMIT) return false;
+  if (entry.count >= DOWNLOAD_RATE_LIMIT) {
+    return { allowed: false, resetAt: entry.resetAt, remaining: 0 };
+  }
   entry.count++;
-  return true;
+  return { allowed: true, resetAt: entry.resetAt, remaining: DOWNLOAD_RATE_LIMIT - entry.count };
 }
 
 // Periodically clean up expired rate limit entries
@@ -755,7 +758,7 @@ setInterval(() => {
   for (const [ip, entry] of downloadRateLimiter) {
     if (now > entry.resetAt) downloadRateLimiter.delete(ip);
   }
-}, 60_000);
+}, 60_000).unref();
 
 // Serve download files (EPUB/PDF) from private storage
 const serveDownload = async (token: string, req?: Request): Promise<Response> => {
@@ -763,10 +766,18 @@ const serveDownload = async (token: string, req?: Request): Promise<Response> =>
   const ip = req?.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
     || req?.headers.get("cf-connecting-ip")
     || "unknown";
-  if (!checkDownloadRateLimit(ip)) {
-    return new Response(renderDownloadError("Too many requests", "Please wait a few minutes before downloading again."), {
+  const rateLimit = checkDownloadRateLimit(ip);
+  if (!rateLimit.allowed) {
+    const retryAfterSec = Math.ceil((rateLimit.resetAt - Date.now()) / 1000);
+    return new Response(renderDownloadError("Too many requests", `You've reached the download limit. Please wait ${Math.ceil(retryAfterSec / 60)} minute(s) before trying again.`), {
       status: 429,
-      headers: { "Content-Type": "text/html", "Retry-After": "300" },
+      headers: {
+        "Content-Type": "text/html",
+        "Retry-After": String(retryAfterSec),
+        "X-RateLimit-Limit": String(DOWNLOAD_RATE_LIMIT),
+        "X-RateLimit-Remaining": "0",
+        "X-RateLimit-Reset": String(Math.ceil(rateLimit.resetAt / 1000)),
+      },
     });
   }
 
