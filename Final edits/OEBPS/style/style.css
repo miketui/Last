@@ -2768,3 +2768,174 @@ body.doodle-body {
 .endnote-item p {
   margin: 0;
 }
+
+/* ================================================================
+   FINAL REVIEW: Missing Class Definitions
+   Added during final QA pass — matches XHTML usage
+   ================================================================ */
+
+/* Activity section in worksheets/chapters */
+.activity-section {
+  margin: 1.5em 0;
+  padding: 1.2em;
+  background-color: #f7f7f7;
+  border-left: 4px solid #008080;
+  border-radius: 4px;
+}
+
+/* Author photo on About page */
+.author-img {
+  display: block;
+  max-width: 200px;
+  margin: 0 auto 1em;
+  border-radius: 50%;
+}
+
+/* Bibliography body */
+.bib-body {
+  font-size: 0.92em;
+  line-height: 1.6;
+}
+
+/* About author bio content wrapper */
+.bio-content {
+  margin-top: 1em;
+  line-height: 1.7;
+}
+
+/* Closing line on About/Preface */
+.closing-line {
+  font-style: italic;
+  margin-top: 1.5em;
+  text-align: center;
+}
+
+/* Copyright page body */
+.copyright-page {
+  font-size: 0.85em;
+  text-align: center;
+  margin-top: 3em;
+}
+
+/* Self-care journal day column */
+.day-col {
+  width: 10%;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.3em;
+}
+
+/* Disclaimer box for financial/wellness disclaimers */
+.disclaimer-box {
+  margin: 1.5em 0;
+  padding: 1em 1.2em;
+  background-color: #fff8e1;
+  border: 1px solid #e0c97f;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+/* Drop cap for chapter opening paragraphs */
+.drop-cap {
+  float: left;
+  font-size: 3.2em;
+  line-height: 0.8;
+  padding-right: 0.08em;
+  padding-top: 0.05em;
+  color: #008080;
+  font-weight: bold;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Bibliography footer note */
+.footer-note {
+  margin-top: 2em;
+  padding-top: 1em;
+  border-top: 1px solid #ccc;
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+/* Self-care journal habit column */
+.habit-col {
+  font-weight: bold;
+  padding: 0.5em;
+  text-align: left;
+  width: 30%;
+}
+
+/* Highlighted/pull quote */
+.highlight-quote {
+  font-size: 1.15em;
+  font-style: italic;
+  color: #008080;
+  text-align: center;
+  margin: 1.5em 2em;
+  padding: 0.8em;
+  border-top: 2px solid #008080;
+  border-bottom: 2px solid #008080;
+}
+
+/* Image container wrapper */
+.image-container {
+  text-align: center;
+  margin: 1.5em 0;
+}
+
+/* Quiz key body */
+.key-body {
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+/* Key takeaways list */
+.key-takeaways {
+  list-style: none;
+  padding-left: 0;
+  margin: 1em 0;
+}
+.key-takeaways li {
+  padding: 0.4em 0 0.4em 1.5em;
+  position: relative;
+}
+.key-takeaways li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #008080;
+  font-weight: bold;
+}
+
+/* General note class */
+.note {
+  font-size: 0.9em;
+  color: #555;
+  font-style: italic;
+}
+
+/* Signature text in Preface/Conclusion */
+.signature-text {
+  font-style: italic;
+  margin-top: 2em;
+  text-align: right;
+}
+
+/* Social media handle link */
+.social-handle {
+  color: #008080;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Table of contents list wrapper */
+.toc-list {
+  margin: 1em 0;
+  padding: 0;
+}
+
+/* Worksheet page body */
+.worksheet-page-body {
+  font-size: 0.95em;
+  line-height: 1.7;
+}
