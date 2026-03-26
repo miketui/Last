@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-border: hsl(var(--primary));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-border: hsl(var(--secondary));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-border: hsl(var(--muted));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-border: hsl(var(--accent));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-border: hsl(var(--destructive));
+
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Playfair Display', serif;
+
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 1rem;
+}
+
+:root {
+  /* Luxury Dark Theme Enforced Globally */
+  --background: 0 0% 7%;
+  --foreground: 40 20% 87%;
+  --border: 40 10% 16%;
+  
+  --card: 0 0% 10%;
+  --card-foreground: 40 20% 87%;
+  --card-border: 40 10% 16%;
+  
+  --popover: 0 0% 10%;
+  --popover-foreground: 40 20% 87%;
+  --popover-border: 40 10% 16%;
+  
+  --primary: 37 32% 52%; /* Antique Gold */
+  --primary-foreground: 0 0% 7%;
+  
+  --secondary: 157 52% 76%; /* Jade Mist — vivid */
+  --secondary-foreground: 0 0% 7%;
+  
+  --muted: 0 0% 14%;
+  --muted-foreground: 40 8% 55%;
+  
+  --accent: 158 78% 36%; /* Vivid Jade */
+  --accent-foreground: 40 20% 87%;
+  
+  --destructive: 0 65% 45%;
+  --destructive-foreground: 40 20% 87%;
+  
+  --input: 0 0% 18%;
+  --ring: 37 32% 52%;
+  
+  --radius: 0rem; /* Sharp edges for editorial look */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground selection:bg-primary/30 selection:text-primary-foreground;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-normal tracking-tight;
+  }
+}
+
+/* Custom Scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent) / 0.6);
+}
+
+/* Image Hover Zoom Utility */
+.img-zoom-wrapper {
+  @apply overflow-hidden relative block;
+}
+.img-zoom-wrapper img {
+  @apply transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)];
+}
+.img-zoom-wrapper:hover img {
+  @apply scale-105;
+}
+
+/* Outline Text Effect */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px hsl(var(--muted-foreground) / 0.5);
+}

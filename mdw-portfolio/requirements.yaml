@@ -1,0 +1,17 @@
+packages:
+  "framer-motion": "For premium page transitions, scroll reveals, and smooth interactions"
+  "react-hook-form": "For form state management in the contact/booking page"
+  "@hookform/resolvers": "For Zod validation integration with react-hook-form"
+
+images:
+  - path: "artifacts/hairstylist-portfolio/public/images/hero-bg.png"
+    description: "Black and white high fashion editorial photography of avant-garde hair styling, cinematic lighting, luxury vibe, dramatic shadows"
+    aspect_ratio: "16:9"
+  - path: "artifacts/hairstylist-portfolio/public/images/about-portrait.png"
+    description: "Moody, artistic portrait of a stylish creative director and hairstylist in a dark studio, soft key light, professional, premium editorial style"
+    aspect_ratio: "3:4"
+
+notes:
+  - This is a frontend-only static portfolio. All data is hardcoded placeholder content.
+  - The contact form simulates a submission with a timeout and toast notification.
+  - Dark mode is enforced as the primary and only theme for the luxury aesthetic.
