@@ -2480,3 +2480,291 @@ body.doodle-body {
 /* ====================================================================
    END OF STYLESHEET
    ==================================================================== */
+
+
+/* ====================================================================
+   21. MISSING CLASS DEFINITIONS (Added by editorial fix script)
+   These classes were used in XHTML but had no CSS definitions.
+   ==================================================================== */
+
+/* Quiz/MCQ Classes */
+.quiz-container {
+  margin: var(--space-lg) 0;
+  page-break-inside: avoid;
+}
+
+.quiz-header {
+  margin-bottom: var(--space-md);
+  text-align: center;
+}
+
+.quiz-title {
+  font-family: var(--font-sans);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--clr-teal-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.quiz-instructions {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--clr-muted);
+  font-style: italic;
+}
+
+.quiz-footer {
+  margin-top: var(--space-md);
+}
+
+.mcq-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: mcq-counter;
+}
+
+.mcq-item {
+  margin-bottom: var(--space-md);
+  padding: var(--space-md);
+  background: var(--clr-cream);
+  border-radius: 8px;
+  border-left: 4px solid var(--clr-teal-primary);
+  page-break-inside: avoid;
+  counter-increment: mcq-counter;
+}
+
+.mcq-item::before {
+  content: counter(mcq-counter) ".";
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--clr-teal-primary);
+  font-size: 1rem;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.mcq-options {
+  list-style-type: upper-alpha;
+  padding-left: 1.5rem;
+  margin: var(--space-sm) 0 0 0;
+}
+
+.option {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  padding: 0.25rem 0;
+}
+
+.chap-quiz {
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) 0;
+  border-top: 2px solid var(--clr-gold-accent);
+}
+
+/* Worksheet/Prompt Classes */
+.accent-teal {
+  color: var(--clr-teal-primary);
+}
+
+.accent-gold {
+  color: var(--clr-gold-accent);
+}
+
+.prompt-container {
+  margin-bottom: var(--space-md);
+  page-break-inside: avoid;
+}
+
+.prompt-number {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--clr-teal-primary);
+  margin-right: 0.5rem;
+}
+
+.prompt-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--clr-teal-dark);
+  margin-bottom: var(--space-sm);
+  line-height: 1.5;
+}
+
+.response-area {
+  margin-top: var(--space-xs);
+}
+
+.response-area.lined .line {
+  border-bottom: 1px solid var(--clr-line);
+  height: 2rem;
+  width: 100%;
+}
+
+.worksheet-content {
+  padding: var(--space-md) 0;
+}
+
+.worksheet-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: var(--space-md);
+}
+
+.bg-grad-modern {
+  background: linear-gradient(135deg, var(--clr-teal-faint), var(--clr-gold-faint));
+  padding: var(--space-md);
+  border-radius: 8px;
+  margin-bottom: var(--space-md);
+}
+
+/* Endnote/Footnote Classes */
+.backlink {
+  margin-left: 0.5em;
+  font-size: 0.85em;
+  color: var(--clr-teal-primary);
+  text-decoration: none;
+}
+
+.backlink:hover {
+  text-decoration: underline;
+}
+
+.endnotes-title {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--clr-teal-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+}
+
+.footnotes-list {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.footnote-section {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--clr-line);
+  font-size: 0.85rem;
+}
+
+.footnote-item {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.note-item {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+/* Section & Layout Classes */
+.content-section {
+  margin-bottom: var(--space-lg);
+}
+
+.avoid-break {
+  page-break-inside: avoid;
+}
+
+.page-break-before {
+  page-break-before: always;
+  break-before: page;
+}
+
+.worksheet {
+  margin: var(--space-lg) 0;
+  page-break-before: always;
+}
+
+.page {
+  page-break-inside: avoid;
+}
+
+/* Key Takeaways */
+.key-takeaway {
+  background: var(--clr-gold-faint);
+  border: 1px solid var(--clr-gold-accent);
+  border-radius: 8px;
+  padding: var(--space-md);
+  margin: var(--space-md) 0;
+  page-break-inside: avoid;
+}
+
+.key-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-gold-accent);
+  text-align: center;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+/* Print additions for new classes */
+@media print {
+  .mcq-item {
+    background: #f9f9f9;
+    border-left: 3pt solid #000;
+  }
+  
+  .bg-grad-modern {
+    background: #f5f5f5;
+  }
+  
+  .accent-teal { color: #000; }
+  .accent-gold { color: #666; }
+}
+
+
+/* Doodle/creative space canvas */
+.doodle-canvas {
+  min-height: 400px;
+  border: 1px dashed #ccc;
+  margin: 1rem 0;
+}
+.canvas {
+  min-height: 300px;
+  border: 1px dashed #ddd;
+  margin: 1rem 0;
+  background: #fafafa;
+}
+
+/* Cross-reference notes */
+.cross-reference {
+  background: #f0f7f0;
+  border-left: 3px solid #2a9d8f;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  font-size: 0.9em;
+  border-radius: 0 4px 4px 0;
+}
+
+/* ── Standardized Endnotes ────────────────────────── */
+.endnotes-list {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+  margin-top: 0.5em;
+}
+.endnote-item {
+  margin-bottom: 0.75em;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+.endnote-item p {
+  margin: 0;
+}

@@ -1092,3 +1092,18 @@ nav[role="doc-toc"] {
 /* ====================================================================
    END OF PRINT STYLESHEET
    ==================================================================== */
+
+/* ── Standardized Endnotes ────────────────────────── */
+.endnotes-list {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+  margin-top: 0.5em;
+}
+.endnote-item {
+  margin-bottom: 0.75em;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+.endnote-item p {
+  margin: 0;
+}
