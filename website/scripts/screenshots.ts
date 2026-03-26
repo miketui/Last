@@ -8,11 +8,13 @@
 import { chromium, type Browser, type Page } from "playwright";
 import { seedTestData, PREORDER_PORTAL_TOKEN, POSTLAUNCH_PORTAL_TOKEN } from "./seed-test-data";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.SCREENSHOT_BASE_URL || "http://localhost:3000";
 const SCREENSHOTS_DIR = `${import.meta.dir}/../screenshots`;
 const SERVER_SCRIPT = `${import.meta.dir}/../server.ts`;
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "admin123";
+// Use environment variables with fallbacks for local testing only
+// WARNING: Do not set real admin credentials in environment variables for CI/CD
+const ADMIN_USERNAME = process.env.SCREENSHOT_ADMIN_USERNAME || "admin";
+const ADMIN_PASSWORD = process.env.SCREENSHOT_ADMIN_PASSWORD || "admin123";
 
 // Wait for server to be ready
 async function waitForServer(url: string, maxAttempts = 30): Promise<void> {

@@ -2182,7 +2182,9 @@ const App: React.FC = () => {
       .then(config => {
         if (config.gaMeasurementId) initGA(config.gaMeasurementId);
       })
-      .catch(() => {});
+      .catch((error) => {
+        console.error('Failed to initialize Google Analytics:', error);
+      });
   }, []);
 
   // Track page views

@@ -110,7 +110,16 @@ export function getCustomerByEmail(email: string) {
 }
 
 export function getCustomerById(id: string) {
-  return db.prepare("SELECT * FROM customers WHERE id = ?").get(id) as Customer | null;
+  if (typeof id !== "string") {
+    return null;
+  }
+
+  const normalizedId = id.trim();
+  if (!normalizedId) {
+    return null;
+  }
+
+  return db.prepare("SELECT * FROM customers WHERE id = ?").get(normalizedId) as Customer | null;
 }
 
 // Order operations
