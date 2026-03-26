@@ -1,0 +1,16 @@
+Final Output QA Report
+Generated: 2026-03-26 04:09:27Z
+
+PASS: 9
+WARN: 0
+FAIL: 0
+
+[PASS] EPUB mimetype placement/content is valid
+[PASS] Container rootfile found: OEBPS/content.opf
+[PASS] All manifest-referenced files exist in EPUB
+[PASS] No undeclared OEBPS files detected
+[PASS] No broken local XHTML links found
+[PASS] Worksheet CTA links are present in all worksheet pages
+[PASS] PDF size looks plausible (3873349 bytes)
+[PASS] PDF header is valid
+[PASS] PDF EOF marker found near end

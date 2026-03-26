@@ -63,6 +63,8 @@
     <item id="img-chapter-xv-quote" href="images/chapter-xv-quote.jpeg" media-type="image/jpeg"/>
     <item id="img-chapter-xvi-quote" href="images/chapter-xvi-quote.jpeg" media-type="image/jpeg"/>
 
+    <item id="printable-worksheet-pdf" href="assets/printable-worksheet-pack.pdf" media-type="application/pdf"/>
+
     <!-- Front Matter -->
     <item id="titlepage" href="xhtml/1-TitlePage.xhtml" media-type="application/xhtml+xml"/>
     <item id="copyright" href="xhtml/2-Copyright.xhtml" media-type="application/xhtml+xml"/>
