@@ -67,6 +67,7 @@
     <item id="worksheet-fallback" href="xhtml/worksheet-download-fallback.xhtml" media-type="application/xhtml+xml"/>
 
     <!-- Front Matter -->
+    <item id="cover-page" href="xhtml/0-Cover.xhtml" media-type="application/xhtml+xml"/>
     <item id="titlepage" href="xhtml/1-TitlePage.xhtml" media-type="application/xhtml+xml"/>
     <item id="copyright" href="xhtml/2-Copyright.xhtml" media-type="application/xhtml+xml"/>
     <item id="toc-page" href="xhtml/3-TableOfContents.xhtml" media-type="application/xhtml+xml"/>
@@ -126,6 +127,7 @@
 
   <spine toc="ncx">
     <!-- Front Matter -->
+    <itemref idref="cover-page"/>
     <itemref idref="titlepage"/>
     <itemref idref="copyright"/>
     <itemref idref="toc-page"/>

@@ -34,12 +34,6 @@
   margin-right: 0.70in;
 
   /* Page number (folios) — PrinceXML only, wrapped for EPUB compat */
-  /* @bottom-center {
-    content: counter(page);
-    font-family: 'Montserrat', Arial, sans-serif;
-    font-size: 9.5pt;
-    letter-spacing: 0.02em;
-  } */
 }
 
 /* Verso (left) pages: inside margin on the LEFT */
@@ -56,19 +50,16 @@
 
 /* First page of a document: no folio by default */
 @page :first {
-  @bottom-center { content: ""; }
 }
 
 /* Blank pages inserted by recto starts: keep fully blank */
 @page :blank {
-  @bottom-center { content: ""; }
 }
 
 /* ====================================================================
    1B. PAGE TYPES (Suppress folios on openers/standalone pages)
    ==================================================================== */
 @page nofolio {
-  @bottom-center { content: ""; }
 }
 
 /* Chapter title pages (and similar openers) should start on a right-hand page */
@@ -274,8 +265,7 @@ li {
   align-items: center;
   min-height: 7.5in;  /* Account for margins */
   text-align: center;
-  border: 2pt solid #000;
-  padding: 0.5in;
+  padding: 0;
 }
 
 .copyright-body {
@@ -495,7 +485,7 @@ li {
 
 .part-container {
   max-width: 5in;
-  padding: 0.5in;
+  padding: 0;
   border-top: 4pt solid #000;
 }
 
@@ -558,7 +548,7 @@ blockquote cite,
   align-items: center;
   min-height: 7.5in;
   text-align: center;
-  padding: 0.5in;
+  padding: 0;
   page-break-before: always;
   page-break-after: always;
 }
@@ -836,7 +826,7 @@ sup a {
    ==================================================================== */
 .certificate-border {
   border: 4pt double #000;
-  padding: 0.5in;
+  padding: 0;
   margin: 0.5in 0;
   text-align: center;
   background: #fff;
@@ -978,8 +968,7 @@ a[href^="../"]:after {
 .cta-section,
 .btn-join,
 .video-link,
-.web-only,
-nav[role="doc-toc"] {
+.web-only {
   display: none !important;
 }
 
@@ -1087,6 +1076,70 @@ nav[role="doc-toc"] {
   justify-content: space-between;
   border-bottom: 1px dotted #999;
   padding: 0.2em 0;
+}
+
+/* ====================================================================
+   COVER IMAGE ON TITLE PAGE
+   ==================================================================== */
+.title-cover {
+  max-width: 100%;
+  max-height: 8.11in;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.title-page-body .frontmatter-shell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 8.11in;
+  padding: 0;
+  margin: 0;
+}
+
+/* Visually hidden (accessibility) */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Suppress folios on title page, copyright page, and TOC */
+.cover-body,
+.title-page-body,
+.copyright-body,
+.toc-body {
+  page: nofolio;
+}
+
+/* Cover page for print */
+.cover-body {
+  page: nofolio;
+  break-after: page;
+}
+
+.cover-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.cover-image {
+  max-width: 100%;
+  max-height: 9.11in;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 /* ====================================================================
