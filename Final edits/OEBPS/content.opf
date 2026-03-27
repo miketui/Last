@@ -123,6 +123,7 @@
     <item id="vision-journal" href="xhtml/41-VisionJournal.xhtml" media-type="application/xhtml+xml"/>
     <item id="doodle-page" href="xhtml/42-DoodlePage.xhtml" media-type="application/xhtml+xml"/>
     <item id="bibliography" href="xhtml/43-bibliography.xhtml" media-type="application/xhtml+xml"/>
+    <item id="cover-jpg" href="cover.jpg" media-type="image/jpeg"/>
   </manifest>
 
   <spine toc="ncx">
@@ -183,6 +184,7 @@
     <itemref idref="vision-journal"/>
     <itemref idref="doodle-page"/>
     <itemref idref="bibliography"/>
+    <itemref idref="worksheet-fallback" linear="no"/>
   </spine>
 
   <guide>
