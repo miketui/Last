@@ -67,6 +67,14 @@ QUESTION_MARK_PAGES = [11, 431]
 TEAL_RGB = (78 / 255, 205 / 255, 196 / 255)   # #4ECDC4
 TEAL_DARK = (59 / 255, 169 / 255, 156 / 255)   # #3BA99C  (accent strokes)
 
+# Brushstroke image identification (embedded PNG dimensions)
+BRUSH_IMG_DIM = 241    # width and height in PDF image units
+
+# Fallback brushstroke placement (when image rect not found)
+BRUSH_HALF_W = 29      # half-width in points
+BRUSH_Y0 = 68.5        # top of brushstroke in points
+BRUSH_Y1 = 126.5       # bottom of brushstroke in points
+
 # Roman numeral styling
 ROMAN_SIZE = 18        # points (matches original 18.7pt CinzelDecorative)
 ROMAN_COLOR = (1, 1, 1)  # white — sits on teal brushstroke
@@ -75,6 +83,7 @@ ROMAN_COLOR = (1, 1, 1)  # white — sits on teal brushstroke
 FOLIO_FONT = "helv"    # Helvetica (built-in)
 FOLIO_SIZE = 8         # points
 FOLIO_COLOR = (0, 0, 0)  # black
+FOLIO_BOTTOM_MARGIN = 36  # points from page bottom
 
 
 # ---------------------------------------------------------------------------
