@@ -716,7 +716,8 @@ h2.subtitle {
 .chapter-number-roman {
   position: relative;
   z-index: 2;
-  font-family: var(--font-display);
+  /* Fallback for decorative symbols like ✦ not in Cinzel Decorative */
+  font-family: var(--font-display), "Segoe UI Symbol", "Apple Symbols", "Noto Sans Symbols 2", sans-serif;
   font-size: 3rem;
   font-weight: 400;
   color: var(--clr-paper);
