@@ -1,7 +1,7 @@
 /**
  * print.css - 6.69x9.61" Print-on-Demand Optimization
  * For: "Curls & Contemplation: A Stylist's Interactive Journey"
- * By Michael David
+ * By Michael David Warren Jr.
  *
  * This stylesheet extends style.css for PDF Print-on-Demand production.
  * Trim size: 6.69" x 9.61" (KDP custom trim)
@@ -12,6 +12,20 @@
 
 /* Import the main stylesheet to inherit all base styles */
 @import url('style.css');
+/* ====================================================================
+   0. LIGATURE FIX — Ensure PDF text extraction works correctly
+   Chromium subsets fonts and breaks fi/fl/ffi ligature-to-Unicode
+   mappings, causing garbled copy-paste and screen-reader output.
+   Disabling ligatures in print makes each character individual and
+   extractable while remaining visually identical in body text.
+   ==================================================================== */
+
+* {
+  font-variant-ligatures: none !important;
+  font-feature-settings: "liga" 0, "clig" 0, "dlig" 0, "hlig" 0 !important;
+  -webkit-font-feature-settings: "liga" 0, "clig" 0, "dlig" 0, "hlig" 0 !important;
+}
+
 
 /* ====================================================================
    1. PAGE SETUP - 6.69x9.61" TRIM SIZE (PrinceXML + POD friendly)
