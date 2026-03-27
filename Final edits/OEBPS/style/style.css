@@ -132,9 +132,9 @@ body {
 
 /* Title Page */
 .title-page-body {
-  border: 12px solid var(--clr-paper);
-  outline: 2px solid var(--clr-gold-accent);
-  background: radial-gradient(circle, #fff 0%, #fcfcfc 100%);
+  border: none;
+  outline: none;
+  background: #fff;
 }
 
 h1.frontmatter-title, h1.main-title {
