@@ -1170,9 +1170,12 @@ table {
 .btn-join,
 .video-link,
 .web-only,
-.epub-download-cta,
-nav[role="doc-toc"] {
+.epub-download-cta {
   display: none !important;
+}
+/* nav[role="doc-toc"] is the printed TOC — do NOT hide it */
+nav[role="doc-toc"] {
+  display: block !important;
 }
 
 /* ====================================================================
@@ -1249,6 +1252,65 @@ nav[role="doc-toc"] {
   page-break-before: auto;
   break-before: auto;
 }
+
+/* ====================================================================
+   TOC — Automatic page numbers via CSS target-counter
+   (WeasyPrint resolves target-counter() at layout time, so page
+    numbers match exactly where each section lands in this PDF.)
+   ==================================================================== */
+
+/* Hide the empty static span; the ::after pseudo-element replaces it */
+.toc-entry .toc-page-number {
+  display: none !important;
+}
+
+/* Dot leader + auto page number after every TOC link */
+.toc-entry a.toc-link {
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+  color: #000;
+}
+
+.toc-entry a.toc-link::after {
+  content: target-counter(attr(href), page);
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 9pt;
+  font-weight: 400;
+  color: #333;
+  flex-shrink: 0;
+  min-width: 0.35in;
+  text-align: right;
+  order: 1;
+}
+
+/* Dot leader between title and page number */
+.toc-entry a.toc-link .toc-dot-leader {
+  flex: 1;
+  border-bottom: 1pt dotted #999;
+  margin: 0 0.1in;
+  position: relative;
+  bottom: 0.15em;
+  order: 0;
+}
+
+/* Suppress @page counter on cover, title, copyright, and TOC pages */
+@page nofolio {
+  @bottom-center { content: none; }
+}
+
+/* Suppress folio on pages with class cover-body, title-page-body,
+   copyright-body, toc-body (applied via the named page mechanism) */
+@page cover-page    { @bottom-center { content: none; } }
+@page title-page    { @bottom-center { content: none; } }
+@page copyright-pg  { @bottom-center { content: none; } }
+@page toc-pg        { @bottom-center { content: none; } }
+
+/* Named page assignments */
+div[class*="cover-body"]    { page: cover-page; }
+div[class*="title-page-body"] { page: title-page; }
+div[class*="copyright-body"]  { page: copyright-pg; }
+div[class*="toc-body"]        { page: toc-pg; }
 
 /* ====================================================================
    END OF POD PRINT STYLESHEET — 6.69" x 9.61"
