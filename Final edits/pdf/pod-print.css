@@ -39,6 +39,15 @@
   @bottom-center { content: ""; }
 }
 
+/* Frontmatter pages (title, copyright) — no folio */
+@page frontmatter-nofolio {
+  @bottom-center { content: ""; }
+}
+div[class*="title-page-body"],
+div[class*="copyright-body"] {
+  page: frontmatter-nofolio;
+}
+
 /* ====================================================================
    2. BASE TYPOGRAPHY
    ==================================================================== */
@@ -56,8 +65,8 @@ body {
   padding: 0;
   orphans: 3;
   widows: 3;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
 *, *::before, *::after {
@@ -236,6 +245,13 @@ blockquote + p,
   text-align: center;
   border: 2pt solid #000;
   padding: 0.8in 0.6in;
+}
+
+/* Title page: reduce main-title size to fit within the border box */
+div[class*="title-page-body"] h1.main-title {
+  font-size: 26pt;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.25in;
 }
 
 /* Copyright Page — left-aligned publishing format, airy spacing */
@@ -509,6 +525,8 @@ div[class*="part-body"] {
   justify-content: center;
   align-items: center;
   min-height: 8in;
+  max-height: 9in;
+  overflow: hidden;
   text-align: center;
 }
 
@@ -1147,9 +1165,25 @@ table {
 .btn-join,
 .video-link,
 .web-only,
-.epub-download-cta {
+.epub-download-cta,
+.worksheet-cta {
   display: none !important;
 }
+
+/* Screen-reader-only spans must also be hidden in PDF
+   (otherwise drop-cap duplicates the first letter: "TThe") */
+.sr-only {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Full-page image-quote pages render as solid black in POD PDF —
+   hide them; they remain visible in EPUB */
+div[data-source="7a-preface-quote.xhtml"],
+div[data-source="28a-conclusion-quote.xhtml"] {
+  display: none !important;
+}
+
 /* nav[role="doc-toc"] is the printed TOC — do NOT hide it */
 nav[role="doc-toc"] {
   display: block !important;
