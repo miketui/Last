@@ -157,6 +157,15 @@ def extract_body(xhtml_path: Path, images_dir: Path) -> tuple[str, str]:
     # Strip leading artifact chars (single ~ or . at top of body from web export)
     inner = re.sub(r'^\s*[~\.\u00b7]\s*\n', '', inner)
 
+    # For the TOC file: convert .xhtml hrefs → #src-{stem} fragment IDs so that
+    # CSS target-counter(attr(href), page) resolves correctly in the combined PDF.
+    if xhtml_path.name == '3-TableOfContents.xhtml':
+        def xhtml_to_fragment(m):
+            href = m.group(1)
+            stem = href.replace('.xhtml', '')
+            return f'href="#src-{stem}"'
+        inner = re.sub(r'href="([^"#][^"]*\.xhtml)"', xhtml_to_fragment, inner)
+
     return body_attrs, inner
 
 

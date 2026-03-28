@@ -34,30 +34,8 @@
   }
 }
 
-/* Verso (left/even) pages: gutter on LEFT */
-@page :left {
-  margin-left: 0.95in;
-  margin-right: 0.80in;
-}
-
-/* Recto (right/odd) pages: gutter on RIGHT */
-@page :right {
-  margin-left: 0.80in;
-  margin-right: 0.95in;
-}
-
 /* First page of document: suppress folio */
 @page :first {
-  @bottom-center { content: ""; }
-}
-
-/* Blank pages inserted for recto chapter starts */
-@page :blank {
-  @bottom-center { content: ""; }
-}
-
-/* Named page: suppress folio on openers/standalone pages */
-@page nofolio {
   @bottom-center { content: ""; }
 }
 
@@ -101,9 +79,8 @@ body {
 }
 
 /* ---- WRAPPER-LEVEL page breaks (exactly one break per section) ----
-   NOTE: We intentionally do NOT use "page: nofolio" on any element.
-   Named-page changes cause WeasyPrint to insert implicit blank pages.
-   Folio suppression is handled via @page :first instead. */
+   Digital-first PDF: all breaks use break-before: page (not recto/verso).
+   No named pages except cover (zero-margin). No blank pages inserted. */
 
 /* Chapter wrappers */
 .chapter-page {
@@ -1242,7 +1219,7 @@ nav[role="doc-toc"] {
    BACKMATTER FLOW — compact short backmatter items onto fewer pages
    ==================================================================== */
 
-/* Backmatter flow: each file starts on a new page, but no blank recto pages */
+/* Backmatter flow: each file starts on a new page */
 .backmatter-flow .backmatter-item {
   page-break-before: always;
   break-before: page;
@@ -1294,23 +1271,14 @@ nav[role="doc-toc"] {
   order: 0;
 }
 
-/* Suppress @page counter on cover, title, copyright, and TOC pages */
-@page nofolio {
+/* Cover page: zero-margin full-bleed, no folio */
+@page cover-page {
+  margin: 0;
   @bottom-center { content: none; }
 }
 
-/* Suppress folio on pages with class cover-body, title-page-body,
-   copyright-body, toc-body (applied via the named page mechanism) */
-@page cover-page    { @bottom-center { content: none; } }
-@page title-page    { @bottom-center { content: none; } }
-@page copyright-pg  { @bottom-center { content: none; } }
-@page toc-pg        { @bottom-center { content: none; } }
-
-/* Named page assignments */
-div[class*="cover-body"]    { page: cover-page; }
-div[class*="title-page-body"] { page: title-page; }
-div[class*="copyright-body"]  { page: copyright-pg; }
-div[class*="toc-body"]        { page: toc-pg; }
+/* Assign cover to its named page (zero margins, no folio) */
+div[class*="cover-body"] { page: cover-page; }
 
 /* ====================================================================
    END OF POD PRINT STYLESHEET — 6.69" x 9.61"
