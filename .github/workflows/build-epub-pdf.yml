@@ -30,7 +30,7 @@ jobs:
           cp ../CurlsAndContemplation-FINAL.epub output/CurlsAndContemplation-FINAL.epub
           echo "EPUB built successfully"
 
-      - name: Build PDF (pass 1 - get page numbers)
+      - name: Build PDF pass 1
         run: |
           cd "Final edits/pdf"
           python3 build-pod-pdf-royal.py
@@ -40,129 +40,143 @@ jobs:
         run: |
           cd "Final edits"
           python3 << 'PYEOF'
-          import subprocess, re, json
+import subprocess, re, json
 
-          pdf_path = "output/CurlsAndContemplation-KDP-ROYAL-FINAL.pdf"
+pdf_path = "output/CurlsAndContemplation-KDP-ROYAL-FINAL.pdf"
 
-          # Get total pages
-          result = subprocess.run(["pdfinfo", pdf_path], capture_output=True, text=True)
-          pages_line = [l for l in result.stdout.splitlines() if "Pages:" in l]
-          total_pages = int(pages_line[0].split(":")[1].strip()) if pages_line else 0
-          print(f"Total pages: {total_pages}")
+# Get total pages
+result = subprocess.run(["pdfinfo", pdf_path], capture_output=True, text=True)
+pages_line = [l for l in result.stdout.splitlines() if "Pages:" in l]
+total_pages = int(pages_line[0].split(":")[1].strip()) if pages_line else 0
+print(f"Total pages: {total_pages}")
 
-          # Extract text from each page to find chapter starts
-          toc_entries = {
-              "4-Dedication": "Dedication",
-              "5-SelfAssessment": "Creative Identity Audit",
-              "6-AffirmationOdyssey": "Affirmation Odyssey",
-              "7-Preface": "Preface",
-              "9-chapter-i": "Chapter I",
-              "10-chapter-ii": "Chapter II",
-              "11-chapter-iii": "Chapter III",
-              "13-chapter-iv": "Chapter IV",
-              "14-chapter-v": "Chapter V",
-              "15-chapter-vi": "Chapter VI",
-              "16-chapter-vii": "Chapter VII",
-              "17-chapter-viii": "Chapter VIII",
-              "19-chapter-ix": "Chapter IX",
-              "20-chapter-x": "Chapter X",
-              "21-chapter-xi": "Chapter XI",
-              "22-chapter-xii": "Chapter XII",
-              "23-chapter-xiii": "Chapter XIII",
-              "25-chapter-xiv": "Chapter XIV",
-              "26-chapter-xv": "Chapter XV",
-              "27-chapter-xvi": "Chapter XVI",
-              "28-Conclusion": "Conclusion",
-              "29-QuizKey": "Quiz Key",
-              "30-SelfAssessment": "Self-Assessment",
-              "31-affirmations": "Affirmations Close",
-              "32-continued": "Continued Learning",
-              "33-Acknowledgments": "Acknowledgments",
-              "34-AbouttheAuthor": "About the Author",
-              "35-JournalingStart": "Journaling Start",
-              "36-ManifestingJournal": "Manifesting Journal",
-              "37-journal": "Journal Page",
-              "38-professional": "Professional Development",
-              "39-SMARTGoals": "SMART Goals",
-              "40-self-care": "Self-Care Journal",
-              "41-VisionJournal": "Vision Journal",
-              "42-DoodlePage": "Doodle Page",
-              "43-bibliography": "Bibliography",
-          }
+# Map of stem -> list of search strings (first unique text that appears on the chapter opening page)
+# Order matters: put longer/more specific strings first; all comparisons are case-insensitive
+search_map = {
+    "4-Dedication":       ["for the dreamers", "dedication"],
+    "5-SelfAssessment":   ["creative identity audit", "who are you"],
+    "6-AffirmationOdyssey": ["affirmation odyssey", "daily affirmations worksheet"],
+    "7-Preface":          ["preface"],
+    "9-chapter-i":        ["unveiling your creative odyssey", "chapter i", "chapter 1"],
+    "10-chapter-ii":      ["refining your creative toolkit", "chapter ii", "chapter 2"],
+    "11-chapter-iii":     ["reigniting your creative fire", "chapter iii", "chapter 3"],
+    "13-chapter-iv":      ["the art of networking", "chapter iv", "chapter 4"],
+    "14-chapter-v":       ["cultivating creative excellence through mentorship", "chapter v", "chapter 5"],
+    "15-chapter-vi":      ["mastering the business of hairstyling", "chapter vi", "chapter 6"],
+    "16-chapter-vii":     ["embracing wellness and self-care", "chapter vii", "chapter 7"],
+    "17-chapter-viii":    ["advancing skills through continuous education", "chapter viii", "chapter 8"],
+    "19-chapter-ix":      ["stepping into leadership", "chapter ix", "chapter 9"],
+    "20-chapter-x":       ["crafting enduring legacies", "chapter x\\b", "chapter 10"],
+    "21-chapter-xi":      ["advanced digital strategies", "chapter xi\\b", "chapter 11"],
+    "22-chapter-xii":     ["financial wisdom", "chapter xii\\b", "chapter 12"],
+    "23-chapter-xiii":    ["embracing ethics and sustainability", "chapter xiii", "chapter 13"],
+    "25-chapter-xiv":     ["the impact of ai on the beauty industry", "chapter xiv", "chapter 14"],
+    "26-chapter-xv":      ["cultivating resilience and well-being", "chapter xv\\b", "chapter 15"],
+    "27-chapter-xvi":     ["tresses and textures", "chapter xvi", "chapter 16"],
+    "28-Conclusion":      ["conclusion"],
+    "29-QuizKey":         ["quiz key", "quiz answer"],
+    "30-SelfAssessment":  ["self-assessment worksheet", "self\\s*assessment\\s*worksheet"],
+    "31-affirmations":    ["affirmations close", "closing affirmations"],
+    "32-continued":       ["continued learning commitment", "continued learning"],
+    "33-Acknowledgments": ["acknowledgments", "acknowledgements"],
+    "34-AbouttheAuthor":  ["about the author"],
+    "35-JournalingStart": ["journaling start", "begin your journal"],
+    "36-ManifestingJournal": ["manifesting journal"],
+    "37-journal":         ["journal page"],
+    "38-professional":    ["professional development worksheet"],
+    "39-SMARTGoals":      ["smart goals worksheet", "smart goals"],
+    "40-self-care":       ["self-care journal", "self\\s*care\\s*journal"],
+    "41-VisionJournal":   ["vision journal"],
+    "42-DoodlePage":      ["doodle page", "doodle"],
+    "43-bibliography":    ["bibliography", "references"],
+}
 
-          # Extract text page by page
-          page_map = {}
-          for page_num in range(1, total_pages + 1):
-              result = subprocess.run(
-                  ["pdftotext", "-f", str(page_num), "-l", str(page_num), pdf_path, "-"],
-                  capture_output=True, text=True
-              )
-              text = result.stdout
+# Extract full PDF text page by page
+page_texts = {}
+print("Extracting text from PDF pages...")
+for page_num in range(1, total_pages + 1):
+    res = subprocess.run(
+        ["pdftotext", "-f", str(page_num), "-l", str(page_num), pdf_path, "-"],
+        capture_output=True, text=True
+    )
+    page_texts[page_num] = res.stdout.lower().strip()
 
-              # Check if this page contains a chapter/section start
-              for key, label in toc_entries.items():
-                  if key not in page_map:
-                      # Match by looking for the chapter title keywords
-                      stem = key.split("-", 1)[-1] if "-" in key else key
-                      # Check for section IDs or title text
-                      if f"src-{key}" in text or label.lower() in text.lower():
-                          page_map[key] = page_num
-                          print(f"  Found {label} on page {page_num}")
+print(f"Extracted text from {len(page_texts)} pages")
 
-          # Write page map to JSON
-          with open("output/page-map.json", "w") as f:
-              json.dump(page_map, f, indent=2)
+page_map = {}
+# For each TOC entry, find the FIRST page that contains any of the search strings
+for stem, terms in search_map.items():
+    for page_num in range(1, total_pages + 1):
+        text = page_texts.get(page_num, "")
+        matched = False
+        for term in terms:
+            # Use regex for word-boundary safe matching
+            try:
+                if re.search(term, text):
+                    page_map[stem] = page_num
+                    print(f"  {stem}: page {page_num} (matched: '{term}')")
+                    matched = True
+                    break
+            except re.error:
+                if term in text:
+                    page_map[stem] = page_num
+                    print(f"  {stem}: page {page_num} (matched literal: '{term}')")
+                    matched = True
+                    break
+        if matched:
+            break
+    if stem not in page_map:
+        print(f"  WARNING: {stem} not found in PDF")
 
-          print(f"\nMapped {len(page_map)} / {len(toc_entries)} entries")
-          PYEOF
+with open("output/page-map.json", "w") as f:
+    json.dump(page_map, f, indent=2)
+
+print(f"\nMapped {len(page_map)} / {len(search_map)} entries")
+PYEOF
 
       - name: Update TOC with page numbers
         run: |
           cd "Final edits"
           python3 << 'PYEOF'
-          import json, re
+import json, re
 
-          # Read page map
-          with open("output/page-map.json") as f:
-              page_map = json.load(f)
+with open("output/page-map.json") as f:
+    page_map = json.load(f)
 
-          # Read TOC XHTML
-          toc_path = "OEBPS/xhtml/3-TableOfContents.xhtml"
-          with open(toc_path) as f:
-              toc = f.read()
+toc_path = "OEBPS/xhtml/3-TableOfContents.xhtml"
+with open(toc_path) as f:
+    toc = f.read()
 
-          # Map href filenames to page numbers
-          def replace_page_num(match):
-              href = match.group(1)
-              stem = href.replace(".xhtml", "")
-              page = page_map.get(stem, "")
-              if page:
-                  return f'href="{href}"><span class="toc-entry-title">{match.group(2)}</span></a> <span class="toc-page-number">{page}</span>'
-              return match.group(0)
+# Replace each toc-page-number span for the matching href
+for stem, page_num in page_map.items():
+    # Match the full toc-item div containing this href
+    # Pattern: href="STEM.xhtml" or href="STEM-long-title.xhtml" (stem is a prefix match)
+    # We need to match href="STEM..." then find the toc-page-number span
+    escaped = re.escape(stem)
+    # Match the anchor href starting with this stem (allows full filename)
+    pattern = (
+        r'(href="' + escaped + r'[^"]*"[^>]*>)'   # href attr
+        r'(.*?)'                                    # link content
+        r'(</a>s*<span class="toc-page-number">)' # closing tag + span open
+        r'[^<]*'                                    # old page number (may be empty)
+        r'(</span>)'                                # span close
+    )
+    replacement = rf'\1\2\3{page_num}\4'
+    new_toc, count = re.subn(pattern, replacement, toc, flags=re.DOTALL)
+    if count > 0:
+        toc = new_toc
+        print(f"  Set page {page_num} for {stem}")
+    else:
+        print(f"  WARNING: could not update TOC entry for {stem}")
 
-          # Replace empty toc-page-number spans with actual numbers
-          for stem, page_num in page_map.items():
-              fname = stem + ".xhtml"
-              # Pattern: href="filename.xhtml">...title...</a>...<span class="toc-page-number"></span>
-              pattern = f'href="{re.escape(fname)}"[^>]*>[^<]*(?:<[^>]+>[^<]*)*</a>\s*<span class="toc-page-number">[^<]*</span>'
-              def make_replacer(pn):
-                  def replacer(m):
-                      old = m.group(0)
-                      # Replace the empty span content with the page number
-                      return re.sub(r'<span class="toc-page-number">[^<]*</span>',
-                                    f'<span class="toc-page-number">{pn}</span>', old)
-                  return replacer
-              toc = re.sub(pattern, make_replacer(page_num), toc)
+with open(toc_path, "w") as f:
+    f.write(toc)
 
-          with open(toc_path, "w") as f:
-              f.write(toc)
+populated = len(re.findall(r'toc-page-number">\d+<', toc))
+print(f"\nTotal populated TOC entries: {populated}")
+PYEOF
 
-          # Count populated entries
-          populated = len(re.findall(r'toc-page-number">\d+<', toc))
-          print(f"Updated {populated} TOC page numbers")
-          PYEOF
-
-      - name: Rebuild PDF (pass 2 - with TOC page numbers)
+      - name: Rebuild PDF pass 2 with TOC page numbers
         run: |
           cd "Final edits/pdf"
           python3 build-pod-pdf-royal.py
@@ -193,5 +207,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add "Final edits/output/" "Final edits/OEBPS/xhtml/3-TableOfContents.xhtml" "Final edits/pdf/print-interior-royal.html"
-          git diff --cached --quiet || git commit -m "build: rebuild EPUB+PDF with TOC page numbers and no blank pages"
+          git diff --cached --quiet || git commit -m "build: final EPUB+PDF with correct TOC page numbers"
           git push
