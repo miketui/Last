@@ -78,7 +78,7 @@
     <item id="font-libre-regular"      href="fonts/librebaskerville-regular.woff2" media-type="font/woff2"/>
 
     <!-- Images -->
-    <item id="img-cover-jpg"          href="cover.jpg"                         media-type="image/jpeg"/>
+    <!-- cover.jpg removed: unused (cover uses cover.png) -->
     <item id="img-michael"            href="images/Michael.jpeg"               media-type="image/jpeg"/>
     <item id="img-brushstroke-svg"    href="images/brushstroke.svg"            media-type="image/svg+xml"/>
     <item id="img-brushstroke-png"    href="images/brushstroke.png"            media-type="image/png"/>

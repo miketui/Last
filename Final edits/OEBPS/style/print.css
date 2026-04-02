@@ -10,8 +10,7 @@
  * Version: 2.1 - Final Corrected
  */
 
-/* Import the main stylesheet to inherit all base styles */
-@import url('style.css');
+/* @import url('style.css') removed — style.css is linked directly in XHTML <head> */
 /* ====================================================================
    0. LIGATURE FIX — Ensure PDF text extraction works correctly
    Chromium subsets fonts and breaks fi/fl/ffi ligature-to-Unicode
@@ -1117,13 +1116,14 @@ a[href^="../"]:after {
   margin: 0;
 }
 
-/* Visually hidden (accessibility) */
+/* Visually hidden (accessibility) — e-reader-safe: clip-path instead of position:absolute */
 .visually-hidden {
-  position: absolute !important;
+  position: static !important;
   width: 1px !important;
   height: 1px !important;
   overflow: hidden !important;
   clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
   white-space: nowrap !important;
   border: 0 !important;
 }

@@ -243,13 +243,16 @@ div.quote-page {
 
 /* Chapter body, endnotes, quiz, worksheet — each starts on new page */
 .chapter-opener,
-section[class*="chap-body"],
 .endnotes,
 .quiz-section,
 .worksheet-card {
   page-break-before: always;
   break-before: page;
 }
+
+/* Chapter body flows naturally after the opener section.
+   Removing break-before prevents an empty half-page when the
+   opener introduction doesn't fill the page completely. */
 
 /* ====================================================================
    4. HEADINGS
@@ -494,6 +497,7 @@ section.chap-title {
   background: #000;
   color: #fff;
   padding: 0.6in 0.5in;
+  page-break-inside: avoid;
 }
 
 .chap-title h1,
@@ -705,6 +709,7 @@ section.chap-body,
   height: 0;
   margin: 0;
   padding: 0;
+  display: none;
 }
 
 /* ====================================================================
@@ -1417,6 +1422,34 @@ nav[role="doc-toc"] {
 
 /* Assign cover to its named page (zero margins, no folio) */
 div[class*="cover-body"] { page: cover-page; }
+
+/* ====================================================================
+   TEXT EXTRACTION FIX — Reduce letter-spacing on headings
+   WeasyPrint's text layer inserts actual spaces when letter-spacing is
+   applied with text-transform: uppercase, causing "I NTRODUCTION",
+   "C HAPTERS", "CONTEMPL ATION" in the PDF text layer. Setting
+   letter-spacing to a very small value preserves visual spread while
+   keeping text extraction clean.
+   ==================================================================== */
+h2, .subtitle, .toc-title,
+h2.part-subtitle,
+.introduction-heading {
+  letter-spacing: 0.02em;
+}
+
+/* Remove ::first-letter drop caps that break text extraction.
+   The XHTML source already uses <strong> tags for drop caps where needed.
+   ::first-letter separates the first character in the text layer. */
+p.intro-text:first-of-type::first-letter,
+.chap-body .content-area > h2:first-child + p:first-letter,
+.chap-body .content-area > p:first-child:first-letter {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin-right: 0;
+  padding-right: 0;
+  letter-spacing: 0;
+}
 
 /* ====================================================================
    END OF POD PRINT STYLESHEET — 6.69" x 9.61"
@@ -2161,7 +2194,7 @@ div[class*="cover-body"] { page: cover-page; }
 </section>
 <!-- PAGE BREAK -->
 <div class="page-break"></div>
-<!-- PAGE 6: QUIZ & WORKSHEET -->
+<!-- PAGE 6: QUIZ &amp; WORKSHEET -->
 <section aria-labelledby="quiz-title" class="quiz-container chap-quiz avoid-break page-break-before" role="region">
 <header class="quiz-header">
 
@@ -3779,7 +3812,7 @@ Tokyo Stylez built her reputation through self-teaching, wig craftsmanship, and 
 
 <div class="page-break"></div>
 
-<!-- PAGE 6: QUIZ & WORKSHEET -->
+<!-- PAGE 6: QUIZ &amp; WORKSHEET -->
 <section aria-labelledby="quiz-title" class="quiz-container chap-quiz avoid-break page-break-before" role="region">
 <header class="quiz-header">
 <h2 class="quiz-title" id="quiz-title">Chapter Quiz</h2>
@@ -4469,7 +4502,7 @@ Scheduling buffer time between appointments can prevent back-to-back fatigue, al
 
 <!-- PAGE BREAK -->
 <div class="page-break"></div>
-<!-- PAGE 6: QUIZ & WORKSHEET -->
+<!-- PAGE 6: QUIZ &amp; WORKSHEET -->
 <section aria-labelledby="quiz-title" class="quiz-container chap-quiz avoid-break page-break-before" role="region">
 <header class="quiz-header">
 <h2 class="quiz-title" id="quiz-title">Chapter Quiz</h2>
@@ -4955,7 +4988,7 @@ Scheduling buffer time between appointments can prevent back-to-back fatigue, al
 </section>
 
 <div class="page-break"></div>
-<!-- PAGE 6: QUIZ & WORKSHEET -->
+<!-- PAGE 6: QUIZ &amp; WORKSHEET -->
 <section aria-labelledby="quiz-title" class="quiz-container chap-quiz avoid-break page-break-before" role="region">
 <header class="quiz-header">
 <h2 class="quiz-title" id="quiz-title">Chapter Quiz</h2>
