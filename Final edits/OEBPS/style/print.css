@@ -77,7 +77,7 @@
 
 /* Chapter title pages (and similar openers) should start on a right-hand page */
 section.chap-title {
-  break-before: right;
+  break-before: page; /* changed from right to eliminate blank pages */
   page: nofolio;
 }
 
@@ -89,7 +89,7 @@ section.image-quote {
 
 /* Part divider pages: treat as openers */
 section.part-container, section.part-divider, section.part-title, .part-title, .part-divider {
-  break-before: right;
+  break-before: page; /* changed from right to eliminate blank pages */
   page: nofolio;
 }
 
