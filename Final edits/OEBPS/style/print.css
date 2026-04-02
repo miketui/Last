@@ -217,11 +217,7 @@ section[epub\:type="part"],
   break-before: page;
 }
 
-/* Defensive page breaks - modern syntax for PDF/POD compatibility */
-html {
-  break-before: page;
-  page-break-before: always;
-}
+/* html { break-before } rule removed per audit P2 */
 
 .chap-title,
 .part-page,
@@ -1200,7 +1196,7 @@ nav[role="doc-toc"] li a {
   align-items: baseline;
   text-decoration: none;
   color: #000;
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-family: 'Libre Baskerville', 'Georgia', serif;
   font-size: 10pt;
   line-height: 1.6;
 }
@@ -1230,15 +1226,15 @@ nav[role="doc-toc"] .toc-part-title {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--clr-teal-primary, #1a8a7d);
+  color: #333;
   margin-top: 0.2in;
   margin-bottom: 0.08in;
-  border-bottom: 1.5pt solid var(--clr-teal-primary, #1a8a7d);
+  border-bottom: 1.5pt solid #333;
   padding-bottom: 0.04in;
 }
 nav[role="doc-toc"] .toc-chapter-num {
   font-weight: 700;
   min-width: 0.4in;
   display: inline-block;
-  color: var(--clr-teal-primary, #1a8a7d);
+  color: #333;
 }
