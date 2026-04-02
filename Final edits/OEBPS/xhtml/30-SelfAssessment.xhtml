@@ -25,8 +25,8 @@
  <p class="prompt-text">Do your current service prices reflect your expertise, overhead, and long-term goals? Be honest about where you may be undervaluing yourself or absorbing costs you should be accounting for.</p>
  <div class="box-container">
  <h3>Current Pricing Analysis</h3>
- <input type="text" class="lined-input" placeholder="My signature service is priced at..."/>
- <input type="text" class="lined-input" placeholder="My true hourly value including prep time is..."/>
+ <div class="answer-line" role="textbox" aria-label="Writing line"></div>
+ <div class="answer-line" role="textbox" aria-label="Writing line"></div>
  </div>
  </div>
 
@@ -36,12 +36,20 @@
  <div class="box-container">
  <h3>Current Income Streams</h3>
  <p class="prompt-text">List all ways you currently generate income:</p>
- <textarea placeholder="Services, retail, education, content..."></textarea>
+ <div class="answer-lines" role="textbox" aria-label="Writing area">
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+        </div>
  </div>
  <div class="box-container">
  <h3>Untapped Potential</h3>
  <p class="prompt-text">What additional revenue streams could you realistically explore over time?</p>
- <textarea placeholder="Workshops, product lines, online courses..."></textarea>
+ <div class="answer-lines" role="textbox" aria-label="Writing area">
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+        </div>
  </div>
  </div>
  </div>
@@ -52,11 +60,11 @@
  <div class="grid-2">
  <div class="box-container">
  <h3>My Dream Client</h3>
- <input type="text" class="lined-input" placeholder="Values, personality, needs..."/>
+ <div class="answer-line" role="textbox" aria-label="Writing line"></div>
  </div>
  <div class="box-container">
  <h3>Clients I’ll Refer Out</h3>
- <input type="text" class="lined-input" placeholder="Red flags to recognize..."/>
+ <div class="answer-line" role="textbox" aria-label="Writing line"></div>
  </div>
  </div>
  </div>
@@ -64,7 +72,7 @@
  <div class="commitment-box">
  <div>
  <h3>This Week’s Key Action</h3>
- <input type="text" class="lined-input" placeholder="One strategic step I'll take..."/>
+ <div class="answer-line" role="textbox" aria-label="Writing line"></div>
  </div>
  </div>
 
@@ -74,9 +82,9 @@
  </footer>
  </div>
 
- <aside class="worksheet-cta" style="margin:1.5em 0; padding:1em; border:2px solid #c8a951; border-radius:8px; text-align:center; background:#fdf8ed;">
- <p style="margin:0 0 0.5em 0; font-weight:bold; color:#333;">&#x1F4E5; Prefer a printable version?</p>
- <p style="margin:0;"><a href="worksheet-download-fallback.xhtml" style="color:#c8a951; text-decoration:underline;">Download the Printable Worksheet Pack</a> for the best hands-on experience.</p>
+ <aside class="worksheet-cta">
+ <p class="worksheet-cta-heading">Prefer a printable version?</p>
+ <p class="worksheet-cta-text"><a href="worksheet-download-fallback.xhtml" class="worksheet-cta-link">Download the Printable Worksheet Pack</a> for the best hands-on experience.</p>
  </aside>
 </body>
 </html>
