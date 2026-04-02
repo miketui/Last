@@ -1327,35 +1327,22 @@ div[class*="cover-body"] { page: cover-page; }
    letter-spacing to a very small value preserves visual spread while
    keeping text extraction clean.
    ==================================================================== */
+h2, .subtitle, .toc-title,
+h2.part-subtitle,
 .introduction-heading {
-  letter-spacing: 0.02em;
-}
-
-h2.part-subtitle {
-  letter-spacing: 0.02em;
-}
-
-/* Reduce the general h2 letter-spacing that causes broken words */
-h2, .subtitle, .toc-title {
   letter-spacing: 0.02em;
 }
 
 /* Remove ::first-letter drop caps that break text extraction.
    The XHTML source already uses <strong> tags for drop caps where needed.
    ::first-letter separates the first character in the text layer. */
-p.intro-text:first-of-type::first-letter {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  margin-right: 0;
-  letter-spacing: 0;
-}
-
+p.intro-text:first-of-type::first-letter,
 .chap-body .content-area > h2:first-child + p:first-letter,
 .chap-body .content-area > p:first-child:first-letter {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
+  margin-right: 0;
   padding-right: 0;
   letter-spacing: 0;
 }
