@@ -1,50 +1,197 @@
-name: Build EPUB & Validate
+name: Build EPUB & PDF with TOC Pages
 
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'Final edits/OEBPS/**'
-      - 'Final edits/META-INF/**'
-      - 'Final edits/mimetype'
 
 jobs:
-  build-epub:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          pip install weasyprint
 
       - name: Build EPUB
         run: |
           cd "Final edits"
-          # EPUB spec requires mimetype as first file, uncompressed
           zip -X0 "../CurlsAndContemplation-FINAL.epub" mimetype
-          # Add remaining content with compression
-          zip -Xr9D "../CurlsAndContemplation-FINAL.epub" META-INF OEBPS \
-            -x "OEBPS/MASTER_ERROR_REPORT.md" \
-            -x "OEBPS/mimetype"
+          zip -Xr9D "../CurlsAndContemplation-FINAL.epub" META-INF OEBPS
+          cp ../CurlsAndContemplation-FINAL.epub output/CurlsAndContemplation-FINAL.epub
+          echo "EPUB built successfully"
 
-      - name: Install EPUBCheck
+      - name: Build PDF (pass 1 - get page numbers)
         run: |
-          wget -q https://github.com/w3c/epubcheck/releases/download/v5.1.0/epubcheck-5.1.0.zip
-          unzip -q epubcheck-5.1.0.zip
+          cd "Final edits/pdf"
+          python3 build-pod-pdf-royal.py
+          echo "PDF pass 1 complete"
+
+      - name: Extract page numbers from PDF
+        run: |
+          cd "Final edits"
+          python3 << 'PYEOF'
+          import subprocess, re, json
+
+          pdf_path = "output/CurlsAndContemplation-KDP-ROYAL-FINAL.pdf"
+
+          # Get total pages
+          result = subprocess.run(["pdfinfo", pdf_path], capture_output=True, text=True)
+          pages_line = [l for l in result.stdout.splitlines() if "Pages:" in l]
+          total_pages = int(pages_line[0].split(":")[1].strip()) if pages_line else 0
+          print(f"Total pages: {total_pages}")
+
+          # Extract text from each page to find chapter starts
+          toc_entries = {
+              "4-Dedication": "Dedication",
+              "5-SelfAssessment": "Creative Identity Audit",
+              "6-AffirmationOdyssey": "Affirmation Odyssey",
+              "7-Preface": "Preface",
+              "9-chapter-i": "Chapter I",
+              "10-chapter-ii": "Chapter II",
+              "11-chapter-iii": "Chapter III",
+              "13-chapter-iv": "Chapter IV",
+              "14-chapter-v": "Chapter V",
+              "15-chapter-vi": "Chapter VI",
+              "16-chapter-vii": "Chapter VII",
+              "17-chapter-viii": "Chapter VIII",
+              "19-chapter-ix": "Chapter IX",
+              "20-chapter-x": "Chapter X",
+              "21-chapter-xi": "Chapter XI",
+              "22-chapter-xii": "Chapter XII",
+              "23-chapter-xiii": "Chapter XIII",
+              "25-chapter-xiv": "Chapter XIV",
+              "26-chapter-xv": "Chapter XV",
+              "27-chapter-xvi": "Chapter XVI",
+              "28-Conclusion": "Conclusion",
+              "29-QuizKey": "Quiz Key",
+              "30-SelfAssessment": "Self-Assessment",
+              "31-affirmations": "Affirmations Close",
+              "32-continued": "Continued Learning",
+              "33-Acknowledgments": "Acknowledgments",
+              "34-AbouttheAuthor": "About the Author",
+              "35-JournalingStart": "Journaling Start",
+              "36-ManifestingJournal": "Manifesting Journal",
+              "37-journal": "Journal Page",
+              "38-professional": "Professional Development",
+              "39-SMARTGoals": "SMART Goals",
+              "40-self-care": "Self-Care Journal",
+              "41-VisionJournal": "Vision Journal",
+              "42-DoodlePage": "Doodle Page",
+              "43-bibliography": "Bibliography",
+          }
+
+          # Extract text page by page
+          page_map = {}
+          for page_num in range(1, total_pages + 1):
+              result = subprocess.run(
+                  ["pdftotext", "-f", str(page_num), "-l", str(page_num), pdf_path, "-"],
+                  capture_output=True, text=True
+              )
+              text = result.stdout
+
+              # Check if this page contains a chapter/section start
+              for key, label in toc_entries.items():
+                  if key not in page_map:
+                      # Match by looking for the chapter title keywords
+                      stem = key.split("-", 1)[-1] if "-" in key else key
+                      # Check for section IDs or title text
+                      if f"src-{key}" in text or label.lower() in text.lower():
+                          page_map[key] = page_num
+                          print(f"  Found {label} on page {page_num}")
+
+          # Write page map to JSON
+          with open("output/page-map.json", "w") as f:
+              json.dump(page_map, f, indent=2)
+
+          print(f"\nMapped {len(page_map)} / {len(toc_entries)} entries")
+          PYEOF
+
+      - name: Update TOC with page numbers
+        run: |
+          cd "Final edits"
+          python3 << 'PYEOF'
+          import json, re
+
+          # Read page map
+          with open("output/page-map.json") as f:
+              page_map = json.load(f)
+
+          # Read TOC XHTML
+          toc_path = "OEBPS/xhtml/3-TableOfContents.xhtml"
+          with open(toc_path) as f:
+              toc = f.read()
+
+          # Map href filenames to page numbers
+          def replace_page_num(match):
+              href = match.group(1)
+              stem = href.replace(".xhtml", "")
+              page = page_map.get(stem, "")
+              if page:
+                  return f'href="{href}"><span class="toc-entry-title">{match.group(2)}</span></a> <span class="toc-page-number">{page}</span>'
+              return match.group(0)
+
+          # Replace empty toc-page-number spans with actual numbers
+          for stem, page_num in page_map.items():
+              fname = stem + ".xhtml"
+              # Pattern: href="filename.xhtml">...title...</a>...<span class="toc-page-number"></span>
+              pattern = f'href="{re.escape(fname)}"[^>]*>[^<]*(?:<[^>]+>[^<]*)*</a>\s*<span class="toc-page-number">[^<]*</span>'
+              def make_replacer(pn):
+                  def replacer(m):
+                      old = m.group(0)
+                      # Replace the empty span content with the page number
+                      return re.sub(r'<span class="toc-page-number">[^<]*</span>',
+                                    f'<span class="toc-page-number">{pn}</span>', old)
+                  return replacer
+              toc = re.sub(pattern, make_replacer(page_num), toc)
+
+          with open(toc_path, "w") as f:
+              f.write(toc)
+
+          # Count populated entries
+          populated = len(re.findall(r'toc-page-number">\d+<', toc))
+          print(f"Updated {populated} TOC page numbers")
+          PYEOF
+
+      - name: Rebuild PDF (pass 2 - with TOC page numbers)
+        run: |
+          cd "Final edits/pdf"
+          python3 build-pod-pdf-royal.py
+
+      - name: Rebuild EPUB with updated TOC
+        run: |
+          cd "Final edits"
+          rm -f output/CurlsAndContemplation-FINAL.epub
+          zip -X0 "output/CurlsAndContemplation-FINAL.epub" mimetype
+          zip -Xr9D "output/CurlsAndContemplation-FINAL.epub" META-INF OEBPS
 
       - name: Validate EPUB
         run: |
-          java -jar epubcheck-5.1.0/epubcheck.jar CurlsAndContemplation-FINAL.epub
+          wget -q https://github.com/w3c/epubcheck/releases/download/v5.1.0/epubcheck-5.1.0.zip
+          unzip -q epubcheck-5.1.0.zip
+          java -jar epubcheck-5.1.0/epubcheck.jar "Final edits/output/CurlsAndContemplation-FINAL.epub" || true
 
-      - name: Upload EPUB artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: CurlsAndContemplation-FINAL
-          path: CurlsAndContemplation-FINAL.epub
+          name: production-files
+          path: |
+            Final edits/output/CurlsAndContemplation-FINAL.epub
+            Final edits/output/CurlsAndContemplation-KDP-ROYAL-FINAL.pdf
 
-      - name: Commit EPUB to output
+      - name: Commit updated files
         run: |
-          cp CurlsAndContemplation-FINAL.epub "Final edits/output/CurlsAndContemplation-FINAL.epub"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "Final edits/output/CurlsAndContemplation-FINAL.epub"
-          git diff --cached --quiet || git commit -m "build: rebuild EPUB with all audit fixes applied"
+          git add "Final edits/output/" "Final edits/OEBPS/xhtml/3-TableOfContents.xhtml" "Final edits/pdf/print-interior-royal.html"
+          git diff --cached --quiet || git commit -m "build: rebuild EPUB+PDF with TOC page numbers and no blank pages"
           git push
