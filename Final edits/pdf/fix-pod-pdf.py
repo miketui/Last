@@ -350,21 +350,12 @@ def main():
     # ── Step 3: (merged into step 2 — '?' removed via redact_header_text) ──
     print("\n[3/4] Stray '?' removal — handled in step 2 via header redaction")
 
-    # ── Step 4: Add visible page numbers ──
-    print("\n[4/4] Stamping visible page numbers...")
+    # ── Step 4: Page numbers — SKIPPED ──
+    # WeasyPrint already stamps Montserrat page numbers via @bottom-center in
+    # pod-print.css. Re-stamping Helvetica numbers here caused duplicate
+    # overlapping folios. Removed to fix the issue.
+    print("\n[4/4] Page numbers — already handled by WeasyPrint CSS @bottom-center (skipped)")
     stamped = 0
-    for i in range(total):
-        pn = i + 1
-        # Skip cover (page 1, oversized) and frontmatter (2-5)
-        if pn <= 5:
-            continue
-        if pn in blank_pages:
-            continue
-
-        stamp_page_number(doc[i], pn)
-        stamped += 1
-
-    print(f"  Stamped page numbers on {stamped} pages")
 
     # ── Save ──
     print(f"\nSaving to {output_path}...")

@@ -601,6 +601,7 @@ section.chap-body,
   height: 0;
   margin: 0;
   padding: 0;
+  display: none;
 }
 
 /* ====================================================================
@@ -1313,6 +1314,47 @@ nav[role="doc-toc"] {
 
 /* Assign cover to its named page (zero margins, no folio) */
 div[class*="cover-body"] { page: cover-page; }
+
+/* ====================================================================
+   TEXT EXTRACTION FIX — Reduce letter-spacing on headings
+   WeasyPrint's text layer inserts actual spaces when letter-spacing is
+   applied with text-transform: uppercase, causing "I NTRODUCTION",
+   "C HAPTERS", "CONTEMPL ATION" in the PDF text layer. Setting
+   letter-spacing to a very small value preserves visual spread while
+   keeping text extraction clean.
+   ==================================================================== */
+.introduction-heading {
+  letter-spacing: 0.02em;
+}
+
+h2.part-subtitle {
+  letter-spacing: 0.02em;
+}
+
+/* Reduce the general h2 letter-spacing that causes broken words */
+h2, .subtitle, .toc-title {
+  letter-spacing: 0.02em;
+}
+
+/* Remove ::first-letter drop caps that break text extraction.
+   The XHTML source already uses <strong> tags for drop caps where needed.
+   ::first-letter separates the first character in the text layer. */
+p.intro-text:first-of-type::first-letter {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin-right: 0;
+  letter-spacing: 0;
+}
+
+.chap-body .content-area > h2:first-child + p:first-letter,
+.chap-body .content-area > p:first-child:first-letter {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  padding-right: 0;
+  letter-spacing: 0;
+}
 
 /* ====================================================================
    END OF POD PRINT STYLESHEET — 6.69" x 9.61"
