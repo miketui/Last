@@ -8,7 +8,7 @@
   Version: 2.1 - Final Corrected
 */
 
-@import url('fonts.css');
+/* @import url('fonts.css') removed — fonts.css is linked directly in XHTML <head> */
 
 /* ====================================================================
    1. CSS VARIABLES & RESET
@@ -104,13 +104,15 @@ body {
 
 .hidden { display: none !important; }
 .sr-only {
-  position: absolute;
+  /* e-reader-safe: use clip-path instead of position:absolute */
+  position: static;
   width: 1px;
   height: 1px;
   padding: 0;
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
