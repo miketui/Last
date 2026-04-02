@@ -1,0 +1,50 @@
+name: Build EPUB & Validate
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'Final edits/OEBPS/**'
+      - 'Final edits/META-INF/**'
+      - 'Final edits/mimetype'
+
+jobs:
+  build-epub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build EPUB
+        run: |
+          cd "Final edits"
+          # EPUB spec requires mimetype as first file, uncompressed
+          zip -X0 "../CurlsAndContemplation-FINAL.epub" mimetype
+          # Add remaining content with compression
+          zip -Xr9D "../CurlsAndContemplation-FINAL.epub" META-INF OEBPS \
+            -x "OEBPS/MASTER_ERROR_REPORT.md" \
+            -x "OEBPS/mimetype"
+
+      - name: Install EPUBCheck
+        run: |
+          wget -q https://github.com/w3c/epubcheck/releases/download/v5.1.0/epubcheck-5.1.0.zip
+          unzip -q epubcheck-5.1.0.zip
+
+      - name: Validate EPUB
+        run: |
+          java -jar epubcheck-5.1.0/epubcheck.jar CurlsAndContemplation-FINAL.epub
+
+      - name: Upload EPUB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CurlsAndContemplation-FINAL
+          path: CurlsAndContemplation-FINAL.epub
+
+      - name: Commit EPUB to output
+        run: |
+          cp CurlsAndContemplation-FINAL.epub "Final edits/output/CurlsAndContemplation-FINAL.epub"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "Final edits/output/CurlsAndContemplation-FINAL.epub"
+          git diff --cached --quiet || git commit -m "build: rebuild EPUB with all audit fixes applied"
+          git push
