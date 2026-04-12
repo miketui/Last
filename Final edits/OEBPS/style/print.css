@@ -1,13 +1,13 @@
 /**
- * print.css - 6.69x9.61" Print-on-Demand Optimization
+ * print.css - 6.35x9.65" Print-on-Demand Optimization
  * For: "Curls & Contemplation: A Stylist's Interactive Journey"
  * By Michael David Warren Jr.
  *
  * This stylesheet extends style.css for PDF Print-on-Demand production.
- * Trim size: 6.69" x 9.61" (KDP custom trim)
+ * Trim size: 6.35" x 9.65" (KDP custom trim)
  * Interior: Black & white on white paper, no bleed.
  *
- * Version: 2.1 - Final Corrected
+ * Version: 3.0 - Production Ready
  */
 
 /* @import url('style.css') removed — style.css is linked directly in XHTML <head> */
@@ -27,16 +27,16 @@
 
 
 /* ====================================================================
-   1. PAGE SETUP - 6.69x9.61" TRIM SIZE (PrinceXML + POD friendly)
+   1. PAGE SETUP - 6.35x9.65" TRIM SIZE (PrinceXML + POD friendly)
    Notes:
    - KDP/most POD printers do NOT want crop marks unless you are doing full-bleed.
    - Use :left/:right to control inside (gutter) vs outside margins.
-   - Trim: 6.69" x 9.61" | Ink: B&W | Paper: White | Bleed: None
+   - Trim: 6.35" x 9.65" | Ink: B&W | Paper: White | Bleed: None
    ==================================================================== */
 
 /* Default page box */
 @page {
-  size: 6.69in 9.61in;
+  size: 6.35in 9.65in;
 
   /* Top/Bottom margins (tune later if needed) */
   margin-top: 0.75in;
