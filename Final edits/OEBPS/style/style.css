@@ -821,21 +821,7 @@ h2.subtitle {
   color: var(--clr-cream);
 }
 
-/* Drop Cap - Using strong tag for first letter only
-   Note: Removed ::first-letter pseudo-element approach as it was causing
-   conflicts with the strong tag, resulting in TWO letters being styled
-   as drop caps instead of just the first letter */
-.introduction-paragraph p:first-of-type strong:first-child,
-.dropcap-first-letter p:first-of-type strong:first-child {
-  font-family: var(--font-display);
-  font-size: 3.2rem;
-  float: left;
-  line-height: 0.85;
-  padding-right: 0.08em;
-  padding-top: 0.05em;
-  color: var(--clr-paper);
-  font-weight: 400;
-}
+/* Drop Cap — handled by .drop-cap class in HTML markup (see line ~2854) */
 
 /* ====================================================================
    10. CHAPTER BODY CONTENT
@@ -1236,11 +1222,6 @@ figcaption {
     max-width: 100%;
   }
   
-  .introduction-paragraph p:first-of-type strong:first-child,
-  .dropcap-first-letter p:first-of-type strong:first-child {
-    font-size: 2.8rem;
-  }
-  
   .part-container {
     padding: var(--space-md);
     margin: var(--space-sm);
@@ -1447,7 +1428,7 @@ body.dedication-body .final-line {
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  font-family: sans-serif;
+  font-family: var(--font-sans);
   font-style: normal;
 }
 

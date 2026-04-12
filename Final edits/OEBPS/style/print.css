@@ -226,9 +226,9 @@ section[epub\:type="part"],
 .worksheet-page,
 .frontmatter-shell {
   break-before: page;
-  break-after: page;
+  break-after: auto;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 /* Prevent orphaned headings */
@@ -378,7 +378,7 @@ li {
   justify-content: center;
   min-height: 7.5in;
   text-align: center;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .chapter-number-figure {
@@ -467,18 +467,7 @@ li {
   text-align: justify;
 }
 
-/* Drop Cap for Print - Using strong tag for first letter only
-   Note: Removed ::first-letter pseudo-element approach as it was causing
-   conflicts with the strong tag, resulting in TWO letters being styled
-   as drop caps instead of just the first letter */
-.introduction-paragraph p:first-of-type strong:first-child,
-.dropcap-first-letter p:first-of-type strong:first-child {
-  font-family: 'Cinzel Decorative', Georgia, serif;
-  font-size: 28pt;
-  float: left;
-  line-height: 0.8;
-  padding-right: 0.05in;
-}
+/* Drop cap for print handled by .drop-cap class in style.css */
 
 /* ====================================================================
    9. PART DIVIDER PAGES
@@ -491,7 +480,7 @@ li {
   align-items: center;
   min-height: 7.5in;
   text-align: center;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .part-container {
@@ -561,7 +550,7 @@ blockquote cite,
   text-align: center;
   padding: 0;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .quote-figure img {
