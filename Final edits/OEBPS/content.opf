@@ -101,8 +101,7 @@
     <item id="img-chapter-xv-quote"   href="images/chapter-xv-quote.jpeg"      media-type="image/jpeg"/>
     <item id="img-chapter-xvi-quote"  href="images/chapter-xvi-quote.jpeg"     media-type="image/jpeg"/>
 
-    <!-- Printable worksheet asset with XHTML fallback -->
-    <item id="printable-worksheet-pdf" href="assets/printable-worksheet-pack.pdf" media-type="application/pdf" fallback="worksheet-fallback"/>
+    <!-- Worksheet fallback page -->
     <item id="worksheet-fallback"      href="xhtml/worksheet-download-fallback.xhtml" media-type="application/xhtml+xml"/>
 
     <!-- Front Matter -->
