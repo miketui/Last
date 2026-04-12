@@ -943,10 +943,9 @@ h2.subtitle {
 }
 
 /* Defensive page breaks - modern syntax for Kindle/EPUB3 compatibility */
-html {
-  break-before: page;
-  page-break-before: always;
-}
+/* html { break-before: page } removed — applying page-break to the root
+   element inserts blank leading pages on many EPUB reading systems.
+   Section-level break rules below handle page breaks correctly. */
 
 .chap-title,
 .part-page,
