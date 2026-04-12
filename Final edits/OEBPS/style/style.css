@@ -2,10 +2,10 @@
   style.css — ACISS Design System for Curls & Contemplation
   Complete Stylesheet with All Corrections
   
-  Colors: Teal (#2B9999) & Gold (#C9A961)
+  Colors: Teal (#008080), Gold (#D4AF37), Jade (#00A86B)
   Fonts: Libre Baskerville (Body), Cinzel Decorative (Display), Montserrat (Headers/UI)
   
-  Version: 2.1 - Final Corrected
+  Version: 3.0 - Production Ready
 */
 
 /* @import url('fonts.css') removed — fonts.css is linked directly in XHTML <head> */
@@ -15,15 +15,20 @@
    ==================================================================== */
 :root {
   /* Brand Colors */
-  --clr-teal-primary: #2B9999;
-  --clr-teal-dark: #1F7272;
-  --clr-teal-light: #3DB3B3;
-  --clr-teal-faint: rgba(43, 153, 153, 0.08);
+  --clr-teal-primary: #008080;
+  --clr-teal-dark: #006666;
+  --clr-teal-light: #339999;
+  --clr-teal-faint: rgba(0, 128, 128, 0.08);
   
-  --clr-gold-accent: #C9A961;
-  --clr-gold-dark: #B08F4A;
-  --clr-gold-light: #D4B976;
-  --clr-gold-faint: rgba(201, 169, 97, 0.1);
+  --clr-gold-accent: #D4AF37;
+  --clr-gold-dark: #B8962E;
+  --clr-gold-light: #E0C564;
+  --clr-gold-faint: rgba(212, 175, 55, 0.1);
+
+  /* Jade Accent */
+  --clr-jade: #00A86B;
+  --clr-jade-light: #33BB88;
+  --clr-jade-faint: rgba(0, 168, 107, 0.08);
 
   /* Neutrals */
   --clr-ink: #1a1a1a;
@@ -1258,8 +1263,8 @@ figcaption {
 
 /* Alias variables for inline style compatibility */
 :root {
-  --teal: #2B9999;
-  --gold: #C9A961;
+  --teal: #008080;
+  --gold: #D4AF37;
   --dark: #1F7272;
 }
 
@@ -1575,7 +1580,7 @@ body.toc-body .toc-entry .page-num {
   height: 100px;
   border: 1px solid var(--clr-teal-primary);
   border-radius: 4px;
-  background: rgba(43,153,153,0.02);
+  background: rgba(0, 128, 128,0.02);
   resize: none;
   padding: 1rem;
   font-family: 'Playfair Display', var(--font-body);
