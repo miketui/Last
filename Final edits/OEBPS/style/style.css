@@ -685,6 +685,11 @@ h2.subtitle {
   background-color: var(--clr-paper);
 }
 
+/* Chapter title section: dark background per eco-luxe design spec */
+.chap-title {
+  background-color: var(--clr-ink);
+}
+
 /* ====================================================================
    9. CHAPTER TITLE PAGE
    ==================================================================== */
@@ -762,7 +767,7 @@ h2.subtitle {
 .title-line {
   font-family: var(--font-display);
   font-size: 1.8rem;
-  color: var(--clr-teal-dark);
+  color: var(--clr-paper);
   text-transform: uppercase;
   letter-spacing: 0.15em;
   line-height: 1.2;
@@ -781,7 +786,7 @@ h2.subtitle {
   font-family: var(--font-body);
   font-size: 1rem;
   font-style: italic;
-  color: var(--clr-text);
+  color: var(--clr-cream);
   margin: 0 0 var(--space-xs);
   line-height: 1.6;
 }
@@ -789,7 +794,7 @@ h2.subtitle {
 .bible-quote-reference {
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  color: var(--clr-gold-dark);
+  color: var(--clr-gold-accent);
   font-weight: 600;
 }
 
@@ -800,7 +805,7 @@ h2.subtitle {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--clr-teal-primary);
+  color: var(--clr-gold-accent);
   margin-bottom: var(--space-sm);
 }
 
@@ -813,6 +818,7 @@ h2.subtitle {
 .introduction-paragraph p {
   margin-bottom: 1rem;
   text-indent: 0;
+  color: var(--clr-cream);
 }
 
 /* Drop Cap - Using strong tag for first letter only
@@ -827,7 +833,7 @@ h2.subtitle {
   line-height: 0.85;
   padding-right: 0.08em;
   padding-top: 0.05em;
-  color: var(--clr-teal-primary);
+  color: var(--clr-paper);
   font-weight: 400;
 }
 
@@ -1311,7 +1317,7 @@ body.title-page-body .bottom-left {
 }
 
 body.title-page-body h1.main-title {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 4.5rem;
   line-height: 1;
   color: var(--clr-teal-dark);
@@ -1334,7 +1340,7 @@ body.title-page-body .subtitle {
 }
 
 body.title-page-body .author-name {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 1.5rem;
   font-style: italic;
   color: #555;
@@ -1407,7 +1413,7 @@ body.dedication-body .dedication-container {
 }
 
 body.dedication-body h1.dedication-heading {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 1.5rem;
   letter-spacing: 0.2em;
   color: var(--clr-gold-accent);
@@ -1422,7 +1428,7 @@ body.dedication-body .dedication-section {
 }
 
 body.dedication-body p.dedication-text {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-style: italic;
   font-size: 1.15rem;
   color: #555;
@@ -1459,7 +1465,7 @@ body.toc-body .toc-wrapper {
 }
 
 body.toc-body h1.toc-main-title {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 2.5rem;
   color: var(--clr-teal-dark);
   text-align: center;
@@ -1535,7 +1541,7 @@ body.toc-body .toc-entry .page-num {
 }
 
 .worksheet-page h1 {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   color: var(--clr-teal-primary);
   font-size: 2.5rem;
   text-align: center;
@@ -1582,7 +1588,7 @@ body.toc-body .toc-entry .page-num {
   background: rgba(0, 128, 128,0.02);
   resize: none;
   padding: 1rem;
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 1.1rem;
 }
 
@@ -1616,7 +1622,7 @@ body.affirmation-body {
 
 .assessment-container h1,
 .affirmation-container h1 {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 2.2rem;
   color: var(--clr-teal-dark);
   text-align: center;
@@ -1650,7 +1656,7 @@ body.bibliography-body {
 
 .quiz-key-container h1,
 .bibliography-container h1 {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 2.2rem;
   color: var(--clr-teal-dark);
   text-align: center;
@@ -1675,7 +1681,7 @@ body.about-author-body {
 
 .acknowledgments-container h1,
 .about-author-container h1 {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 2rem;
   color: var(--clr-teal-dark);
   text-align: center;
@@ -1700,7 +1706,7 @@ body.doodle-body {
 
 .journal-start-container h1,
 .doodle-container h1 {
-  font-family: 'Playfair Display', var(--font-body);
+  font-family: var(--font-display);
   font-size: 2rem;
   color: var(--clr-teal-dark);
   text-align: center;
@@ -2851,9 +2857,9 @@ body.doodle-body {
   line-height: 0.8;
   padding-right: 0.08em;
   padding-top: 0.05em;
-  color: #008080;
-  font-weight: bold;
-  font-family: Georgia, "Times New Roman", serif;
+  color: var(--clr-paper);
+  font-weight: 400;
+  font-family: var(--font-display);
 }
 
 /* Bibliography footer note */
