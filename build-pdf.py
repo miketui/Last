@@ -2,7 +2,7 @@
 """
 Build production PDF for "Curls & Contemplation"
 Combines all XHTML chapters into a single document for WeasyPrint.
-Trim: 6.35" x 9.65" | No blank pages | Drop caps | Page numbers
+Trim: 6.69" x 9.61" (KDP Royal) | No blank pages | Drop caps | Page numbers
 """
 import re
 import os

@@ -702,7 +702,7 @@ h2.subtitle {
   min-height: 90vh;
   padding: var(--space-lg) var(--space-md);
   text-align: center;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 /* Roman Numeral on Brushstroke */
@@ -926,8 +926,8 @@ h2.subtitle {
 
 /* Page Breaks */
 .page-break {
-  page-break-after: always;
-  break-after: page;
+  page-break-after: auto;
+  break-after: auto;
   height: 0;
   margin: 0;
   padding: 0;
@@ -947,7 +947,7 @@ h2.subtitle {
 .worksheet-page,
 .frontmatter-shell {
   break-before: page;
-  break-after: page;
+  break-after: auto;
 }
 
 /* ====================================================================
@@ -968,7 +968,7 @@ h2.subtitle {
   padding: 0;
   margin: 0;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .quote-figure {
@@ -1009,7 +1009,7 @@ h2.subtitle {
   justify-content: center;
   min-height: 90vh;
   text-align: center;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .part-container {
@@ -1718,7 +1718,7 @@ body.doodle-body {
   }
   
   .page-break {
-    page-break-after: always;
+    page-break-after: auto;
   }
   
   a {
@@ -1729,7 +1729,7 @@ body.doodle-body {
   .chap-title,
   .part-page,
   .image-quote {
-    page-break-after: always;
+    page-break-after: auto;
   }
   
   .action-steps,
@@ -1753,7 +1753,7 @@ body.doodle-body {
   box-sizing: border-box;
   background-color: var(--clr-paper);
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
   page-break-inside: avoid;
 }
 
@@ -2122,7 +2122,7 @@ body.doodle-body {
   display: flex;
   flex-direction: column;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .backmatter-section h1 {
@@ -2157,7 +2157,7 @@ body.doodle-body {
   max-width: 650px;
   padding: 3rem 2rem;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .ack-container .ack-title {
@@ -2230,7 +2230,7 @@ body.doodle-body {
   padding: 3rem 2rem;
   text-align: center;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .profile-card h1 {
@@ -2274,7 +2274,7 @@ body.doodle-body {
   max-width: 700px;
   padding: 3rem 2rem;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
 }
 
 .journal-card .main-heading {

@@ -1,13 +1,13 @@
 /**
- * print.css - 6.35x9.65" Print-on-Demand Optimization
+ * print.css - 6.69x9.61" Print-on-Demand Optimization (KDP Royal)
  * For: "Curls & Contemplation: A Stylist's Interactive Journey"
  * By Michael David Warren Jr.
  *
  * This stylesheet extends style.css for PDF Print-on-Demand production.
- * Trim size: 6.35" x 9.65" (KDP custom trim)
+ * Trim size: 6.69" x 9.61" (KDP Royal trim)
  * Interior: Black & white on white paper, no bleed.
  *
- * Version: 3.0 - Production Ready
+ * Version: 3.1 - Production Ready
  */
 
 /* @import url('style.css') removed — style.css is linked directly in XHTML <head> */
@@ -36,15 +36,15 @@
 
 /* Default page box */
 @page {
-  size: 6.35in 9.65in;
+  size: 6.69in 9.61in;
 
-  /* Top/Bottom margins (tune later if needed) */
+  /* Top/Bottom margins */
   margin-top: 0.75in;
   margin-bottom: 0.75in;
 
   /* Fallback if :left/:right not applied */
-  margin-left: 0.70in;
-  margin-right: 0.70in;
+  margin-left: 0.75in;
+  margin-right: 0.75in;
 
   /* Page number (folios) — PrinceXML only, wrapped for EPUB compat */
 }
@@ -1128,7 +1128,7 @@ a[href^="../"]:after {
 /* Cover page for print */
 .cover-body {
   page: nofolio;
-  break-after: page;
+  break-after: auto;
 }
 
 .cover-page {
