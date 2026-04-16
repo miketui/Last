@@ -11,14 +11,14 @@
     <meta refines="#title" property="display-seq">1</meta>
 
     <!-- Creator -->
-    <dc:creator id="creator">Michael David</dc:creator>
+    <dc:creator id="creator">Michael David Warren Jr.</dc:creator>
     <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
     <meta refines="#creator" property="display-seq">1</meta>
-    <meta refines="#creator" property="file-as">David, Michael</meta>
+    <meta refines="#creator" property="file-as">Warren, Michael David, Jr.</meta>
 
     <!-- Language and Publisher -->
     <dc:language>en</dc:language>
-    <dc:publisher>Michael David</dc:publisher>
+    <dc:publisher>TAYLKOMB LLC</dc:publisher>
     <dc:date>2026-03-27</dc:date>
 
     <!-- Description -->
