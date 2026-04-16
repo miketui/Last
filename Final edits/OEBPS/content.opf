@@ -106,6 +106,7 @@
 
     <!-- Front Matter -->
     <item id="cover-page"        href="xhtml/0-Cover.xhtml"            media-type="application/xhtml+xml"/>
+    <item id="halftitle"         href="xhtml/0a-HalfTitle.xhtml"       media-type="application/xhtml+xml"/>
     <item id="titlepage"         href="xhtml/1-TitlePage.xhtml"        media-type="application/xhtml+xml"/>
     <item id="copyright"         href="xhtml/2-Copyright.xhtml"        media-type="application/xhtml+xml"/>
     <item id="toc-page"          href="xhtml/3-TableOfContents.xhtml"  media-type="application/xhtml+xml"/>
@@ -165,10 +166,11 @@
 
   <spine toc="ncx">
     <itemref idref="cover-page"          linear="yes"/>
+    <itemref idref="halftitle"           linear="yes"/>
     <itemref idref="titlepage"           linear="yes"/>
     <itemref idref="copyright"           linear="yes"/>
-    <itemref idref="toc-page"            linear="yes"/>
     <itemref idref="dedication"          linear="yes"/>
+    <itemref idref="toc-page"            linear="yes"/>
     <itemref idref="self-assessment-1"   linear="yes"/>
     <itemref idref="affirmation-odyssey" linear="yes"/>
     <itemref idref="preface"             linear="yes"/>

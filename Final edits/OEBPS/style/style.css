@@ -2989,3 +2989,50 @@ body.doodle-body {
   color: #c8a951;
   text-decoration: underline;
 }
+
+/* Disable hyphenation for EPUB — reflowable text should not hyphenate */
+body, p, li, dd, dt, blockquote {
+  hyphens: manual !important;
+  -webkit-hyphens: manual !important;
+}
+
+/* ====================================================================
+   SINGLE-PAGE ENFORCEMENT — EPUB version
+   Quizzes, worksheets, and image quotes stay together as atomic units
+   ==================================================================== */
+
+/* Quizzes: keep together */
+.quiz-container, .chap-quiz {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Worksheets: keep together */
+section.worksheet, .worksheet.page, .worksheet.page-break-before {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Image quotes: full viewport */
+section.image-quote {
+  page-break-before: always;
+  break-before: page;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+}
+section.image-quote .quote-figure {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+section.image-quote .quote-figure img {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+}
+

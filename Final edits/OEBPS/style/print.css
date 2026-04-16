@@ -75,9 +75,9 @@
 @page nofolio {
 }
 
-/* Chapter title pages (and similar openers) should start on a right-hand page */
+/* Chapter title pages (and similar openers) should start on a right-hand (recto) page */
 section.chap-title {
-  break-before: page; /* changed from right to eliminate blank pages */
+  break-before: right;
   page: nofolio;
 }
 
@@ -87,15 +87,30 @@ section.image-quote {
   page: nofolio;
 }
 
-/* Part divider pages: treat as openers */
+/* Part divider pages: treat as openers — always recto */
 section.part-container, section.part-divider, section.part-title, .part-title, .part-divider {
-  break-before: page; /* changed from right to eliminate blank pages */
+  break-before: right;
   page: nofolio;
 }
 
 /* Frontmatter openers (common patterns) */
 .frontmatter-title, .main-title, .title-page, section.frontmatter, section.preface {
   page: nofolio;
+}
+
+/* Half-title page: recto start, centered, no folio */
+.half-title-body {
+  page: nofolio;
+}
+.half-title-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 8in;
+}
+.half-title-page .main-title {
+  font-size: 22pt;
+  text-align: center;
 }
 
 
@@ -1227,3 +1242,216 @@ nav[role="doc-toc"] .toc-chapter-num {
   display: inline-block;
   color: #333;
 }
+
+/* ====================================================================
+   SINGLE-PAGE ENFORCEMENT — Quizzes, Worksheets, Backmatter, Image Quotes
+   Added by production pipeline — enforces KDP layout spec
+   ==================================================================== */
+
+/* --- CHAPTER QUIZZES: single page, no break inside --- */
+.quiz-container,
+.chap-quiz {
+  break-before: page;
+  break-after: auto;
+  break-inside: avoid;
+  page-break-before: always;
+  page-break-inside: avoid;
+  max-height: 8.11in; /* content area within 9.61in page minus margins */
+  overflow: hidden;
+}
+
+/* Compact quiz typography to fit single page */
+.quiz-container .key-takeaways {
+  font-size: 8pt;
+  line-height: 1.3;
+  margin-bottom: 0.1in;
+}
+.quiz-container .key-takeaways li {
+  margin-bottom: 0.04in;
+}
+.quiz-container .quiz-title {
+  font-size: 11pt;
+  margin-top: 0.1in;
+  margin-bottom: 0.08in;
+}
+.quiz-container .quiz-instructions {
+  font-size: 8pt;
+  margin-bottom: 0.08in;
+}
+.quiz-container .mcq-list {
+  font-size: 8.5pt;
+  line-height: 1.3;
+}
+.quiz-container .mcq-item {
+  margin-bottom: 0.08in;
+}
+.quiz-container .question-text {
+  font-size: 8.5pt;
+  margin-bottom: 0.04in;
+  text-indent: 0;
+}
+.quiz-container .mcq-options {
+  font-size: 8pt;
+  margin-left: 0.2in;
+  margin-bottom: 0;
+}
+.quiz-container .mcq-options li {
+  margin-bottom: 0.02in;
+}
+.quiz-container .quiz-footer {
+  margin-top: 0.08in;
+}
+.quiz-container .quiz-footer p {
+  font-size: 7.5pt;
+  text-indent: 0;
+}
+
+/* --- CHAPTER WORKSHEETS: single page, no break inside --- */
+section.worksheet,
+.worksheet.page {
+  break-before: page;
+  break-after: auto;
+  break-inside: avoid;
+  page-break-before: always;
+  page-break-inside: avoid;
+  max-height: 8.11in;
+  overflow: hidden;
+}
+
+/* Compact worksheet to fit single page */
+section.worksheet .worksheet-header,
+.worksheet.page .worksheet-header {
+  margin-bottom: 0.1in;
+  padding: 0.08in 0.15in;
+}
+section.worksheet h2,
+.worksheet.page h2 {
+  font-size: 11pt;
+  margin-top: 0;
+  margin-bottom: 0.04in;
+}
+section.worksheet .worksheet-subtitle,
+.worksheet.page .worksheet-subtitle {
+  font-size: 8pt;
+  margin-bottom: 0;
+}
+section.worksheet .prompt-container,
+.worksheet.page .prompt-container {
+  margin-bottom: 0.08in;
+}
+section.worksheet .prompt-label,
+.worksheet.page .prompt-label {
+  font-size: 8.5pt;
+  line-height: 1.3;
+  margin-bottom: 0.04in;
+}
+section.worksheet .response-area,
+.worksheet.page .response-area {
+  min-height: 0.5in;
+  max-height: 0.7in;
+}
+section.worksheet .line,
+.worksheet.page .line {
+  height: 0.2in;
+  margin-bottom: 0;
+}
+section.worksheet .worksheet-footer,
+.worksheet.page .worksheet-footer {
+  margin-top: 0.05in;
+}
+section.worksheet .worksheet-footer p,
+.worksheet.page .worksheet-footer p {
+  font-size: 7.5pt;
+  text-indent: 0;
+}
+
+/* Ch VI worksheet uses different markup */
+.worksheet.page-break-before {
+  break-before: page;
+  break-inside: avoid;
+  page-break-before: always;
+  page-break-inside: avoid;
+  max-height: 8.11in;
+  overflow: hidden;
+}
+.worksheet .writing-area {
+  min-height: 0.5in;
+  max-height: 0.7in;
+}
+.worksheet .activity-section ol li {
+  font-size: 8.5pt;
+  line-height: 1.3;
+  margin-bottom: 0.06in;
+}
+
+/* --- IMAGE QUOTE: full single page, image fills content area --- */
+section.image-quote {
+  break-before: page;
+  break-after: auto;
+  break-inside: avoid;
+  page-break-before: always;
+  page-break-inside: avoid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 8.11in;
+  max-height: 8.11in;
+  padding: 0;
+  margin: 0;
+}
+section.image-quote .quote-figure {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+section.image-quote .quote-figure img {
+  max-width: 100%;
+  max-height: 8.11in;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+/* --- BACKMATTER: single page for each file (except bibliography) --- */
+.key-body,           /* Quiz Key */
+.bib-body,           /* bibliography - exception, multi-page */
+.bio-body            /* About Author */
+{
+  /* These use the default page break rules */
+}
+
+/* All backmatter worksheet/journal sections: single page */
+body[class*="worksheet"] section,
+body[class*="journal"] section,
+body[class*="assessment"] section,
+.frontmatter-shell.worksheet-page,
+.profile-card,
+.key-container,
+section.commitment-page,
+section.affirmations-close,
+section.journaling-start,
+section.manifesting-journal,
+section.journal-page,
+section.professional-dev,
+section.smart-goals,
+section.self-care,
+section.vision-journal,
+section.doodle-page {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  max-height: 8.11in;
+  overflow: hidden;
+}
+
+/* --- FRONTMATTER WORKSHEETS: single page each --- */
+/* 5-SelfAssessment (Creative Identity Audit) */
+/* 6-AffirmationOdyssey */
+.frontmatter-shell {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
