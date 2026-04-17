@@ -1,3 +1,131 @@
+/* ====================================================================
+   1. PAGE SETUP — KDP Royal 6.69in x 9.61in
+   Headers (verso=book title, recto=chapter title) + folios (bottom-center)
+   Margins: gutter 0.95in, outside 0.70in, top/bot 0.80in
+   ==================================================================== */
+@page {
+  size: 6.69in 9.61in;
+  margin-top:    0.80in;
+  margin-bottom: 0.80in;
+  margin-left:   0.70in;  /* outside (default; overridden per :left/:right) */
+  margin-right:  0.70in;
+
+  @bottom-center {
+    content: counter(page);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9pt;
+    letter-spacing: 0.08em;
+    color: #333;
+    padding-top: 0.22in;
+  }
+}
+
+/* Verso (left-hand / even-numbered) pages: gutter on RIGHT, book title in top-left */
+@page :left {
+  margin-left:  0.70in;   /* outside edge */
+  margin-right: 0.95in;   /* gutter / binding side */
+
+  @top-left {
+    content: "Curls & Contemplation";
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 8.5pt;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    color: #555;
+    padding-bottom: 0.15in;
+  }
+}
+
+/* Recto (right-hand / odd-numbered) pages: gutter on LEFT, chapter title in top-right */
+@page :right {
+  margin-left:  0.95in;   /* gutter / binding side */
+  margin-right: 0.70in;   /* outside edge */
+
+  @top-right {
+    content: string(chapter-title);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 8.5pt;
+    letter-spacing: 0.12em;
+    color: #555;
+    padding-bottom: 0.15in;
+  }
+}
+
+/* First page of document: suppress folio */
+@page :first {
+  @bottom-center { content: ""; }
+  @top-left      { content: ""; }
+  @top-right     { content: ""; }
+}
+
+/* Blank pages forced by recto-start: fully empty */
+@page :blank {
+  @bottom-center { content: ""; }
+  @top-left      { content: ""; }
+  @top-right     { content: ""; }
+}
+
+/* Chapter opener / part divider / quote pages: no header, no folio */
+@page chapter-opener {
+  @bottom-center { content: ""; }
+  @top-left      { content: ""; }
+  @top-right     { content: ""; }
+}
+
+/* Front-matter pages (title, copyright, half-title, cover): no folio, no header */
+@page frontmatter-nofolio {
+  @bottom-center { content: ""; }
+  @top-left      { content: ""; }
+  @top-right     { content: ""; }
+}
+
+/* ================================================================
+   Assign page types to content wrappers emitted by the build script
+   (build-pod-pdf-royal.py wraps each file as <div id="src-..." class="...">)
+   ================================================================ */
+div[class*="title-page-body"],
+div[class*="copyright-body"],
+div[class*="cover-body"],
+div[class*="half-title-body"],
+div[class*="dedication-body"],
+div[class*="toc-body"]                  { page: frontmatter-nofolio; }
+
+/* Chapter opener title blocks, part dividers, image-quote pages: no header/folio */
+div[class*="chapter-page"] .chap-title,
+section.chap-title,
+div[class*="part-body"],
+div[class*="quote-page"]                { page: chapter-opener; }
+
+/* ================================================================
+   Capture chapter title for the recto running header.
+   The chapter title is inside <section class="chap-title"> as stacked
+   <div class="title-line"> elements inside <div class="title-stack">.
+   We harvest it via the sr-only <h1> at the top of each chapter file.
+   ================================================================ */
+h1.sr-only {
+  string-set: chapter-title content();
+}
+
+/* Hide the sr-only h1 visually in print, Paged.js-safe (no position: absolute).
+   Paged.js's Range API crashes on abspos inside flow content. We use
+   font-size:0 + line-height:0 so the element takes no visual space but
+   string-set: content() still works. */
+h1.sr-only {
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  display: block !important;
+}
+
+/* Hide the worksheet "print-only" CTA notice when we're ACTUALLY printing */
+.epub-download-cta, .worksheet-cta, .cta-section, .btn-join, .video-link, .web-only {
+  display: none !important;
+}
+
 /**
  * pod-print.css — Standalone Print-on-Demand Stylesheet
  * For: "Curls & Contemplation: A Stylist's Interactive Journey"
@@ -17,38 +145,6 @@
  */
 
 /* ====================================================================
-   1. PAGE SETUP — 6×9 TRIM
-   ==================================================================== */
-@page {
-  size: 6.69in 9.61in;
-  margin-top: 0.80in;
-  margin-bottom: 0.80in;
-  margin-left: 0.80in;
-  margin-right: 0.80in;
-
-  @bottom-center {
-    content: counter(page);
-    font-family: 'Montserrat', Arial, sans-serif;
-    font-size: 8pt;
-    letter-spacing: 0.08em;
-  }
-}
-
-/* First page of document: suppress folio */
-@page :first {
-  @bottom-center { content: ""; }
-}
-
-/* Frontmatter pages (title, copyright) — no folio */
-@page frontmatter-nofolio {
-  @bottom-center { content: ""; }
-}
-div[class*="title-page-body"],
-div[class*="copyright-body"] {
-  page: frontmatter-nofolio;
-}
-
-/* ====================================================================
    2. BASE TYPOGRAPHY
    ==================================================================== */
 html {
@@ -56,7 +152,7 @@ html {
 }
 
 body {
-  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  font-family: 'Libre Baskerville', 'Montserrat', 'Cinzel Decorative', Georgia, 'Times New Roman', serif;
   font-size: 11pt;
   line-height: 1.65;
   color: #000;
@@ -1350,3 +1446,62 @@ p.intro-text:first-of-type::first-letter,
 /* ====================================================================
    END OF POD PRINT STYLESHEET — 6.69" x 9.61"
    ==================================================================== */
+
+
+/* ============================================================
+   PRINT OVERRIDES for style.css rules that target digital aesthetic
+   ============================================================ */
+
+/* Chapter opener dark background (eco-luxe digital spec) → white for print */
+.chap-title,
+section.chap-title,
+div[class*="chapter-page"] .chap-title {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  min-height: auto !important;
+}
+
+/* Chapter number roman numeral — keep contrast on white */
+.chapter-number-roman {
+  color: #000000 !important;
+}
+
+/* Title stack text */
+.chap-title .title-line,
+.chap-title .title-bar {
+  color: #000000 !important;
+  background-color: #000000 !important;
+}
+.chap-title .title-line {
+  background-color: transparent !important;
+  color: #000000 !important;
+}
+
+/* Bible quote text + reference */
+.bible-quote-text,
+.bible-quote-reference {
+  color: #000000 !important;
+}
+
+/* Also: any quote-page that might have dark styling */
+.quote-page {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* ================================================================
+   Fix fallback-font triggers: force ALL nested ul levels to disc (•),
+   not circle (◦) which no design-system font contains.
+   Also override checkmark pseudo-element content to use a glyph
+   our fonts actually have.
+   ================================================================ */
+ul, ul ul, ul ul ul, ol ul, ul ol {
+  list-style-type: disc !important;
+}
+/* Any pseudo-element emitting a checkmark: swap U+2713/U+2714 for a dagger
+   (Montserrat has it) */
+*::before, *::after {
+  /* content property overrides need to target specific rules — skip global override;
+     instead add explicit font-family fallback to these pseudo-elements */
+  font-family: 'Libre Baskerville', 'Montserrat', serif;
+}
