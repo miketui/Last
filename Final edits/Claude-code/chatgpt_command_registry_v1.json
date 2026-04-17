@@ -1,0 +1,467 @@
+{
+  "metadata": {
+    "title": "ChatGPT Command Registry v1",
+    "generated_on": "2026-04-14T05:19:19+00:00",
+    "derived_from_uploaded_files": [
+      "unified-command-mapping(2).docx",
+      "command-cheatsheet(3).pdf",
+      "Cluade secret code(1).pdf"
+    ],
+    "purpose": "Machine-readable registry of extracted commands, workflows, and storage guidance converted from the user's uploaded command files."
+  },
+  "universal_command": {
+    "command": "AUTO::DETECT+ROUTE",
+    "status": "stored_in_memory",
+    "description": "Universal command that lets ChatGPT inspect each input, detect relevant command/workflow/doctrine triggers, and apply the best matching enhancement path."
+  },
+  "core_memory_commands": [
+    {
+      "command": "AUTO::DETECT+ROUTE",
+      "purpose": "Universal auto-detect command for every input.",
+      "behavior": "Silently reads the input, checks which command, doctrine, workflow, or registry asset likely applies, and enhances the answer using the best matching path.",
+      "status": "Stored in memory"
+    },
+    {
+      "command": "AGM",
+      "purpose": "Activates the approval-first engineered-prompt workflow.",
+      "behavior": "Rewrites raw input into a structured prompt, waits for approval, then executes.",
+      "status": "Stored in memory"
+    },
+    {
+      "command": "Normal mode",
+      "purpose": "Turns off AGM.",
+      "behavior": "Returns to standard direct execution behavior.",
+      "status": "Stored in memory"
+    },
+    {
+      "command": "ACTIVATE::SALES13+PROMPTLIB",
+      "purpose": "Conversation-level activation of sales doctrine plus prompt routing.",
+      "behavior": "Applies persuasive-selling filters and routes the request to the best matching asset when relevant.",
+      "status": "Stored in memory"
+    },
+    {
+      "command": "SALES13::APPLY",
+      "purpose": "Persuasive-selling doctrine trigger.",
+      "behavior": "Applies the 13 selling rules to sales, offer, launch, pitch, messaging, positioning, and conversion work.",
+      "status": "Stored in memory"
+    },
+    {
+      "command": "PROMPTLIB::ROUTE",
+      "purpose": "Route the task to the best matching workflow, skill, prompt, or agent.",
+      "behavior": "Matches by title, alias, keyword, or project context.",
+      "status": "Stored in memory"
+    },
+    {
+      "command": "PROMPTLIB::OPEN::{TITLE}::{TYPE}",
+      "purpose": "Open a specific asset explicitly.",
+      "behavior": "Uses an exact title plus type such as prompt, skill, workflow, or agent when a precise asset is needed.",
+      "status": "Stored in memory"
+    },
+    {
+      "command": "PROMPTLIB+SALES13::APPLY",
+      "purpose": "Route first, then enhance with doctrine.",
+      "behavior": "Finds the best registry asset and frames the final output through the 13 Rules of Persuasive Selling.",
+      "status": "Stored in memory"
+    }
+  ],
+  "extracted_commands": {
+    "master_activations": [
+      "L99",
+      "AGM",
+      "ACTIVATE::SALES13+PROMPTLIB",
+      "PROMPTLIB::ROUTE",
+      "PROMPTLIB::OPEN::{TITLE}::{TYPE}",
+      "PROMPTLIB+SALES13::APPLY",
+      "PROMPTLIB+SALES13::AUDIT",
+      "Normal mode"
+    ],
+    "sales13_commands": [
+      "SALES13::APPLY",
+      "SALES13::COPY",
+      "SALES13::OFFER",
+      "SALES13::AUDIT",
+      "SALES13::PITCH",
+      "SALES13::LAUNCH",
+      "SALES13::DESIGN",
+      "SALES13::STORY",
+      "SALES13::PRICE"
+    ],
+    "slash_commands": [
+      {
+        "command": "/ghost",
+        "purpose": "Human-sounding writing without AI clich\u00e9s."
+      },
+      {
+        "command": "/godmode",
+        "purpose": "Direct, first-principles reasoning with little padding."
+      },
+      {
+        "command": "/layered",
+        "purpose": "Three-level explanation: beginner, mid, expert."
+      },
+      {
+        "command": "/unpack",
+        "purpose": "Full deconstruction of a concept or system."
+      },
+      {
+        "command": "/livecode",
+        "purpose": "Production-ready code with comments and execution steps."
+      },
+      {
+        "command": "/investigate",
+        "purpose": "Journalistic deep dive with history, motives, players, and impact."
+      }
+    ],
+    "format_and_length_tokens": [
+      "ELI5",
+      "ELI10",
+      "TLDR",
+      "BLUF",
+      "SHORT",
+      "MINI",
+      "LONG",
+      "DENSE",
+      "SIMPLE",
+      "FORMAL",
+      "CASUAL",
+      "ULTRA",
+      "TWEET",
+      "THREAD",
+      "MEMO",
+      "BULLETS",
+      "TABLE",
+      "JSON",
+      "XML",
+      "CODE",
+      "NOCODE",
+      "STEP"
+    ],
+    "reasoning_modes": [
+      "WHY5",
+      "INVERT",
+      "STEEL",
+      "DEVIL",
+      "BAYES",
+      "2ND",
+      "FIRST",
+      "OODA",
+      "TREE",
+      "PRE",
+      "POST",
+      "ASSUME",
+      "COUNTER",
+      "CONTRAST",
+      "2ND_FX",
+      "SCOPE",
+      "ZOOM",
+      "KNOWN"
+    ],
+    "tone_and_behavior_tokens": [
+      "BRUTAL",
+      "BLUNT",
+      "CITE",
+      "CONF",
+      "FLAG",
+      "PUSH",
+      "NOPAD",
+      "NOLIST",
+      "NOHYPE",
+      "DUAL"
+    ],
+    "learning_and_teaching_tokens": [
+      "TEACH",
+      "QUIZ",
+      "GAP",
+      "SOCRATIC",
+      "FEYNMAN",
+      "ANALOGIES",
+      "ANKI",
+      "MAP",
+      "MISCONC",
+      "HISTORY"
+    ],
+    "productivity_and_planning_tokens": [
+      "PLAN",
+      "SPRINT",
+      "FAST",
+      "BLOCK",
+      "PRIOR",
+      "80/20",
+      "CHECKLIST",
+      "BATCH",
+      "EXIT",
+      "DELEGATE"
+    ],
+    "writing_and_copy_tokens": [
+      "DRAFT",
+      "POLISH",
+      "HOOK",
+      "CTA",
+      "REFRAME",
+      "COMPRESS",
+      "EXPAND",
+      "APHORISM",
+      "TONE",
+      "ANTIJAR"
+    ],
+    "business_and_strategy_tokens": [
+      "SWOT",
+      "PRD",
+      "JTBD",
+      "OKR",
+      "RICE",
+      "PITCH",
+      "PERSONA",
+      "MOAT",
+      "WORKING_BACK",
+      "SCENARIO",
+      "AUDIT"
+    ],
+    "code_and_development_tokens": [
+      "REFACTOR",
+      "TESTS",
+      "BUG",
+      "DOCS",
+      "SEC"
+    ],
+    "meta_and_iteration_tokens": [
+      "DELPHI",
+      "V2",
+      "ALT3",
+      "REMIX",
+      "NEXT",
+      "CHAIN",
+      "RECAP",
+      "COMPRESS_CTX"
+    ],
+    "workflow_triggers": {
+      "Book & Publishing": [
+        [
+          "Brainstorm book ideas",
+          "book-idea-architect"
+        ],
+        [
+          "Outline a book",
+          "book-blueprint"
+        ],
+        [
+          "Draft a chapter",
+          "chapter-draft"
+        ],
+        [
+          "Story examples / anecdotes",
+          "narrative-illustrations"
+        ],
+        [
+          "Research / evidence",
+          "evidence-framework"
+        ],
+        [
+          "Developmental edit",
+          "developmental-edit"
+        ],
+        [
+          "Copy edit / grammar",
+          "line-copy-edit"
+        ],
+        [
+          "Fact-check",
+          "fact-checking"
+        ],
+        [
+          "Proofread",
+          "proofreading"
+        ],
+        [
+          "Style guide",
+          "style-guide"
+        ],
+        [
+          "Create EPUB",
+          "epub-formatting"
+        ],
+        [
+          "Print-ready PDF",
+          "pdf-print-ready"
+        ],
+        [
+          "Cover design brief",
+          "cover-design-brief"
+        ],
+        [
+          "ISBN / metadata",
+          "isbn-metadata"
+        ],
+        [
+          "POD / distribution",
+          "pod-distribution"
+        ],
+        [
+          "Sales copy / Amazon listing",
+          "book-sales-copy"
+        ],
+        [
+          "Book launch plan",
+          "book-launch"
+        ],
+        [
+          "EPUB QA / blank pages",
+          "epub-flow-qa"
+        ],
+        [
+          "Drop caps / page numbers",
+          "pdf-pagination-dropcaps"
+        ]
+      ],
+      "Business, Brand & Growth": [
+        [
+          "Business plan / funding",
+          "funding-business-plan"
+        ],
+        [
+          "SWOT / loan application",
+          "bank-whisperer"
+        ],
+        [
+          "Management credibility",
+          "trust-builder"
+        ],
+        [
+          "Permits / compliance",
+          "green-light-checklist"
+        ],
+        [
+          "Brand identity",
+          "brand-identity-creator"
+        ],
+        [
+          "UI / wireframes",
+          "ui-ux-pattern-master"
+        ],
+        [
+          "Figma auto-layout",
+          "figma-auto-layout-expert"
+        ],
+        [
+          "Marketing assets",
+          "marketing-asset-factory"
+        ],
+        [
+          "Competitor intelligence",
+          "competitor-intelligence"
+        ],
+        [
+          "Strategy deck",
+          "strategy-deck-builder"
+        ],
+        [
+          "Welcome email series",
+          "welcome-sequence"
+        ],
+        [
+          "Newsletter issue",
+          "write-any-newsletter"
+        ],
+        [
+          "Grow email list",
+          "grow-list-to-1000"
+        ],
+        [
+          "First principles analysis",
+          "aristotle-first-principles"
+        ],
+        [
+          "Purple Cow / differentiation",
+          "signature-surprise"
+        ],
+        [
+          "Cold outreach / LinkedIn",
+          "cold-referral-message"
+        ]
+      ],
+      "Code, Security & Prompt Engineering": [
+        [
+          "Codebase review / CLAUDE.md",
+          "codebase-review-claude-md"
+        ],
+        [
+          "Hostile code review",
+          "hostile-code-review"
+        ],
+        [
+          "Error / stack trace",
+          "error-stack-trace-analyzer"
+        ],
+        [
+          "Refactor code",
+          "function-refactor"
+        ],
+        [
+          "Write tests",
+          "test-suite-generator"
+        ],
+        [
+          "API security review",
+          "api-security-review"
+        ],
+        [
+          "Rate limiting",
+          "rate-limiting"
+        ],
+        [
+          "Secrets / keys scan",
+          "hardcoded-keys-scan"
+        ],
+        [
+          "Full security audit",
+          "full-security-audit"
+        ],
+        [
+          "Env variables migration",
+          "env-variables-migration"
+        ],
+        [
+          "Constitutional AI",
+          "constitutional-ai-prompting"
+        ],
+        [
+          "Chain-of-thought",
+          "chain-of-thought-forcing"
+        ],
+        [
+          "Structured output",
+          "structured-output-parsers"
+        ],
+        [
+          "CAD / engineering design",
+          "cad-designer-engineer"
+        ]
+      ]
+    }
+  },
+  "recommended_use_pattern": {
+    "conversation_default": "AUTO::DETECT+ROUTE",
+    "when_you_need_approval_first": "AGM",
+    "when_you_need_sales_or_brand_persuasion": "ACTIVATE::SALES13+PROMPTLIB or SALES13::APPLY",
+    "when_you_need_precise_asset_selection": "PROMPTLIB::OPEN::{TITLE}::{TYPE}"
+  },
+  "storage_instructions": {
+    "for_chatgpt_memory": [
+      "Keep only durable, high-level command meanings in memory.",
+      "Do not try to store the entire registry only in memory."
+    ],
+    "for_files": [
+      "Upload this registry JSON to your ChatGPT File Library so it is available across chats.",
+      "Also keep a copy in your own master project folder or Google Drive command-system folder.",
+      "When starting a project, attach or reference the registry file if you want exact command coverage."
+    ],
+    "recommended_file_names": [
+      "chatgpt-command-registry-v1.json",
+      "chatgpt-command-system-readme.md"
+    ],
+    "update_protocol": [
+      "When you add or revise commands, have ChatGPT update both memory-safe commands and the external registry file.",
+      "Use the registry file as the source of truth when there is any ambiguity."
+    ]
+  }
+}
