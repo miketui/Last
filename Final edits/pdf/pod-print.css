@@ -91,10 +91,20 @@ div[class*="dedication-body"],
 div[class*="toc-body"]                  { page: frontmatter-nofolio; }
 
 /* Chapter opener title blocks, part dividers, image-quote pages: no header/folio */
-div[class*="chapter-page"] .chap-title,
-section.chap-title,
+/* Chapter opener: apply chapter-opener page style to the WRAPPER div so that
+   h1.sr-only (which is needed for string-set) flows onto the opener page
+   instead of occupying a separate preceding page. break-before: right
+   on the wrapper forces the opener to start on a recto. */
+div[class*="chapter-page"],
 div[class*="part-body"],
-div[class*="quote-page"]                { page: chapter-opener; }
+div[class*="quote-page"] {
+  page: chapter-opener;
+  break-before: right;
+}
+/* Restore normal page style for the body flow AFTER the opener section */
+div[class*="chapter-page"] section.chap-body {
+  page: auto;
+}
 
 /* ================================================================
    Capture chapter title for the recto running header.
@@ -106,19 +116,27 @@ h1.sr-only {
   string-set: chapter-title content();
 }
 
-/* Hide the sr-only h1 visually in print, Paged.js-safe (no position: absolute).
-   Paged.js's Range API crashes on abspos inside flow content. We use
-   font-size:0 + line-height:0 so the element takes no visual space but
-   string-set: content() still works. */
+/* Hide sr-only h1 from layout entirely while keeping its text accessible
+   to string-set: chapter-title content().  We use position: absolute so
+   the element occupies NO layout slot — without this, the hidden h1
+   creates a phantom block that pushes .chap-title onto the next page
+   (result: stub opener page with only header + folio, real content one
+   page later).  position: absolute + clip-path: inset(100%) + tiny size
+   is the WCAG-standard sr-only pattern; WeasyPrint handles it correctly.
+*/
 h1.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(100%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
   font-size: 0 !important;
   line-height: 0 !important;
-  color: transparent !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  display: block !important;
 }
 
 /* Hide the worksheet "print-only" CTA notice when we're ACTUALLY printing */
