@@ -1,3 +1,156 @@
+/* ====================================================================
+   1. PAGE SETUP — KDP Royal 6.69in x 9.61in
+   Headers (verso=book title, recto=chapter title) + folios (bottom-center)
+   Margins: gutter 0.95in, outside 0.70in, top/bot 0.80in
+   ==================================================================== */
+@page {
+  size: 6.69in 9.61in;
+  margin-top:    0.80in;
+  margin-bottom: 0.80in;
+  margin-left:   0.70in;  /* outside (default; overridden per :left/:right) */
+  margin-right:  0.70in;
+
+  @bottom-center {
+    content: counter(page);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9pt;
+    letter-spacing: 0.08em;
+    color: #333;
+    padding-top: 0.22in;
+  }
+}
+
+/* Verso (left-hand / even-numbered) pages: gutter on RIGHT, book title in top-left */
+@page :left {
+  margin-left:  0.70in;   /* outside edge */
+  margin-right: 0.95in;   /* gutter / binding side */
+
+  @top-left {
+    content: "Curls & Contemplation";
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 8.5pt;
+    font-style: italic;
+    letter-spacing: 0.12em;
+    color: #555;
+    padding-bottom: 0.15in;
+  }
+}
+
+/* Recto (right-hand / odd-numbered) pages: gutter on LEFT, chapter title in top-right */
+@page :right {
+  margin-left:  0.95in;   /* gutter / binding side */
+  margin-right: 0.70in;   /* outside edge */
+
+  @top-right {
+    content: string(chapter-title);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 8.5pt;
+    letter-spacing: 0.12em;
+    color: #555;
+    padding-bottom: 0.15in;
+  }
+}
+
+/* First page of document: suppress folio */
+@page :first {
+  @bottom-center { content: ""; }
+  @top-left      { content: ""; }
+  @top-right     { content: ""; }
+}
+
+/* Blank pages forced by recto-start: fully empty */
+@page :blank {
+  @bottom-center { content: ""; }
+  @top-left      { content: ""; }
+  @top-right     { content: ""; }
+}
+
+/* Chapter opener / part divider / quote pages: no header, no folio */
+@page chapter-opener {
+  @bottom-center { content: ""; }
+  @top-left      { content: ""; }
+  @top-right     { content: ""; }
+}
+
+/* Front-matter pages (title, copyright, half-title, cover): no folio, no header */
+@page frontmatter-nofolio {
+  @bottom-center { content: ""; }
+  @top-left      { content: ""; }
+  @top-right     { content: ""; }
+}
+
+/* ================================================================
+   Assign page types to content wrappers emitted by the build script
+   (build-pod-pdf-royal.py wraps each file as <div id="src-..." class="...">)
+   ================================================================ */
+div[class*="title-page-body"],
+div[class*="copyright-body"],
+div[class*="cover-body"],
+div[class*="half-title-body"],
+div[class*="dedication-body"],
+div[class*="toc-body"]                  { page: frontmatter-nofolio; }
+
+/* Chapter / part / quote wrappers: force recto start; leave the outer wrapper
+   on the default @page so body-flow pages keep running headers. The inner
+   opener section (section.chap-title) is what carries the no-header treatment. */
+div[class*="chapter-page"],
+div[class*="part-body"],
+div[class*="quote-page"] {
+  break-before: right;
+}
+/* Only the decorative chapter-opener elements (Roman numeral + stacked title +
+   bible quote) that land on the first page of each chapter get the no-header/
+   no-folio treatment. The Introduction paragraphs that follow inside
+   section.chap-title fall through to the default @page with running headers. */
+section.chap-title > figure.chapter-number-figure,
+section.chap-title > .title-stack,
+section.chap-title > .bible-quote-container,
+section.part-container,
+section.image-quote,
+div[class*="part-body"] > main,
+div[class*="quote-page"] > main {
+  page: chapter-opener;
+}
+
+/* ================================================================
+   Capture chapter title for the recto running header.
+   The chapter title is inside <section class="chap-title"> as stacked
+   <div class="title-line"> elements inside <div class="title-stack">.
+   We harvest it via the sr-only <h1> at the top of each chapter file.
+   ================================================================ */
+h1.sr-only {
+  string-set: chapter-title content();
+}
+
+/* Hide sr-only h1 from layout entirely while keeping its text accessible
+   to string-set: chapter-title content().  We use position: absolute so
+   the element occupies NO layout slot — without this, the hidden h1
+   creates a phantom block that pushes .chap-title onto the next page
+   (result: stub opener page with only header + folio, real content one
+   page later).  position: absolute + clip-path: inset(100%) + tiny size
+   is the WCAG-standard sr-only pattern; WeasyPrint handles it correctly.
+*/
+h1.sr-only {
+  display: block !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(100%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+}
+
+/* Hide the worksheet "print-only" CTA notice when we're ACTUALLY printing */
+.epub-download-cta, .worksheet-cta, .cta-section, .btn-join, .video-link, .web-only {
+  display: none !important;
+}
+
 /**
  * pod-print.css — Standalone Print-on-Demand Stylesheet
  * For: "Curls & Contemplation: A Stylist's Interactive Journey"
@@ -17,38 +170,6 @@
  */
 
 /* ====================================================================
-   1. PAGE SETUP — 6×9 TRIM
-   ==================================================================== */
-@page {
-  size: 6.69in 9.61in;
-  margin-top: 0.80in;
-  margin-bottom: 0.80in;
-  margin-left: 0.80in;
-  margin-right: 0.80in;
-
-  @bottom-center {
-    content: counter(page);
-    font-family: 'Montserrat', Arial, sans-serif;
-    font-size: 8pt;
-    letter-spacing: 0.08em;
-  }
-}
-
-/* First page of document: suppress folio */
-@page :first {
-  @bottom-center { content: ""; }
-}
-
-/* Frontmatter pages (title, copyright) — no folio */
-@page frontmatter-nofolio {
-  @bottom-center { content: ""; }
-}
-div[class*="title-page-body"],
-div[class*="copyright-body"] {
-  page: frontmatter-nofolio;
-}
-
-/* ====================================================================
    2. BASE TYPOGRAPHY
    ==================================================================== */
 html {
@@ -56,7 +177,7 @@ html {
 }
 
 body {
-  font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+  font-family: 'Libre Baskerville', 'Montserrat', 'Cinzel Decorative', Georgia, 'Times New Roman', serif;
   font-size: 11pt;
   line-height: 1.65;
   color: #000;
@@ -126,6 +247,54 @@ div.quote-page {
 .worksheet-page-body {
   break-before: page;
   page-break-before: always;
+}
+
+/* ---- Backmatter body wrappers — every back-matter file starts on a new page ---- */
+.key-body,
+.ack-body,
+.bio-body,
+.journal-body,
+.certificate-body {
+  break-before: page;
+  page-break-before: always;
+  /* Cancel the EPUB flex-centering that produces blank opener pages in print */
+  display: block !important;
+  min-height: 0 !important;
+}
+
+/* Inner containers already break via their body wrapper above — cancel the
+   second break to prevent title-only opener pages */
+.profile-card,
+.ack-container,
+.journal-card,
+.backmatter-section {
+  page-break-before: auto !important;
+  break-before: auto !important;
+}
+
+/* Keep the About-the-Author title with the image + name that follow */
+.profile-card .section-heading,
+.profile-card h1 {
+  break-after: avoid !important;
+  page-break-after: avoid !important;
+  margin-top: 0 !important;
+}
+.profile-card .image-container,
+.profile-card .author-img {
+  break-before: avoid !important;
+  break-inside: avoid !important;
+  page-break-before: avoid !important;
+  page-break-inside: avoid !important;
+}
+/* Constrain author photo size so title + image fit on the opener page */
+.profile-card .author-img,
+.bio-body .author-img,
+img.author-img {
+  max-width: 2in !important;
+  max-height: 2in !important;
+  width: 2in !important;
+  height: auto !important;
+  margin: 0.5em auto 0.75em !important;
 }
 
 /* ---- Backmatter & in-chapter sections that need their own breaks ---- */
@@ -1350,3 +1519,67 @@ p.intro-text:first-of-type::first-letter,
 /* ====================================================================
    END OF POD PRINT STYLESHEET — 6.69" x 9.61"
    ==================================================================== */
+
+
+/* ============================================================
+   PRINT OVERRIDES for style.css rules that target digital aesthetic
+   ============================================================ */
+
+/* Chapter opener dark background (eco-luxe digital spec) → white for print */
+.chap-title,
+section.chap-title,
+div[class*="chapter-page"] .chap-title {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  min-height: auto !important;
+}
+
+/* Chapter number roman numeral — keep contrast on white */
+.chapter-number-roman {
+  color: #000000 !important;
+}
+
+/* Title stack text */
+.chap-title .title-line,
+.chap-title .title-bar {
+  color: #000000 !important;
+  background-color: #000000 !important;
+}
+.chap-title .title-line {
+  background-color: transparent !important;
+  color: #000000 !important;
+}
+
+/* Bible quote text + reference */
+.bible-quote-text,
+.bible-quote-reference {
+  color: #000000 !important;
+}
+
+/* Also: any quote-page that might have dark styling */
+.quote-page {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* ================================================================
+   Fix fallback-font triggers: force ALL nested ul levels to disc (•),
+   not circle (◦) which no design-system font contains.
+   Also override checkmark pseudo-element content to use a glyph
+   our fonts actually have.
+   ================================================================ */
+ul, ul ul, ul ul ul, ol ul, ul ol {
+  list-style-type: disc !important;
+}
+/* Pseudo-elements that emit non-ASCII glyphs (✓ checkmarks, URL markers, TOC
+   leaders, page numbers) need an explicit font-family fallback so WeasyPrint
+   doesn't drop to Noto Color Emoji. Scoped to the exact rules that use them —
+   no universal selector, no collateral damage to icon fonts elsewhere. */
+.pledge-list li::before,
+.key-takeaways li::before,
+.mcq-item::before,
+.toc-entry a.toc-link::after,
+a[href^="http"]::after,
+a[href^="http"]:after {
+  font-family: 'Libre Baskerville', 'Montserrat', serif;
+}
