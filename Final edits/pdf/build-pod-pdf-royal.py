@@ -231,12 +231,14 @@ def build_combined_html(
     fonts_dir: Path,
     images_dir: Path,
     pod_css_path: Path,
+    include_cover: bool = True,
 ) -> str:
     font_css = build_font_css(fonts_dir)
     pod_css = pod_css_path.read_text(encoding="utf-8")
 
+    spine = SPINE_ORDER if include_cover else [f for f in SPINE_ORDER if f != "0-Cover.xhtml"]
     sections = []
-    for i, fname in enumerate(SPINE_ORDER):
+    for i, fname in enumerate(spine):
         fpath = xhtml_dir / fname
         if not fpath.exists():
             print(f"  WARNING: {fname} not found, skipping", file=sys.stderr)
@@ -292,6 +294,11 @@ def main():
     parser.add_argument(
         "--html-only", action="store_true", help="Write combined HTML only (no PDF)"
     )
+    parser.add_argument(
+        "--no-cover",
+        action="store_true",
+        help="Exclude 0-Cover.xhtml from the spine (KDP interior upload)",
+    )
     args = parser.parse_args()
 
     script_dir, oebps, xhtml_dir, style_dir, images_dir, fonts_dir, output_dir = (
@@ -319,7 +326,13 @@ def main():
     print()
 
     print("  [1/3] Combining XHTML files...")
-    html = build_combined_html(xhtml_dir, fonts_dir, images_dir, pod_css_path)
+    html = build_combined_html(
+        xhtml_dir,
+        fonts_dir,
+        images_dir,
+        pod_css_path,
+        include_cover=not args.no_cover,
+    )
 
     # Write HTML for debugging
     html_path = script_dir / "print-interior-royal.html"
