@@ -113,12 +113,30 @@ div[class*="quote-page"] > main {
 }
 
 /* ================================================================
-   Capture chapter title for the recto running header.
+   Capture chapter / section title for the recto running header.
    The chapter title is inside <section class="chap-title"> as stacked
    <div class="title-line"> elements inside <div class="title-stack">.
    We harvest it via the sr-only <h1> at the top of each chapter file.
+   Back-matter files (Quiz Key, Acknowledgments, About the Author,
+   Bibliography, journal sections) use visible h1s with various class
+   names — capture those too so the running header updates for each
+   back-matter section instead of persisting "Chapter XVI…" from the
+   last chapter.
    ================================================================ */
-h1.sr-only {
+h1.sr-only,
+h1.key-title,
+h1.ack-title,
+h1.cert-title,
+h1.bib-title,
+h1.main-heading,
+h1.section-heading,
+.key-body h1,
+.ack-body h1,
+.bio-body h1,
+.journal-body h1,
+.bib-body h1,
+.certificate-body h1,
+.worksheet-page-body h1 {
   string-set: chapter-title content();
 }
 
@@ -1560,6 +1578,57 @@ div[class*="chapter-page"] .chap-title {
 .quote-page {
   background-color: #ffffff !important;
   color: #000000 !important;
+}
+
+/* Introduction heading + paragraphs + drop cap — force black for print.
+   EPUB spec has these as white/light-gray for dark chapter-opener design;
+   print needs visible black ink. */
+.introduction-heading {
+  color: #000000 !important;
+}
+.introduction-paragraph,
+.introduction-paragraph p,
+.dropcap-first-letter,
+.dropcap-first-letter p {
+  color: #000000 !important;
+}
+.introduction-paragraph p:first-of-type strong:first-child,
+.dropcap-first-letter p:first-of-type strong:first-child,
+.drop-cap {
+  color: #000000 !important;
+}
+
+/* Cancel the full-page flex-centering on section.chap-title for print.
+   The flex container with min-height: 8in + justify-content: center was
+   clamping Introduction + paragraphs + signature into the centered box,
+   causing content to be hidden/clipped off the page. Using display:block
+   lets the opener decoratives (figure / title-stack / bible-quote — which
+   live on page: chapter-opener) render on their own page, and the
+   Introduction content then flows onto the default @page with folio +
+   running header. */
+section.chap-title,
+.chap-title,
+div[class*="chapter-page"] .chap-title {
+  display: block !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding: 0.4in 0 !important;
+  page-break-inside: auto !important;
+  break-inside: auto !important;
+  text-align: center;
+}
+section.chap-title > .introduction-heading,
+section.chap-title > .introduction-paragraph,
+section.chap-title > .dropcap-first-letter,
+section.chap-title > .signature-section {
+  text-align: left;
+  max-width: 4.5in;
+  margin-left: auto;
+  margin-right: auto;
+}
+section.chap-title > .introduction-heading {
+  text-align: left;
+  margin-top: 0.25in;
 }
 
 /* ================================================================
