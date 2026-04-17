@@ -90,20 +90,26 @@ div[class*="half-title-body"],
 div[class*="dedication-body"],
 div[class*="toc-body"]                  { page: frontmatter-nofolio; }
 
-/* Chapter opener title blocks, part dividers, image-quote pages: no header/folio */
-/* Chapter opener: apply chapter-opener page style to the WRAPPER div so that
-   h1.sr-only (which is needed for string-set) flows onto the opener page
-   instead of occupying a separate preceding page. break-before: right
-   on the wrapper forces the opener to start on a recto. */
+/* Chapter / part / quote wrappers: force recto start; leave the outer wrapper
+   on the default @page so body-flow pages keep running headers. The inner
+   opener section (section.chap-title) is what carries the no-header treatment. */
 div[class*="chapter-page"],
 div[class*="part-body"],
 div[class*="quote-page"] {
-  page: chapter-opener;
   break-before: right;
 }
-/* Restore normal page style for the body flow AFTER the opener section */
-div[class*="chapter-page"] section.chap-body {
-  page: auto;
+/* Only the decorative chapter-opener elements (Roman numeral + stacked title +
+   bible quote) that land on the first page of each chapter get the no-header/
+   no-folio treatment. The Introduction paragraphs that follow inside
+   section.chap-title fall through to the default @page with running headers. */
+section.chap-title > figure.chapter-number-figure,
+section.chap-title > .title-stack,
+section.chap-title > .bible-quote-container,
+section.part-container,
+section.image-quote,
+div[class*="part-body"] > main,
+div[class*="quote-page"] > main {
+  page: chapter-opener;
 }
 
 /* ================================================================
@@ -125,6 +131,7 @@ h1.sr-only {
    is the WCAG-standard sr-only pattern; WeasyPrint handles it correctly.
 */
 h1.sr-only {
+  display: block !important;
   position: absolute !important;
   width: 1px !important;
   height: 1px !important;
@@ -240,6 +247,54 @@ div.quote-page {
 .worksheet-page-body {
   break-before: page;
   page-break-before: always;
+}
+
+/* ---- Backmatter body wrappers — every back-matter file starts on a new page ---- */
+.key-body,
+.ack-body,
+.bio-body,
+.journal-body,
+.certificate-body {
+  break-before: page;
+  page-break-before: always;
+  /* Cancel the EPUB flex-centering that produces blank opener pages in print */
+  display: block !important;
+  min-height: 0 !important;
+}
+
+/* Inner containers already break via their body wrapper above — cancel the
+   second break to prevent title-only opener pages */
+.profile-card,
+.ack-container,
+.journal-card,
+.backmatter-section {
+  page-break-before: auto !important;
+  break-before: auto !important;
+}
+
+/* Keep the About-the-Author title with the image + name that follow */
+.profile-card .section-heading,
+.profile-card h1 {
+  break-after: avoid !important;
+  page-break-after: avoid !important;
+  margin-top: 0 !important;
+}
+.profile-card .image-container,
+.profile-card .author-img {
+  break-before: avoid !important;
+  break-inside: avoid !important;
+  page-break-before: avoid !important;
+  page-break-inside: avoid !important;
+}
+/* Constrain author photo size so title + image fit on the opener page */
+.profile-card .author-img,
+.bio-body .author-img,
+img.author-img {
+  max-width: 2in !important;
+  max-height: 2in !important;
+  width: 2in !important;
+  height: auto !important;
+  margin: 0.5em auto 0.75em !important;
 }
 
 /* ---- Backmatter & in-chapter sections that need their own breaks ---- */
@@ -1516,10 +1571,15 @@ div[class*="chapter-page"] .chap-title {
 ul, ul ul, ul ul ul, ol ul, ul ol {
   list-style-type: disc !important;
 }
-/* Any pseudo-element emitting a checkmark: swap U+2713/U+2714 for a dagger
-   (Montserrat has it) */
-*::before, *::after {
-  /* content property overrides need to target specific rules — skip global override;
-     instead add explicit font-family fallback to these pseudo-elements */
+/* Pseudo-elements that emit non-ASCII glyphs (✓ checkmarks, URL markers, TOC
+   leaders, page numbers) need an explicit font-family fallback so WeasyPrint
+   doesn't drop to Noto Color Emoji. Scoped to the exact rules that use them —
+   no universal selector, no collateral damage to icon fonts elsewhere. */
+.pledge-list li::before,
+.key-takeaways li::before,
+.mcq-item::before,
+.toc-entry a.toc-link::after,
+a[href^="http"]::after,
+a[href^="http"]:after {
   font-family: 'Libre Baskerville', 'Montserrat', serif;
 }
