@@ -1640,6 +1640,99 @@ section.chap-title > .introduction-heading {
 ul, ul ul, ul ul ul, ol ul, ul ol {
   list-style-type: disc !important;
 }
+
+/* ================================================================
+   VISUAL LAYOUT REPAIR OVERRIDES (RC QA pass)
+   - remove recto-only blank insertions
+   - center chapter marker brush/roman over title stack
+   - keep quiz / worksheet / image quote on separate section pages
+   ================================================================ */
+div[class*="chapter-page"],
+div[class*="part-body"],
+div[class*="quote-page"] {
+  break-before: auto !important;
+  page-break-before: auto !important;
+}
+
+section.chap-title,
+section.part-container,
+section.part-divider,
+section.part-title,
+.part-title,
+.part-divider {
+  break-before: page !important;
+  page-break-before: always !important;
+}
+
+.chap-title .chapter-number-figure {
+  position: relative !important;
+  display: block !important;
+  width: 1.5in !important;
+  height: 1in !important;
+  margin: 0 auto 0.35in auto !important;
+  padding: 0 !important;
+  text-align: center !important;
+  align-self: center !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+.chap-title .chapter-number-brush {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+}
+
+.chap-title .chapter-number-roman {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.quiz-container,
+.chap-quiz {
+  break-before: page !important;
+  page-break-before: always !important;
+  break-after: auto !important;
+  page-break-after: auto !important;
+  break-inside: auto !important;
+  page-break-inside: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+section.worksheet,
+.worksheet.page,
+.worksheet.page-break-before {
+  break-before: page !important;
+  page-break-before: always !important;
+  break-after: auto !important;
+  page-break-after: auto !important;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+section.image-quote {
+  break-before: page !important;
+  page-break-before: always !important;
+  break-after: auto !important;
+  page-break-after: auto !important;
+  break-inside: avoid !important;
+  page-break-inside: avoid !important;
+}
 /* Pseudo-elements that emit non-ASCII glyphs (✓ checkmarks, URL markers, TOC
    leaders, page numbers) need an explicit font-family fallback so WeasyPrint
    doesn't drop to Noto Color Emoji. Scoped to the exact rules that use them —
