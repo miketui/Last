@@ -187,10 +187,22 @@ def build_font_css(fonts_dir: Path) -> str:
   src: url('{base}/librebaskerville-bold.woff2') format('woff2');
   font-weight: 700; font-style: normal;
 }}
+/* Bold-italic alias: italic file used so combined runs stay in the brand serif */
+@font-face {{
+  font-family: 'Libre Baskerville';
+  src: url('{base}/librebaskerville-italic.woff2') format('woff2');
+  font-weight: 700; font-style: italic;
+}}
 @font-face {{
   font-family: 'Cinzel Decorative';
   src: url('{base}/CinzelDecorative.woff2') format('woff2');
   font-weight: 400; font-style: normal;
+}}
+/* Cinzel Decorative bold alias: regular file reused at 700 weight */
+@font-face {{
+  font-family: 'Cinzel Decorative';
+  src: url('{base}/CinzelDecorative.woff2') format('woff2');
+  font-weight: 700; font-style: normal;
 }}
 @font-face {{
   font-family: 'Montserrat';
@@ -201,6 +213,17 @@ def build_font_css(fonts_dir: Path) -> str:
   font-family: 'Montserrat';
   src: url('{base}/Montserrat-Bold.woff2') format('woff2');
   font-weight: 700; font-style: normal;
+}}
+/* Montserrat italic/oblique aliases: regular/bold reused in italic style */
+@font-face {{
+  font-family: 'Montserrat';
+  src: url('{base}/Montserrat-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: italic;
+}}
+@font-face {{
+  font-family: 'Montserrat';
+  src: url('{base}/Montserrat-Bold.woff2') format('woff2');
+  font-weight: 700; font-style: italic;
 }}
 /* Aliases for any references to Lato/Playfair Display in markup */
 @font-face {{
@@ -264,13 +287,13 @@ def build_combined_html(
 <head>
 <meta charset="UTF-8"/>
 <title>Curls &amp; Contemplation: A Stylist&#x2019;s Interactive Journey</title>
-<meta name="author" content="Michael David"/>
-<meta name="description" content="Curls and Contemplation: A Stylist&#x2019;s Interactive Journey &#8212; A professional development journal for hairstylists covering creative artistry, business strategy, wellness, and legacy building. By Michael David."/>
-<meta name="keywords" content="hairstylist journal, hair stylist professional development, curls, natural hair, beauty industry, salon business, creative hairstyling, freelance hairstylist, Michael David"/>
+<meta name="author" content="Michael David Warren Jr."/>
+<meta name="description" content="Curls and Contemplation: A Stylist&#x2019;s Interactive Journey &#8212; A professional development journal for hairstylists covering creative artistry, business strategy, wellness, and legacy building. By Michael David Warren Jr."/>
+<meta name="keywords" content="hairstylist journal, hair stylist professional development, curls, natural hair, beauty industry, salon business, creative hairstyling, freelance hairstylist, Michael David Warren Jr., TAYLKOMB"/>
 <meta name="subject" content="Professional Development for Hairstylists"/>
-<meta name="creator" content="Michael David"/>
-<meta name="publisher" content="Michael David"/>
-<meta name="rights" content="Copyright 2026 Michael David. All rights reserved."/>
+<meta name="creator" content="Michael David Warren Jr."/>
+<meta name="publisher" content="TAYLKOMB LLC"/>
+<meta name="rights" content="Copyright 2026 Michael David Warren Jr. / TAYLKOMB LLC. All rights reserved."/>
 <meta name="language" content="en-US"/>
 <style>
 {font_css}

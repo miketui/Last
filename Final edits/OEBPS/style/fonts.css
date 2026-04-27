@@ -25,11 +25,30 @@
   font-style: normal;
   font-display: swap;
 }
+/* Bold-italic fallback: italic file used so combined runs stay in the brand serif
+   rather than falling back to FreeSerif/Liberation. Sacrifices weight, keeps
+   typeface family. */
+@font-face {
+  font-family: 'Libre Baskerville';
+  src: url('../fonts/librebaskerville-italic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'Cinzel Decorative';
   src: url('../fonts/CinzelDecorative.woff2') format('woff2');
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* Cinzel Decorative Bold fallback: regular file used so bold display runs stay in
+   the brand decorative face rather than falling back to a generic serif. */
+@font-face {
+  font-family: 'Cinzel Decorative';
+  src: url('../fonts/CinzelDecorative.woff2') format('woff2');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -46,6 +65,22 @@
   src: url('../fonts/Montserrat-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
+}
+/* Montserrat italic/oblique fallback: regular file used so italic sans runs stay
+   in the brand sans-serif rather than falling back to DejaVu/Liberation. */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../fonts/Montserrat-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../fonts/Montserrat-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
   font-display: swap;
 }
 

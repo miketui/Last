@@ -63,16 +63,34 @@
 
 /* First page of a document: no folio by default */
 @page :first {
+  @top-left { content: none; }
+  @top-center { content: none; }
+  @top-right { content: none; }
+  @bottom-left { content: none; }
+  @bottom-center { content: none; }
+  @bottom-right { content: none; }
 }
 
-/* Blank pages inserted by recto starts: keep fully blank */
+/* Blank pages inserted by recto starts: keep fully blank (no running headers, no folio) */
 @page :blank {
+  @top-left { content: none; }
+  @top-center { content: none; }
+  @top-right { content: none; }
+  @bottom-left { content: none; }
+  @bottom-center { content: none; }
+  @bottom-right { content: none; }
 }
 
 /* ====================================================================
    1B. PAGE TYPES (Suppress folios on openers/standalone pages)
    ==================================================================== */
 @page nofolio {
+  @top-left { content: none; }
+  @top-center { content: none; }
+  @top-right { content: none; }
+  @bottom-left { content: none; }
+  @bottom-center { content: none; }
+  @bottom-right { content: none; }
 }
 
 /* Chapter title pages (and similar openers) should start on a right-hand (recto) page */

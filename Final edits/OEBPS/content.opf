@@ -3,10 +3,10 @@
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
 
     <!-- Identity -->
-    <dc:identifier id="bookid">urn:uuid:c8d4e5f6-a1b2-4c3d-9e8f-0a1b2c3d4e5f</dc:identifier>
+    <dc:identifier id="bookid">urn:uuid:b815780c-968e-4f5f-a928-f00e2f4341bc</dc:identifier>
 
     <!-- Title -->
-    <dc:title id="title">Curls &amp; Contemplation: A Stylist's Interactive Journey</dc:title>
+    <dc:title id="title">Curls &amp; Contemplation: A Stylist&#x2019;s Interactive Journey</dc:title>
     <meta refines="#title" property="title-type">main</meta>
     <meta refines="#title" property="display-seq">1</meta>
 
@@ -43,14 +43,23 @@
     <!-- Cover image reference (EPUB2 compatibility) -->
     <meta name="cover" content="cover-image"/>
 
-    <!-- Accessibility -->
+    <!-- Accessibility (EPUB Accessibility 1.1 / Schema.org) -->
     <meta property="schema:accessMode">textual</meta>
     <meta property="schema:accessMode">visual</meta>
     <meta property="schema:accessModeSufficient">textual</meta>
+    <meta property="schema:accessModeSufficient">textual,visual</meta>
     <meta property="schema:accessibilityFeature">structuralNavigation</meta>
     <meta property="schema:accessibilityFeature">tableOfContents</meta>
+    <meta property="schema:accessibilityFeature">readingOrder</meta>
+    <meta property="schema:accessibilityFeature">alternativeText</meta>
+    <meta property="schema:accessibilityFeature">printPageNumbers</meta>
+    <meta property="schema:accessibilityFeature">unlocked</meta>
     <meta property="schema:accessibilityHazard">none</meta>
-    <meta property="schema:accessibilitySummary">This EPUB provides structured navigation, semantic headings, and alt text on all meaningful images.</meta>
+    <meta property="schema:accessibilityControl">fullKeyboardControl</meta>
+    <meta property="schema:accessibilityControl">fullMouseControl</meta>
+    <meta property="schema:accessibilityControl">fullTouchControl</meta>
+    <meta property="schema:accessibilitySummary">This EPUB provides structured navigation, semantic headings, language declarations, alt text on meaningful images, and a logical reading order. Decorative images are marked with empty alt attributes. WCAG conformance has not been independently verified.</meta>
+    <meta property="a11y:certifiedBy">Self-certified by the publisher</meta>
 
   </metadata>
 
@@ -169,8 +178,8 @@
     <itemref idref="halftitle"           linear="yes"/>
     <itemref idref="titlepage"           linear="yes"/>
     <itemref idref="copyright"           linear="yes"/>
-    <itemref idref="dedication"          linear="yes"/>
     <itemref idref="toc-page"            linear="yes"/>
+    <itemref idref="dedication"          linear="yes"/>
     <itemref idref="self-assessment-1"   linear="yes"/>
     <itemref idref="affirmation-odyssey" linear="yes"/>
     <itemref idref="preface"             linear="yes"/>
