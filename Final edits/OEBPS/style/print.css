@@ -95,7 +95,8 @@
 
 /* Chapter title pages (and similar openers) should start on a right-hand (recto) page */
 section.chap-title {
-  break-before: right;
+  break-before: page;
+  page-break-before: always;
   page: nofolio;
 }
 
@@ -107,7 +108,8 @@ section.image-quote {
 
 /* Part divider pages: treat as openers — always recto */
 section.part-container, section.part-divider, section.part-title, .part-title, .part-divider {
-  break-before: right;
+  break-before: page;
+  page-break-before: always;
   page: nofolio;
 }
 
@@ -416,12 +418,16 @@ li {
 
 .chapter-number-figure {
   position: relative;
+  display: block;
   width: 1.5in;
   height: 1in;
-  margin-bottom: 0.35in;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0 auto 0.35in auto;
+  padding: 0;
+  text-align: center;
+  align-self: center;
+  left: auto;
+  right: auto;
+  transform: none;
 }
 
 .chapter-number-brush {
@@ -435,8 +441,13 @@ li {
 }
 
 .chapter-number-roman {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   font-family: 'Cinzel Decorative', Georgia, serif;
   font-size: 24pt;
   color: #fff;
@@ -1270,12 +1281,13 @@ nav[role="doc-toc"] .toc-chapter-num {
 .quiz-container,
 .chap-quiz {
   break-before: page;
-  break-after: auto;
-  break-inside: avoid;
+  break-after: page;
+  break-inside: auto;
   page-break-before: always;
-  page-break-inside: avoid;
-  max-height: 8.11in; /* content area within 9.61in page minus margins */
-  overflow: hidden;
+  page-break-after: always;
+  page-break-inside: auto;
+  max-height: none;
+  overflow: visible;
 }
 
 /* Compact quiz typography to fit single page */
@@ -1328,12 +1340,13 @@ nav[role="doc-toc"] .toc-chapter-num {
 section.worksheet,
 .worksheet.page {
   break-before: page;
-  break-after: auto;
+  break-after: page;
   break-inside: avoid;
   page-break-before: always;
+  page-break-after: always;
   page-break-inside: avoid;
-  max-height: 8.11in;
-  overflow: hidden;
+  max-height: none;
+  overflow: visible;
 }
 
 /* Compact worksheet to fit single page */
@@ -1386,11 +1399,13 @@ section.worksheet .worksheet-footer p,
 /* Ch VI worksheet uses different markup */
 .worksheet.page-break-before {
   break-before: page;
+  break-after: page;
   break-inside: avoid;
   page-break-before: always;
+  page-break-after: always;
   page-break-inside: avoid;
-  max-height: 8.11in;
-  overflow: hidden;
+  max-height: none;
+  overflow: visible;
 }
 .worksheet .writing-area {
   min-height: 0.5in;
@@ -1405,15 +1420,16 @@ section.worksheet .worksheet-footer p,
 /* --- IMAGE QUOTE: full single page, image fills content area --- */
 section.image-quote {
   break-before: page;
-  break-after: auto;
+  break-after: page;
   break-inside: avoid;
   page-break-before: always;
+  page-break-after: always;
   page-break-inside: avoid;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 8.11in;
-  max-height: 8.11in;
+  max-height: none;
   padding: 0;
   margin: 0;
 }
@@ -1472,4 +1488,3 @@ section.doodle-page {
   break-inside: avoid;
   page-break-inside: avoid;
 }
-

@@ -1,0 +1,34 @@
+Total pages: 581
+
+Chapter opener pages (rendered verification set):
+  Chapter I: page 18
+  Chapter II: page 58
+  Chapter III: page 83
+  Chapter IV: page 104
+  Chapter V: page 136
+  Chapter VI: page 166
+  Chapter VII: page 197
+  Chapter VIII: page 219
+  Chapter IX: page 261
+  Chapter X: page 296
+  Chapter XI: page 328
+  Chapter XII: page 361
+  Chapter XIII: page 397
+  Chapter XIV: page 443
+  Chapter XV: page 480
+  Chapter XVI: page 508
+
+Chapter flow checks:
+  ch1_quiz_start: 53
+  ch1_quiz_end: 54
+  ch1_ws_start: 55
+  ch1_ws_end: 56
+  ch1_image_quote: 57
+  ch2_start: 58
+  ch10_start: 296
+  ch10_quiz_start: 323
+  ch10_quiz_end: 324
+  ch10_ws_start: 325
+  ch10_ws_end: 326
+  ch10_image_quote: 327
+  ch11_start: 328
