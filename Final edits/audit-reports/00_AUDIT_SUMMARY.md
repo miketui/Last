@@ -20,13 +20,18 @@ Reasons:
 
 ## Counts
 
+Counts below match `05_ISSUE_LOG.csv` row-for-row.
+
 | Severity | EPUB | PDF | Source | Total |
 |----------|-----:|----:|-------:|------:|
-| BLOCKER  | 0 | 1 (manual confirmation required for KDP-ROYAL non-embedded fonts) | 0 | 1 |
-| HIGH     | 0 | 1 (KDP-ROYAL fonts) | 0 | 1 |
-| MEDIUM   | 1 (3 EPUB versions in final/) | 4 (multiple PDFs in final/, no /TrimBox on KDP-ROYAL, untagged PDFs, page-count divergence) | 0 | 5 |
-| LOW      | 1 (V3 EPUB false-positive `brushstroke.svg` flagged by audit script — actually referenced via `<source srcset>`) | 0 | 0 | 1 |
-| MANUAL REVIEW | 1 (NAV vs `<title>` divergence) | 5 (visual QA, page-size confirmation, font confirmation, 348 vs 581 page intent, official EPUBCheck) | 0 | 6 |
+| BLOCKER  | 0 | 1 — `PDF-01` (KDP-ROYAL: 42/45 FontDescriptors embedded; pending external `pdffonts` confirmation) | 0 | 1 |
+| HIGH     | 0 | 1 — `PDF-02` (4 PDFs in `final/` with page counts 348/579/581/587) | 0 | 1 |
+| MEDIUM   | 1 — `EPUB-01` (3 EPUB versions in `final/`) | 2 — `PDF-03` (no /TrimBox on KDP-ROYAL), `PDF-04` (all PDFs untagged) | 0 | 3 |
+| LOW      | 0 | 0 | 0 | 0 |
+| MANUAL REVIEW | 2 — `EPUB-02` (NAV vs `<title>` divergence), `EPUB-03` (external EPUBCheck) | 3 — `PDF-05` (page-count divergence editorial decision), `PDF-06` (visual QA), `PDF-07` (qpdf/Preflight) | 3 — `SRC-01` (NAV vs `<title>` source side), `SRC-02` (font OFL files), `SRC-03` (cover.png dimensions) | 8 |
+| **Total**     | **3** | **7** | **3** | **13** |
+
+Note on the `brushstroke.svg` "manifest item never referenced" line in the raw audit log: it was a false positive from the audit script (which only inspected `<img src>`/`<link href>`, not `<picture><source srcset>`). The SVG is in fact referenced from 18 chapter pages. It is not an issue and is not counted above. See `01_EPUB_AUDIT.md` for context.
 
 ## Files Audited
 
