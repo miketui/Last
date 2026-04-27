@@ -30,9 +30,19 @@ screenshots/
 web/screenshots/
 
 # Release-candidate QA build artifacts (regeneratable from source — see PRODUCTION_PROMOTION_PLAN.md)
+# NOTE: the ZIP is intentionally tracked so it can be downloaded from GitHub's Code tab.
+# The release-candidate/ and repaired/ folders are uncompressed copies and stay out of git.
 Final edits/output/release-candidate/
 Final edits/output/repaired/
-CurlsAndContemplation-Release-Candidate-QA-Package.zip
 
 # Temp files
 *.tmp
+-e 
+# Environment and credential files
+.env
+.env.*
+*.env
+credentials.json
+*.pem
+*.key
+.credentials
