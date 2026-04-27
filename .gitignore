@@ -28,3 +28,11 @@ dist/
 # Screenshots (regeneratable)
 screenshots/
 web/screenshots/
+
+# Release-candidate QA build artifacts (regeneratable from source — see PRODUCTION_PROMOTION_PLAN.md)
+Final edits/output/release-candidate/
+Final edits/output/repaired/
+CurlsAndContemplation-Release-Candidate-QA-Package.zip
+
+# Temp files
+*.tmp
