@@ -1,6 +1,6 @@
 # Curls & Contemplation — Website PRD (FINAL)
 
-**Version:** 2.0 — supersedes v1.0 (2026-02-16)
+**Version:** 3.0 — supersedes v2.0
 **Status:** Pre-Launch (Pre-Order Phase)
 **Date:** 2026-05-22
 **Owner:** Michael David Warren Jr.
@@ -8,9 +8,11 @@
 
 ---
 
-## 1. What changed from v1.0
+## 1. Version history
 
-| # | v1.0 | v2.0 (this doc) |
+### v1.0 → v2.0
+
+| # | v1.0 | v2.0 |
 |---|---|---|
 | 1 | Palette: Teal `#2B9999` + Gold `#C9A961` | **ACISS — Obsidian `#0E0D0B` / Gold `#B89968` / Jade `#1F6F6B`** |
 | 2 | Type: Cinzel Decorative + Libre Baskerville + Montserrat | Display: distinctive serif (chosen Phase 4 by `ui-ux-pro-max` within ACISS); Body: refined sans; **no Inter / Roboto / Arial / Space Grotesk** |
@@ -24,6 +26,18 @@
 | 10 | No human approval gates | **9 scoped gates** via `human-approval-gate` skill (ledger in build log) |
 | 11 | No legal pages beyond Privacy/Terms/Refund | Adds `/preorder-policy`, `/digital-delivery-policy`, `/cookies`, `/accessibility` — FTC + CCPA/CPRA compliant |
 | 12 | 3D book cover via Three.js loaded eagerly | **Tier-2 lazy-loaded** Spline/Lottie hero; static SVG fallback; honors `prefers-reduced-motion` |
+
+### v2.0 → v3.0 (this doc) — 2026-05-22
+
+| # | v2.0 | v3.0 (this doc) |
+|---|---|---|
+| 1 | Pricing: $17.99 launch / $19.99 regular | **$15.99 pre-order / $17.99 regular** — set after the decision to also sell on Amazon Kindle at $9.99; the direct price stays ≥ the Amazon price so Amazon can't price-match it down |
+| 2 | "Launch promo" = pre-order + first 14 days | **90-day pre-order campaign** — pre-order opens at `RELEASE_DATE − 90 days` |
+| 3 | Timeline anchored to a fixed 2026-05-22 calendar | **All dates relative to `RELEASE_DATE`** (still TBD) — no hardcoded calendar dates anywhere |
+| 4 | EPUB + PDF only | EPUB + PDF **+ bonus bundle** (Pricing Kit, chapter workbook, lifetime updates, pre-order-only bonus chapter) — the reason to buy direct over the $9.99 Kindle |
+| 5 | No demand test | **Demand-validation gate** (`06_PRE_MORTEM.md` C0) — a falsifiable Day-30 pre-order go/no-go |
+| 6 | No sales copy in the bundle | **`17_WEBSITE_COPY.md`** added — real home hero, `/book` sales argument, objection FAQ |
+| 7 | Traffic assumed | **Owned-audience launch plan** added (§ 9a) |
 
 ---
 
@@ -41,8 +55,9 @@ A direct-to-consumer eBook sales platform that enables Michael David Warren (Rih
 
 | Item | Price | Format | Fulfillment |
 |---|---|---|---|
-| eBook (launch promo, pre-order + first 14d post-launch) | **$17.99** | EPUB (V4) + PDF bundle | Stripe Checkout → Supabase signed URL (7-day, 3-download cap) |
-| eBook (regular) | **$19.99** | EPUB (V4) + PDF bundle | same |
+| eBook (pre-order — 90-day campaign + first 14d post-launch) | **$15.99** | EPUB (V4) + PDF + bonus bundle | Stripe Checkout → Supabase signed URL (7-day, 3-download cap) |
+| eBook (regular, post-launch) | **$17.99** | EPUB (V4) + PDF + bonus bundle | same |
+| eBook (Amazon Kindle — external) | $9.99 | Kindle format only | Amazon KDP; not managed by this bundle. Direct price stays ≥ this. |
 | Pricing Confidence Kit | Free | PDF | gated by email; Turnstile-protected |
 | Sample Chapter (Chapter 1) | Free | PDF | ungated; top-of-funnel |
 | Paperback (POD-6x9) | TBD | external | Amazon / B&N / Waterstones / Indigo links only |
@@ -50,7 +65,7 @@ A direct-to-consumer eBook sales platform that enables Michael David Warren (Rih
 
 ### 2.4 Conversion goal hierarchy (one per surface)
 1. **Lead capture** (Pricing Confidence Kit) — top of funnel
-2. **Pre-order** ($17.99) — middle of funnel
+2. **Pre-order** ($15.99) — middle of funnel
 3. **Post-order nurture** (sequence → review → second book/related products) — bottom of funnel
 4. **Substack subscription** — owned-audience compounding asset
 
@@ -292,18 +307,30 @@ SQLite WAL · Stripe auto-retry 72h · email queue retry with backoff · gracefu
 
 ---
 
-## 9. Launch phases (anchored to today)
+## 9. Launch phases (relative to `RELEASE_DATE`)
 
-See `07_LAUNCH_TIMELINE.md` for week-by-week.
+See `07_LAUNCH_TIMELINE.md` for the full relative timeline. No calendar dates are hardcoded — every phase resolves once `RELEASE_DATE` is locked. `PREORDER_OPEN = RELEASE_DATE − 90 days`.
 
 | Phase | Window | Goal |
 |---|---|---|
-| Phase 0 | 2026-05-22 → T-21 | Infra freeze, gate ledger live, Stripe webhook live-test, MailerLite warmup, ACISS codemod merged |
-| Phase 1 | T-20 → T-7 | Pre-order push, lead-magnet flywheel, Substack sync live |
-| Phase 2 | T-6 → T (launch day) | Launch broadcast cascade, bulk pre-order fulfillment cron, paperback links go live |
-| Phase 3 | T+1 → T+90 | Nurture, review-ask, post-purchase optimization, paperback retail expansion |
+| Phase 0 — Build | `BUILD_START → PREORDER_OPEN` | The 22-phase build: infra, design, commerce, email, QA. The site is live and able to take a pre-order by `PREORDER_OPEN`. |
+| Phase 1 — Pre-Order Campaign | `PREORDER_OPEN → T−1` (90 days) | The 90-day pre-order campaign at $15.99. Day-30 demand-validation go/no-go. |
+| Phase 2 — Launch | `T` | Launch broadcast cascade, bulk pre-order fulfillment cron, paperback links go live. |
+| Phase 3 — Post-Launch | `T+1 → T+90` | Nurture, review-ask, post-purchase optimization; $17.99 regular price activates at `T+15`. |
 
-Real `RELEASE_DATE` is set during the Strategy Lock `[GATE]` in Phase 0.
+Real `RELEASE_DATE` is set during the Strategy Lock `[GATE]`.
+
+### 9a. Owned-audience launch plan (v3 — added per LLM Council review)
+
+The 90-day pre-order campaign needs traffic, and the bundle's most underused asset is Michael himself. The pre-order is **not** marketed primarily through an RSS-to-email cron — it is marketed through the channels Michael already owns:
+
+- **Instagram — the primary engine.** Behind-the-scenes from the chair and from set, chapter excerpts as carousels, the "why I wrote this" story. Every post drives to `/book`.
+- **Set + editorial credibility.** Michael's celebrity-roster work is the proof. Used honestly (per `claims-evidence.md`), it is the single biggest reason a stranger trusts the book.
+- **Peer hairstylists.** The book's exact audience. Direct outreach, a small advance-reader group, and word of mouth inside the freelance-stylist community convert far better than cold traffic.
+- **The existing email list.** Warmed first, on day one of pre-order.
+- **Substack.** Owned long-form; cross-posts and the buyer-only reward (S4-E2) compound the list.
+
+Paid acquisition (Meta / Google) stays **off** until organic-only conversion is measured through `T+30` (`BUNDLE_PRE_MORTEM.md` E9). The launch is the start of the list, not the harvest.
 
 ---
 
@@ -324,7 +351,7 @@ Real `RELEASE_DATE` is set during the Strategy Lock `[GATE]` in Phase 0.
 
 ## 11. Risk register
 
-See `06_PRE_MORTEM.md` for full Tigers / Paper Tigers / Elephants. Five Launch-Blocking Tigers: secret leak, webhook forgery, public file URL piracy, FTC preorder violation, 3D-hero perf tank. All folded into the pipeline.
+See `06_PRE_MORTEM.md` for full Tigers / Paper Tigers / Elephants, plus `BUNDLE_PRE_MORTEM.md` for the execution-path meta-tigers. Launch-Blocking Tigers C0–C10 — demand unproven, secret leak, webhook forgery, public file URL piracy, FTC preorder violation, 3D-hero perf tank, and more — all fold into the pipeline. **C0 (demand unproven)** is gated by the 90-day pre-order campaign's Day-30 go/no-go checkpoint.
 
 ---
 
@@ -395,6 +422,7 @@ Last/
 ## 13. Acceptance criteria (definition of done)
 
 A page is **done** only when:
+- It makes its **one job** obvious in five seconds — a real hairstylist lands, understands what is sold, who it is for, and why it is worth $15.99 (positioning lives in `17_WEBSITE_COPY.md`, not a placeholder)
 - Desktop + mobile design pass design-critique
 - One primary CTA
 - SEO title + meta + OG + JSON-LD where applicable

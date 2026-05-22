@@ -8,6 +8,23 @@
 
 ---
 
+> ## ⛔ BLOCKER — THIS FILE IS NOT YET COMPLETE
+>
+> Every `[PLACEHOLDER]` and `[YYYY-MM-DD]` below is unfilled. **No public page, email, or
+> ad making any of these claims may ship until its row is completed with real, dated evidence.**
+> This is a hard gate, not a formality:
+>
+> - "Rihanna's day-to-day hairstylist," "IPPY," "Guido Palau," and "Jimmy Paul" are legal
+>   claims. Shipping them unsubstantiated invites a cease-and-desist or an FTC complaint.
+> - **This file cannot be auto-filled.** Only Michael can supply the call sheets, pay stubs,
+>   written confirmations, and screenshots. Do not delete a claim to "unblock" it — either
+>   substantiate it, or remove it from the site and email copy as well.
+> - The Phase 15 Legal Publication gate **cannot close** while any row here is a placeholder.
+>
+> **Status: 🔴 0 of 7 claim groups substantiated. Owner: Michael.**
+
+---
+
 ## Schema
 
 For each claim, capture:
@@ -98,8 +115,9 @@ For each testimonial used on `/`, `/book`, or in emails (S1-E3 mentions Tasha L.
 |---|---|---|
 | "16 chapters across 4 parts" | TOC in CurlsAndContemplationV4.epub | [YYYY-MM-DD] |
 | "EPUB + PDF bundle" | files in repo root | [YYYY-MM-DD] |
-| "$17.99 launch price" | Stripe price ID PREORDER | [YYYY-MM-DD] |
-| "$19.99 regular price" | Stripe price ID REGULAR | [YYYY-MM-DD] |
+| "$15.99 pre-order price" | Stripe price ID PREORDER | [YYYY-MM-DD] |
+| "$17.99 regular price" | Stripe price ID REGULAR | [YYYY-MM-DD] |
+| "Pre-order bonus bundle (Pricing Kit, workbook, lifetime updates, bonus chapter)" | bonus assets in repo + `17_WEBSITE_COPY.md` | [YYYY-MM-DD] |
 | "Direct download, no Amazon" | architecture in PRD § 3 | [YYYY-MM-DD] |
 | "30-day refund policy" | `/refund-policy` page | [YYYY-MM-DD] |
 | "7-day download link, 3 attempts" | `download_tokens` schema | [YYYY-MM-DD] |

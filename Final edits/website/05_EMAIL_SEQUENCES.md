@@ -46,7 +46,7 @@ Here's what you'll get from me:
 
   · Field notes from the chair — pricing, networking, the business side
   · The Pricing Confidence Kit (free; link below)
-  · Updates on the book launch ($17.99 launch price for pre-orders)
+  · Updates on the book launch (pre-order is $15.99 — bonus bundle included)
   · The occasional behind-the-scenes from the editorial side
 
 Here's what you won't:
@@ -88,7 +88,7 @@ If the first chapter lands with you, the rest is a pre-order:
 
   → https://curlsandcontemplation.com/book
 
-Launch price is $17.99, locked through the first 14 days. After that, $19.99.
+Pre-order is $15.99 and includes the full bonus bundle — EPUB + PDF, the Pricing Confidence Kit, the chapter workbook, and free lifetime updates. That price holds through the 90-day pre-order window and the first 14 days after launch. After that, $17.99.
 
 — Michael
 ```
@@ -140,9 +140,9 @@ Last note before I go quiet for a while.
 
 If the book is a yes for you, the pre-order is the move. Three reasons:
 
-  1. Price. $17.99 now, $19.99 after launch + 14 days. That's it.
-  2. Algorithm. Pre-orders are how the book gets in front of more hairstylists who need it. Every pre-order is a vote.
-  3. You get the EPUB + PDF the morning of release — no waiting on a retailer fulfillment queue.
+  1. Price. $15.99 now, $17.99 after launch + 14 days. That's it.
+  2. The bundle. Every pre-order includes the EPUB + PDF, the Pricing Confidence Kit, the chapter workbook, free lifetime updates, and a pre-order-only bonus chapter — none of which comes with the $9.99 Kindle edition.
+  3. You get everything the morning of release — no waiting on a retailer fulfillment queue. And every pre-order is a vote that puts the book in front of more hairstylists who need it.
 
   → https://curlsandcontemplation.com/book
 

@@ -54,10 +54,10 @@ Every third-party service the Curls launch depends on, with the exact configurat
    ```
    mcp__d6c1a2a4-1d72-471d-b62b-a737bf5b6e67__create_price
    product: {product_id_from_step_2}
-   unit_amount: 1799
+   unit_amount: 1599
    currency: usd
    ```
-   Repeat for $19.99 regular. Capture both `price_*` IDs into `.env`.
+   Repeat for $17.99 regular (`unit_amount: 1799`). Capture both `price_*` IDs into `.env`.
 4. **Webhook endpoint:** `https://curlsandcontemplation.com/api/stripe/webhooks`. Events: `payment_intent.succeeded`, `payment_intent.payment_failed`, `charge.refunded`, `charge.dispute.created`.
 5. Enable **Stripe Tax** on the product. Set `tax_behavior: exclusive` (US sales-tax friendly).
 6. **Test:** card `4242 4242 4242 4242`, any future expiry, any CVC. Confirm:
@@ -65,7 +65,7 @@ Every third-party service the Curls launch depends on, with the exact configurat
    - Order row created in SQLite
    - Download token issued (Supabase path resolves)
    - Refund via dashboard → token revoked, S6 email sent
-7. **Phase 11 gate:** flip to live keys, run **one** live $17.99 transaction with your own card, refund immediately, confirm both legs.
+7. **Phase 11 gate:** flip to live keys, run **one** live $15.99 transaction with your own card, refund immediately, confirm both legs.
 
 **Security:** `STRIPE_SECRET_KEY` is server-only. Webhook payloads are signature-verified before any state change. Never log card data — Stripe's masked output is the only safe surface.
 

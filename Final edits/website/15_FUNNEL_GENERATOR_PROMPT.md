@@ -5,7 +5,7 @@ A single paste-ready prompt that designs and ships the four high-conversion funn
 **The four funnels:**
 
 1. **F1 — Top of funnel:** Cold visitor → Pricing Confidence Kit email subscriber
-2. **F2 — Middle of funnel:** Subscriber → $17.99 Pre-Order
+2. **F2 — Middle of funnel:** Subscriber → $15.99 Pre-Order
 3. **F3 — Substack reciprocity:** Substack subscriber → eBook buyer
 4. **F4 — Post-purchase:** Buyer → Reviewer + repeat audience
 
@@ -48,7 +48,8 @@ INPUTS (already locked)
 - Final edits/MONEY/SITEMAP.md
 - Final edits/MONEY/EMAIL_SEQUENCES.md (S1–S7)
 - Final edits/MONEY/PRE-MORTEM.md
-- Pricing: $17.99 launch / $19.99 regular (gated by RELEASE_DATE + 14d window)
+- Pricing: $15.99 pre-order / $17.99 regular (gated by RELEASE_DATE + 14d window). 90-day pre-order campaign.
+- Direct-buy bonus bundle (the reason to buy direct vs the $9.99 Amazon Kindle edition): EPUB + PDF, Pricing Confidence Kit, chapter workbook, free lifetime updates, pre-order-only bonus chapter
 - Lead magnets: Pricing Confidence Kit (gated), Sample Chapter (ungated)
 - Substack: existing — RSS feed at SUBSTACK_FEED_URL
 - Audience: freelance hairstylists, beauty pros (22–45 primary)
@@ -201,7 +202,7 @@ Failure branch: no open in 7 days → tag as `Cold`; lower-frequency cadence.
 |---|---|---|---|
 | 1 | Email S1-E2 (Sample Chapter free) | "Read Chapter 1" | `funnel_f2_chapter_click` |
 | 2 | Email S1-E3 (Real readers say) | "Pre-order" | `funnel_f2_preorder_click` |
-| 3 | `/book` sales page | "Pre-order — $17.99 launch" | `funnel_f2_checkout_start` |
+| 3 | `/book` sales page | "Pre-order — $15.99" | `funnel_f2_checkout_start` |
 | 4 | `/checkout` (Stripe) | "Complete pre-order" | `funnel_f2_purchase_complete` |
 | 5 | S2 confirmation + S3 launch reminders | (delivery on launch day) | `funnel_f2_fulfilled` |
 
@@ -214,7 +215,7 @@ Failure branch: pre-order click but no checkout in 24h → exit-intent retargeti
 | Stage | Surface | CTA | Event |
 |---|---|---|---|
 | 1 | Substack post (cross-posted Chapter 6 excerpt) | "Get the full book" | `funnel_f3_substack_click` |
-| 2 | `/book` with `?ref=substack` UTM | "Pre-order — $17.99 launch" | `funnel_f3_checkout_start` |
+| 2 | `/book` with `?ref=substack` UTM | "Pre-order — $15.99" | `funnel_f3_checkout_start` |
 | 3 | Stripe checkout with optional coupon `SUBSTACK10` (-10%) | "Complete" | `funnel_f3_purchase_complete` |
 | 4 | S4 post-purchase + Day-3 buyer-only Substack unlock | "Read the buyer post" | `funnel_f3_substack_unlock` |
 

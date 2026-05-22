@@ -36,7 +36,7 @@ Two checklists. Nothing reaches production with an unchecked box. Inherits the g
 - [ ] Checkout metadata includes `customer_email`, `product`, `launch_state`, `utm_*`
 - [ ] Refund path revokes download tokens within 1 second of `charge.refunded`
 - [ ] Test-mode + live-mode keys kept separate; live keys only in Production env
-- [ ] One live $17.99 transaction tested + refunded (recorded in build log)
+- [ ] One live $15.99 transaction tested + refunded (recorded in build log)
 
 ### A.4 Secure digital fulfillment
 

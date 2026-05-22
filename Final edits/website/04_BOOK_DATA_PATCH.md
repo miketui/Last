@@ -1,6 +1,6 @@
 # Patch — `web/lib/book-data.ts` (FINAL EPUB metadata)
 
-Updates the live book metadata to point at `CurlsAndContemplationV4.epub` (the FINAL, locked file) plus POD-6x9 PDF, schema.org `Book` JSON-LD seed, and the new $17.99 launch / $19.99 regular pricing.
+Updates the live book metadata to point at `CurlsAndContemplationV4.epub` (the FINAL, locked file) plus POD-6x9 PDF, schema.org `Book` JSON-LD seed, and the new $15.99 pre-order / $17.99 regular pricing.
 
 **Scope:** money-touching surface — requires Phase 11 `[GATE: payment activation]` before going live.
 
@@ -55,8 +55,8 @@ export const bookData = {
 
   // pricing — gated by RELEASE_DATE env, pinned to UTC (pre-mortem fix B3)
   pricing: {
-    launchUSD: 17.99,                       // active until RELEASE_DATE_UTC + 14 days
-    regularUSD: 19.99,                      // active from RELEASE_DATE_UTC + 15 days onward
+    launchUSD: 15.99,                       // pre-order price — active through the 90-day pre-order window + 14-day launch grace
+    regularUSD: 17.99,                      // active from RELEASE_DATE_UTC + 15 days onward
     currency: "USD",
     stripePriceIdLaunch: process.env.STRIPE_PRICE_ID_PREORDER ?? "",
     stripePriceIdRegular: process.env.STRIPE_PRICE_ID_REGULAR ?? "",
@@ -134,10 +134,10 @@ export const bookData = {
     offers: {
       "@type": "Offer",
       priceCurrency: "USD",
-      price: 17.99,
+      price: 15.99,
       availability: "https://schema.org/PreOrder",
       url: "https://curlsandcontemplation.com/book",
-      validFrom: "2026-05-22",
+      validFrom: process.env.PREORDER_OPEN ?? "",   // PREORDER_OPEN = RELEASE_DATE − 90d; set at Strategy Lock
       // validThrough set dynamically based on RELEASE_DATE + 14d
     },
   } satisfies Partial<Book>,
@@ -166,7 +166,7 @@ If you want the absolute smallest diff that flips production to V4 + new pricing
 - pdfPath: "/private/CurlsAndContemplation.pdf",
 - releaseDate: "2026-XX-XX",
 + title: "Curls & Contemplation",
-+ pricing: { launchUSD: 17.99, regularUSD: 19.99, currency: "USD" },
++ pricing: { launchUSD: 15.99, regularUSD: 17.99, currency: "USD" },
 + epubPath: "/private/CurlsAndContemplationV4.epub",
 + pdfPath: "/private/CurlsAndContemplation-POD-6x9.pdf",
 + releaseDate: process.env.RELEASE_DATE ?? "",
@@ -219,7 +219,7 @@ bun test --filter book-data
 # preview build
 bun --hot server.ts
 # visit http://localhost:3000/book
-# confirm: price reads $17.99, JSON-LD has Book@PreOrder, og:title carries V4
+# confirm: price reads $15.99, JSON-LD has Book@PreOrder, og:title carries V4
 
 # Stripe test charge
 # - use test card 4242 4242 4242 4242
@@ -262,7 +262,7 @@ test("accepts webhook with valid signature (B7)", async () => {
 });
 
 test("pricing tier flips at RELEASE_DATE + 14d UTC (B3)", () => {
-  process.env.RELEASE_DATE = "2026-07-03T00:00:00Z";
+  process.env.RELEASE_DATE = "2026-07-03T00:00:00Z";  // arbitrary test fixture — not the real launch date
   const launch = bookData.pricing.activeTierAt(Date.UTC(2026, 6, 16, 23, 59, 59));
   const regular = bookData.pricing.activeTierAt(Date.UTC(2026, 6, 17, 0, 0, 1));
   expect(launch).toBe("launch");

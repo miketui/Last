@@ -388,10 +388,10 @@ Release date: [to be set at Strategy Lock — placeholder RELEASE_DATE]
 Goal: pre-order capture + email-list compounding
 Audience: freelance hairstylists, beauty industry pros (22–45)
 Promise: The book that turns a hairstyling career into a deliberate craft and a business.
-Primary CTA: "Pre-order — $17.99 launch"
+Primary CTA: "Pre-order — $15.99 launch"
 Secondary CTA: "Get the first chapter free"
 MailerLite group ID (Subscribers): [from env]
-Commerce: Stripe yes ($17.99 launch / $19.99 regular); Supabase yes (signed-URL EPUB delivery)
+Commerce: Stripe yes ($15.99 pre-order / $17.99 regular); Supabase yes (signed-URL EPUB delivery)
 
 SECURITY NOTE
 =============

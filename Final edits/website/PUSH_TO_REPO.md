@@ -10,14 +10,14 @@ Open a terminal on your machine. Paste this block. It clones if needed, copies t
 
 ```bash
 #!/usr/bin/env bash
-# push-bundle.sh — Curls handoff v2 → miketui/Last @ Final edits/website/
+# push-bundle.sh — Curls handoff v3 → miketui/Last @ Final edits/website/
 set -euo pipefail
 
 # CONFIG — adjust if your local path differs
 REPO_URL="https://github.com/miketui/Last.git"
 LOCAL="$HOME/code/miketui-Last"            # where to clone / find the repo
-BUNDLE_SRC="$(pwd)/curls-handoff-bundle-v2" # where you unzipped the bundle (current dir by default)
-BRANCH="feat/curls-handoff-v2"
+BUNDLE_SRC="$(pwd)/curls-handoff-bundle-v3" # where you unzipped the bundle (current dir by default)
+BRANCH="feat/curls-handoff-v3"
 TARGET="Final edits/website"
 
 # 1. Clone or pull
@@ -49,10 +49,10 @@ git add "$TARGET"
 if git diff --cached --quiet; then
   echo "→ no changes to commit"
 else
-  git commit -m "feat(website): land Curls handoff v2 bundle in Final edits/website/
+  git commit -m "feat(website): land Curls handoff v3 bundle in Final edits/website/
 
-- FINAL Website PRD (v2.0) — supersedes 2026-02-16 v1.0
-- ACISS Obsidian/Gold/Jade locked; V4 EPUB; \$17.99 launch / \$19.99 regular
+- FINAL Website PRD (v3.0) — supersedes v2.0
+- ACISS Obsidian/Gold/Jade locked; V4 EPUB; \$15.99 pre-order / \$17.99 regular (90-day pre-order campaign)
 - Stripe + Supabase signed-URL delivery; MailerLite primary
 - 7 email sequences (Resend transactional + MailerLite marketing)
 - 4 high-conversion funnels (F1–F4)
@@ -74,8 +74,8 @@ if command -v gh &>/dev/null; then
   gh pr create \
     --base main \
     --head "$BRANCH" \
-    --title "Curls handoff v2 — Final edits/website/" \
-    --body "Lands the 17-file Curls handoff bundle. Review entry point: Final edits/website/00_README.md → 01_WEBSITE_PRD_FINAL.md → 08_MASTER_AI_BUILDER_PROMPT.md.
+    --title "Curls handoff v3 — Final edits/website/" \
+    --body "Lands the 21-file Curls handoff bundle. Review entry point: Final edits/website/00_README.md → 01_WEBSITE_PRD_FINAL.md → 08_MASTER_AI_BUILDER_PROMPT.md.
 
 Per studio-site-build-os, brief-before-code: this PR is the brief lock. Phase 6 (scaffold) does NOT begin until this is approved.
 
@@ -102,13 +102,13 @@ chmod +x push-bundle.sh
 Same flow for `pwsh` / Windows PowerShell:
 
 ```powershell
-# push-bundle.ps1 — Curls handoff v2 → miketui/Last @ Final edits/website/
+# push-bundle.ps1 — Curls handoff v3 → miketui/Last @ Final edits/website/
 $ErrorActionPreference = "Stop"
 
 $RepoUrl   = "https://github.com/miketui/Last.git"
 $Local     = "$env:USERPROFILE\code\miketui-Last"
-$BundleSrc = "$PSScriptRoot\curls-handoff-bundle-v2"  # adjust to where you unzipped
-$Branch    = "feat/curls-handoff-v2"
+$BundleSrc = "$PSScriptRoot\curls-handoff-bundle-v3"  # adjust to where you unzipped
+$Branch    = "feat/curls-handoff-v3"
 $Target    = "Final edits/website"
 
 # 1. Clone or pull
@@ -144,7 +144,7 @@ $staged = git diff --cached --name-only
 if ($staged.Count -eq 0) {
   Write-Host "→ no changes to commit"
 } else {
-  git commit -m "feat(website): land Curls handoff v2 bundle in Final edits/website/"
+  git commit -m "feat(website): land Curls handoff v3 bundle in Final edits/website/"
 }
 
 # 6. Push
@@ -153,8 +153,8 @@ git push -u origin $Branch
 # 7. PR
 if (Get-Command gh -ErrorAction SilentlyContinue) {
   gh pr create --base main --head $Branch `
-    --title "Curls handoff v2 — Final edits/website/" `
-    --body "Lands the 17-file Curls handoff bundle. Entry point: Final edits/website/00_README.md."
+    --title "Curls handoff v3 — Final edits/website/" `
+    --body "Lands the 21-file Curls handoff bundle. Entry point: Final edits/website/00_README.md."
 } else {
   Write-Host "→ install gh CLI then run: gh pr create --base main --head $Branch"
 }
@@ -183,9 +183,9 @@ If you'd rather I push from this chat:
 
 ## Path D — Manual drag-and-drop (no terminal, no OAuth)
 
-1. Unzip `curls-handoff-bundle-v2.zip` on your computer.
+1. Unzip `curls-handoff-bundle-v3.zip` on your computer.
 2. Open https://github.com/miketui/Last in your browser.
-3. Switch to a new branch via the branch dropdown: `feat/curls-handoff-v2`.
+3. Switch to a new branch via the branch dropdown: `feat/curls-handoff-v3`.
 4. Navigate to `Final edits/` → "Add file" → "Upload files".
 5. Drag the unzipped folder in. GitHub auto-creates the `website/` subfolder.
 6. Commit message: paste the message from Path A § 5.
@@ -197,7 +197,7 @@ Slowest path. Use it if Path A–C don't fit.
 
 ## Branch convention
 
-- **`feat/curls-handoff-v2`** — this bundle, this turn.
+- **`feat/curls-handoff-v3`** — this bundle, this turn.
 - Future iterations: `feat/curls-handoff-v3`, `feat/curls-handoff-v4`, etc.
 - Hot-fix to a landed bundle: `fix/curls-handoff-{descriptor}`.
 - Never push directly to `main` — the bundle wants a PR review per `13_HUMAN_APPROVAL_GATES.md` § Gate 4 (Architecture Lock).
@@ -215,7 +215,7 @@ git pull
 ls "Final edits/website/" | sort
 ```
 
-Expected output (17 + this push file = 18):
+Expected output (21 files):
 
 ```
 00_README.md
@@ -235,8 +235,10 @@ Expected output (17 + this push file = 18):
 14_SECURITY_LEGAL_QA.md
 15_FUNNEL_GENERATOR_PROMPT.md
 16_SEO_AND_DISCOVERY.md
+17_WEBSITE_COPY.md
 BUNDLE_PRE_MORTEM.md
 PUSH_TO_REPO.md
+claims-evidence.md
 ```
 
 ---
@@ -255,8 +257,8 @@ Run Phase 0 through Phase 21. Stop at every [GATE] for my explicit approval per
 Final edits/website/13_HUMAN_APPROVAL_GATES.md. Hardcode the skill / MCP / connector
 inventory from Final edits/website/08_MASTER_AI_BUILDER_PROMPT.md.
 
-Brief is locked. ACISS palette is locked. Stack is locked. Stripe prices: $17.99 launch /
-$19.99 regular. Release date: [I'll confirm at Strategy Lock].
+Brief is locked. ACISS palette is locked. Stack is locked. Stripe prices: $15.99 pre-order /
+$17.99 regular. 90-day pre-order campaign. Release date: [I'll confirm at Strategy Lock].
 ```
 
 That's the entry point. The orchestrator handles every phase from there.

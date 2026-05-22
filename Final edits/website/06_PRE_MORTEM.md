@@ -12,8 +12,9 @@ Risks are classified Tiger (real, evidence-backed), Paper Tiger (sounds scary, u
 
 | # | Risk | Evidence | Mitigation | Owner |
 |---|---|---|---|---|
+| C0 | **Demand is unproven.** The site, funnels, and 90-day pre-order campaign all assume hairstylists will pay $15.99 for this book — but no pre-sell test has been run. A polished, fast, compliant site with zero buyers is the single most likely launch-day-+14 failure. | The bundle audits build machinery exhaustively; not one file tested whether the buyer exists (LLM Council review, 2026-05-22). | Make the 90-day pre-order campaign a falsifiable demand test with a Day-30 go/no-go checkpoint — see **§ Demand-validation gate** below. If the pre-order floor is missed, pause spend and reassess positioning, traffic, and price before the launch push. | Michael |
 | C1 | The book metadata still points at an old EPUB (`V2` or `V3`) after launch, customers get a stale file, refund spike. | Repo currently has V2, V3, V4 EPUBs. `web/lib/book-data.ts` historically pinned to a non-versioned path. | `04_BOOK_DATA_PATCH.md` lands a typed `bookData` object with `epub.filename = "CurlsAndContemplationV4.epub"` plus a `grep` check in `verify-build.sh` that fails the build if V1/V2/V3 paths reappear in `web/`. | Michael |
-| C2 | Launch price set to $19.99 in production (instead of $17.99) — customers expecting launch price either bounce or chargeback when their card hits at $19.99. | Two prices in the spec; manual config drift is the default failure mode. | Stripe price IDs split into `STRIPE_PRICE_ID_PREORDER` ($17.99) and `STRIPE_PRICE_ID_REGULAR` ($19.99). `/checkout` reads `RELEASE_DATE` env + `+14d` window to pick the right ID server-side. Snapshot test in `server.test.ts`. | Michael |
+| C2 | Regular price ($17.99) set in production instead of the $15.99 pre-order price — customers expecting the pre-order price either bounce or chargeback when their card hits at $17.99. | Two prices in the spec; manual config drift is the default failure mode. | Stripe price IDs split into `STRIPE_PRICE_ID_PREORDER` ($15.99) and `STRIPE_PRICE_ID_REGULAR` ($17.99). `/checkout` reads `RELEASE_DATE` env + `+14d` window to pick the right ID server-side. Snapshot test in `server.test.ts`. | Michael |
 | C3 | Webhook accepted without signature verification → forged "paid" events create download tokens. | Generic Tiger; doubly important here because Supabase signed URLs make leaks easy to monetize. | `web/lib/stripe.ts` rejects events whose `stripe.webhooks.constructEvent` fails. Snapshot test with a known-bad signature must fail closed. | Michael |
 | C4 | Paid EPUB/PDF served from a public `/private/` path → indexed by Google or shared on a piracy site. | v1.0 PRD stored books under `/private/` next to public — same Bun process can serve them. | Supabase bucket `curls-deliverables` is **private**; per-customer signed URLs (24h TTL) regenerated on portal access; download endpoint enforces 3-download cap + 7-day expiry; refund revokes. Search-index check `site:curlsandcontemplation.com filetype:epub` post-launch. | Michael |
 | C5 | FTC mail/internet-order rule violation — pre-order page promises a date without reasonable basis; date slips; no consent-or-refund flow. | Pre-order is a stated date with real money attached. | `/preorder-policy` page (Phase 15 gate) carries: real date, delay/refund language, consent flow. `verify-build.sh` checks the route exists and serves 200. | Michael / attorney |
@@ -69,9 +70,23 @@ Risks are classified Tiger (real, evidence-backed), Paper Tiger (sounds scary, u
 
 ---
 
+## Demand-validation gate (v3 — added per LLM Council review, 2026-05-22)
+
+The 90-day pre-order campaign is itself the demand test. Make it **falsifiable** so a weak signal stops the spend instead of being explained away.
+
+- **90-day target.** Michael sets a real pre-order number before pre-order opens. A reasonable floor for a first book from a warm-ish audience: **75–150 pre-orders**. Write the chosen number into `GATE_LEDGER.md` at Strategy Lock.
+- **Day-30 checkpoint.** At pre-order Day 30, pre-orders should be **≥ ~25%** of the 90-day target. Pre-order curves are front- and back-loaded; ~25% by Day 30 is a healthy mid-campaign reading.
+- **Go** — on or above the line → continue to the launch push as planned.
+- **No-go** — below ~25% → **stop the marketing spend.** Reassess, in this order: (1) positioning and sales copy (`17_WEBSITE_COPY.md`), (2) the traffic source, (3) the price, (4) whether to launch at all. Do not "push harder" on a funnel that isn't converting.
+- **Abort line** — below **~10%** of target by Day 30 → the offer or the audience is wrong. Do not proceed to a paid launch; rework the offer first.
+
+This gate exists because every other risk in this file assumes people want the book. C0 is the risk that they don't — and it is the cheapest one to test early.
+
+---
+
 ## Launch-blocker gate
 
-The pre-mortem skill is a **`[GATE]` at Phase 19**. The gate cannot be approved until every Launch-Blocking Tiger (C1–C10) has a green check in `GATE_LEDGER.md` with:
+The pre-mortem skill is a **`[GATE]` at Phase 19**. The gate cannot be approved until every Launch-Blocking Tiger (C0–C10) has a green check in `GATE_LEDGER.md` with:
 
 - the test that proves it's fixed
 - the file path of the fix
@@ -85,6 +100,7 @@ Fast-Follow Tigers are scheduled in the post-launch sprint (Phase 3, T+1 to T+14
 
 | Tiger | Status | Evidence | Approved by | Date |
 |---|---|---|---|---|
+| C0 Demand proven | | Day-30 pre-order checkpoint ≥ floor | | |
 | C1 V4 metadata | | grep + test passed | | |
 | C2 Pricing tiers | | snapshot test passed | | |
 | C3 Webhook signature | | snapshot test failed-closed | | |
@@ -108,7 +124,7 @@ After this project pre-mortem was written, a **second pre-mortem** was run again
 
 **The Phase 19 Pre-Mortem Review gate covers BOTH files.** It cannot close until:
 
-- [ ] Every C-prefix Tiger (C1–C19) in this file has evidence + status in `GATE_LEDGER.md`
+- [ ] Every C-prefix Tiger (C0–C19) in this file has evidence + status in `GATE_LEDGER.md`
 - [ ] Every B-prefix Tiger (B1–B19) in `BUNDLE_PRE_MORTEM.md` has evidence + status
 - [ ] Every E-prefix Elephant (E1–E10) has been acknowledged in writing
 
