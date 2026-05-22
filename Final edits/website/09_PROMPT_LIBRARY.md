@@ -241,7 +241,7 @@ SECURITY NOTE: Any quoted testimonial is checked against claims-evidence.md befo
 ## P9 — Stripe Wiring (commerce activation) — pre-mortem-hardened (B3, B7)
 
 ```
-SYSTEM CONTEXT: You are wiring Stripe Checkout for the $17.99 launch / $19.99 regular pre-order flow.
+SYSTEM CONTEXT: You are wiring Stripe Checkout for the $15.99 pre-order / $17.99 regular flow (90-day pre-order campaign).
 NEGATIVE CONSTRAINTS:
  - Never accept a webhook without signature verification.
  - Never create a download token before webhook fires successfully.
@@ -262,7 +262,7 @@ TOOLS:
  - /studio-site-build-os:human-approval-gate
 TASK:
  1. Create products: "Curls & Contemplation eBook (Launch)" / "Curls & Contemplation eBook"
- 2. Create prices: $17.99 launch, $19.99 regular. Capture IDs into .env.
+ 2. Create prices: $15.99 pre-order, $17.99 regular. Capture IDs into .env.
  3. Implement /api/checkout: pick price via bookData.pricing.activePriceIdAt() —
     UTC-only math, server-computed, never client (pre-mortem B3).
  4. Implement /api/stripe/webhooks: signature-verify, idempotency on event_id, dispatch.

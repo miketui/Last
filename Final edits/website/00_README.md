@@ -1,4 +1,4 @@
-# Curls & Contemplation — Studio Handoff Bundle v2
+# Curls & Contemplation — Studio Handoff Bundle v3
 
 **Project:** Curls & Contemplation: A Freelance Hairstylist's Guide to Creative Excellence
 **Author:** Michael David Warren Jr. (Michael David)
@@ -16,15 +16,15 @@
 This bundle turns your existing `Last/web/` site into a bestseller-worthy, conversion-driven, ACISS-aligned platform that runs through the full 22-phase Studio Site Build OS pipeline. Every prompt hardcodes the skills, slash commands, MCP servers, plugins, and connectors needed to execute. Nothing assumes — every gate stops for explicit approval.
 
 ```
-curls-handoff-bundle-v2/
+curls-handoff-bundle-v3/
 ├── 00_README.md                       ← this file
-├── 01_WEBSITE_PRD_FINAL.md            ← FINAL PRD — supersedes 2026-02-16 v1.0
+├── 01_WEBSITE_PRD_FINAL.md            ← FINAL PRD (v3.0)
 ├── 02_SITEMAP.md                      ← all routes + SEO titles, meta, OG, JSON-LD
 ├── 03_ACISS_TOKENS_SPEC.md            ← packages/aciss-tokens workspace + Style Dictionary
 ├── 04_BOOK_DATA_PATCH.md              ← exact diff for web/lib/book-data.ts (V4 EPUB)
 ├── 05_EMAIL_SEQUENCES.md              ← all 7 sequences, full HTML + plain-text copy
 ├── 06_PRE_MORTEM.md                   ← project-specific Tigers/Paper Tigers/Elephants
-├── 07_LAUNCH_TIMELINE.md              ← Phase 0–3 anchored to 2026-05-22
+├── 07_LAUNCH_TIMELINE.md              ← Phase 0–3, relative to RELEASE_DATE · 90-day pre-order
 ├── 08_MASTER_AI_BUILDER_PROMPT.md     ← orchestrator with every skill/MCP hardcoded
 ├── 09_PROMPT_LIBRARY.md               ← 14 chain-of-thought prompts per phase
 ├── 10_FOUNDATION_FILES.md             ← robots/sitemap/seo/jsonld/.env/vercel/substack-sync
@@ -34,6 +34,7 @@ curls-handoff-bundle-v2/
 ├── 14_SECURITY_LEGAL_QA.md            ← FTC preorder, CCPA/CPRA, WCAG 2.2 AA checklist
 ├── 15_FUNNEL_GENERATOR_PROMPT.md      ← paste-ready prompt — 4 high-conversion funnels (F1–F4)
 ├── 16_SEO_AND_DISCOVERY.md            ← paste-ready prompt — full L1–L7 discoverability playbook
+├── 17_WEBSITE_COPY.md                 ← real sales copy — home hero, /book argument, bonus bundle, FAQ
 ├── BUNDLE_PRE_MORTEM.md               ← meta pre-mortem on this bundle (B1–B19 Tigers, E1–E10 Elephants)
 ├── claims-evidence.md                 ← required substantiation template (pre-mortem B9)
 └── PUSH_TO_REPO.md                    ← idempotent push script (bash + PowerShell) + 4 paths to land
@@ -46,7 +47,7 @@ curls-handoff-bundle-v2/
 - **B3** — pricing math pinned to UTC with snapshot test (see `04`, `09`)
 - **B4** — 7-day MailerLite + Mailchimp dual-write cutover (see `05`, `09`, `11`)
 - **B5** — Vercel Blob fallback for Supabase outage (see `09`, `11`)
-- **B6** — orchestrator dry-run scheduled at T-28 (see `07`, `08`)
+- **B6** — orchestrator dry-run scheduled during the Phase 0 build (see `07`, `08`)
 - **B7** — webhook signature test is a real `server.test.ts` case (see `04`, `09`)
 - **B8** — `epubcheck` required before Phase 11 (see `07`, `14`)
 - **B9** — `claims-evidence.md` is a required artifact (see `14`, file in bundle)
@@ -98,7 +99,7 @@ curls-handoff-bundle-v2/
 | Transactional email | **Resend** | unchanged — DKIM/SPF/DMARC already warm |
 | Hosting | **Vercel** | `vercel.json` + serverless functions; preview → production gate |
 | DNS | **Namecheap** | confirm CNAME/A before flipping the apex |
-| Payments | **Stripe** | preorder $17.99 launch / $19.99 regular; webhook signature verified |
+| Payments | **Stripe** | pre-order $15.99 / $17.99 regular; webhook signature verified |
 | Database / auth / file storage | **Supabase** | signed-URL EPUB delivery (replaces local /private serving) |
 | Bot protection | **Cloudflare Turnstile** | every public form |
 | Analytics | **GA4** | consent-mode; CCPA/CPRA banner required |
@@ -125,15 +126,18 @@ curls-handoff-bundle-v2/
 
 | Item | Price | Format |
 |---|---|---|
-| eBook (launch) | **$17.99** | EPUB (V4) + PDF bundle, secure download via Supabase signed URL |
-| eBook (regular, post-launch) | **$19.99** | EPUB (V4) + PDF |
+| eBook — pre-order (90-day campaign, direct site) | **$15.99** | EPUB (V4) + PDF + bonus bundle, secure download via Supabase signed URL |
+| eBook — regular (post-launch, direct site) | **$17.99** | EPUB (V4) + PDF + bonus bundle |
+| eBook — Amazon Kindle (external) | $9.99 | Kindle format only; managed on KDP, not by this bundle. The direct price stays **≥ $9.99** so Amazon cannot price-match it down. |
 | Pricing Confidence Kit (lead magnet) | Free | PDF, gated by email |
 | Sample Chapter (Chapter 1) | Free | PDF, ungated |
 | Paperback | TBD | Amazon / B&N / Waterstones / Indigo (external links only) |
 
+The direct site sells above the $9.99 Kindle edition because it includes the **bonus bundle** — both formats (EPUB + PDF), the Pricing Confidence Kit, the chapter workbook, free lifetime updates, and a pre-order-only bonus chapter. The bundle is the reason to buy direct. Full copy in `17_WEBSITE_COPY.md`.
+
 Stripe price IDs to set in `.env.production`:
-- `STRIPE_PRICE_ID_PREORDER=price_xxxxx` (launch $17.99)
-- `STRIPE_PRICE_ID_REGULAR=price_xxxxx` (regular $19.99)
+- `STRIPE_PRICE_ID_PREORDER=price_xxxxx` (pre-order $15.99)
+- `STRIPE_PRICE_ID_REGULAR=price_xxxxx` (regular $17.99)
 
 ---
 
@@ -168,6 +172,7 @@ Every claim above carries an evidence link in the build log per `14_SECURITY_LEG
 | `14_SECURITY_LEGAL_QA.md` | `Last/Final edits/MONEY/SECURITY-LEGAL-QA.md` |
 | `15_FUNNEL_GENERATOR_PROMPT.md` | `Last/Final edits/website/15_FUNNEL_GENERATOR_PROMPT.md` |
 | `16_SEO_AND_DISCOVERY.md` | `Last/Final edits/website/16_SEO_AND_DISCOVERY.md` |
+| `17_WEBSITE_COPY.md` | `Last/Final edits/website/17_WEBSITE_COPY.md` |
 | `BUNDLE_PRE_MORTEM.md` | `Last/Final edits/website/BUNDLE_PRE_MORTEM.md` |
 | `claims-evidence.md` | `Last/Final edits/website/claims-evidence.md` |
 | `PUSH_TO_REPO.md` | `Last/Final edits/website/PUSH_TO_REPO.md` |
@@ -183,7 +188,7 @@ Use the studio-site-orchestrator skill from .claude/skills/ to run the 22-phase 
 
 Read Final edits/MONEY/PRD.md as the brief. Run Phase 0 (env + tool verify). Stop at every [GATE] for my explicit approval. Hardcode the skill, slash-command, MCP-server, plugin, and connector inventory from Final edits/MONEY/prompts/MASTER_AI_BUILDER_PROMPT.md.
 
-Brief is locked. ACISS palette is locked. Stack is locked. Stripe prices: $17.99 launch / $19.99 regular. Release date: [confirm with me].
+Brief is locked. ACISS palette is locked. Stack is locked. Stripe prices: $15.99 pre-order / $17.99 regular. 90-day pre-order campaign. Release date: [confirm with me].
 ```
 
 Then approve each gate as it comes up.

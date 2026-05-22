@@ -79,7 +79,7 @@ Staggered children:
   transition={{ duration: 0.18 }}
   className="bg-gold text-obsidian font-display px-6 py-3 rounded-md"
 >
-  Pre-order — $17.99 launch
+  Pre-order — $15.99 launch
 </motion.button>
 ```
 

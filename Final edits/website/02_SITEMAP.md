@@ -26,7 +26,7 @@
 | Field | Value |
 |---|---|
 | title | `Curls & Contemplation — The Hairstylist's Guide to Creative Excellence` |
-| description | `By Rihanna's day-to-day hairstylist. Pre-order the freelance hairstylist's guide that turns a craft into a career. Launch price $17.99.` |
+| description | `By Rihanna's day-to-day hairstylist. Pre-order the freelance hairstylist's guide that turns a craft into a career. Pre-order $15.99.` |
 | canonical | `https://curlsandcontemplation.com/` |
 | og:image | `/og/home.png` |
 | JSON-LD | `WebSite` + `Person` (Michael David) + `Organization` (TAYLKOMB LLC) |
@@ -39,7 +39,7 @@
 | Field | Value |
 |---|---|
 | title | `The Book — Curls & Contemplation by Michael David Warren Jr.` |
-| description | `Pre-order the freelance hairstylist's playbook. 16 chapters, 4 parts, IPPY-submitted. Direct EPUB + PDF. Launch price $17.99.` |
+| description | `Pre-order the freelance hairstylist's playbook. 16 chapters, 4 parts, IPPY-submitted. EPUB + PDF + bonus bundle. Pre-order $15.99.` |
 | canonical | `https://curlsandcontemplation.com/book` |
 | og:image | `/og/book.png` |
 | JSON-LD | `Book` (schema.org/Book with isbn, author, publisher, offers, aggregateRating placeholder) + `BreadcrumbList` |

@@ -38,7 +38,7 @@ About to: Lock the launch strategy for Curls & Contemplation.
 Goal: Pre-order capture + email list compounding.
 Domain: curlsandcontemplation.com
 Release date: 2026-XX-XX
-Primary CTA: "Pre-order — $17.99 launch"
+Primary CTA: "Pre-order — $15.99"
 Secondary CTA: "Get the first chapter free"
 Verified: brief.md drafted; CTAs single per surface; RELEASE_DATE set.
 Irreversible: pipeline math + legal preorder commitment.
@@ -71,7 +71,7 @@ Approve? (reply: approve / go / run it)
 - Test-mode purchase passed (card 4242…) — order created, token issued, EPUB downloads
 - Webhook signature verified — sandboxed forged event rejected
 - Refund path tested — token revoked, S6 email sent
-- One live $17.99 transaction with Michael's own card succeeded and refunded
+- One live $15.99 transaction with Michael's own card succeeded and refunded
 **Irreversible:** real customer cards can now be charged.
 
 ### 6. Automation Activation (Phase 12)
@@ -131,7 +131,7 @@ Each `<gate_request>` includes the orchestrator's reasoning trail so you can aud
 ```
 <work_log>
   Assumptions: Stripe test mode confirmed; webhook signature verified.
-  Approach: Flip env STRIPE_SECRET_KEY from test to live; deploy preview; run live $17.99 charge + refund.
+  Approach: Flip env STRIPE_SECRET_KEY from test to live; deploy preview; run live $15.99 charge + refund.
   Uncertainty: Stripe Tax behavior in foreign jurisdictions — Phase 18 follow-up.
 </work_log>
 ```
@@ -147,8 +147,8 @@ If `<work_log>` shows unresolved Uncertainty on something that affects this gate
 
 ## 1. Strategy Lock
 - Approved by: Michael David Warren Jr.
-- Date: 2026-05-22T14:00:00-04:00
-- Scope: Launch strategy locked. RELEASE_DATE=2026-07-03. Domain=curlsandcontemplation.com.
+- Date: <ISO 8601 timestamp of approval>          (example row — fill in at gate time)
+- Scope: Launch strategy locked. RELEASE_DATE=<TBD — set at this gate>. Domain=curlsandcontemplation.com.
 - Notes: First gate of pipeline.
 
 ## 2. Brief Lock
