@@ -14,10 +14,10 @@ embedded fonts, page-numbered TOC, EPUBCheck-clean). Checksums are maintained in
 
 | Format | Canonical filename | SHA256 | Distribution target |
 |---|---|---|---|
-| EPUB | `optimized/Curls-and-Contemplation-PUBLICATION.epub` | `9679e37f04ff28aab6c7a44278637bde614d2c7999834970d9cdd0512641a513` | KDP EPUB |
-| Print PDF | `optimized/Curls-and-Contemplation-POD-Royal-6.69x9.61-INTERIOR.pdf` | `1055b8cf11e5a0763ea5cddc456d1108c876a71debdadc88204cdf75a42e1bf8` | POD Royal 6.69×9.61 |
+| EPUB | `optimized/Curls-and-Contemplation-PUBLICATION.epub` | `2fc5fc6ab6b25ebe26acfe4814e999d93dc7a5f3eaa4dc319ff5efb45f2f6b2e` | KDP EPUB |
+| Print PDF | `optimized/Curls-and-Contemplation-POD-Royal-6.69x9.61-INTERIOR.pdf` | `91754012845e3b0975b5b73d0c93470b3f52339d3d420d5f69ac877240594cbc` | POD Royal 6.69×9.61 |
 
-- Print interior: **465 pages**, Royal 6.69 × 9.61 in, all fonts embedded,
+- Print interior: **462 pages**, Royal 6.69 × 9.61 in, all fonts embedded,
   continuous page-number folios, page-numbered table of contents, 0 blank pages.
 - EPUB: EPUB 3.3, **0 EPUBCheck errors/warnings**, accessibility metadata present.
 
@@ -31,5 +31,5 @@ must not be uploaded for distribution.
 ## Pre-publication checklist (owner action)
 
 - [ ] Replace the placeholder ISBNs on the copyright page with real ISBNs.
-- [ ] Recalculate the cover spine width for 465 pages and regenerate the cover.
+- [ ] Recalculate the cover spine width for 462 pages and regenerate the cover.
 - [ ] Order a KDP physical proof (verify the dark openers/quote pages in B&W).
