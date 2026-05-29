@@ -164,6 +164,7 @@ def main():
     folio = 0
     dropped = 0
     seen_file = None
+    page_map = {}  # spine filename -> first absolute (kept) page number
     for pg, m, fr in zip(pages, meta, fracs):
         if fr < BLANK_INK_THRESHOLD and not m["keep_blank"]:
             dropped += 1
@@ -171,6 +172,8 @@ def main():
         folio += 1
         first_kept = m["name"] != seen_file
         seen_file = m["name"]
+        if first_kept:
+            page_map[m["name"]] = folio
         # No folio on front-matter display pages, standalone quotes, and the
         # first printed page of each chapter/part (the title opener).
         suppress = m["file_no_folio"] or (m["opener_file"] and first_kept)
@@ -180,6 +183,8 @@ def main():
 
     with open(out, "wb") as fh:
         writer.write(fh)
+    import json
+    (out.parent / "page-map.json").write_text(json.dumps(page_map, indent=2))
     print(f"PDF generated: {out} ({out.stat().st_size/1024/1024:.1f} MB, "
           f"{folio} pages; dropped {dropped} blank pages)")
 
