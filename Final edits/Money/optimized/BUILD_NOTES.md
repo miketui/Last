@@ -7,7 +7,7 @@ count, fixing layout/formatting issues, and producing publication-ready files.
 
 | File | Format | Spec |
 |---|---|---|
-| `Curls-and-Contemplation-POD-Royal-6.69x9.61-INTERIOR.pdf` | Print interior | KDP **Royal 6.69 × 9.61 in**, **465 pages**, all fonts embedded, page numbers, page-numbered TOC |
+| `Curls-and-Contemplation-POD-Royal-6.69x9.61-INTERIOR.pdf` | Print interior | KDP **Royal 6.69 × 9.61 in**, **465 pages**, all fonts embedded, **true grayscale (B&W)**, page numbers, page-numbered TOC |
 | `Curls-and-Contemplation-PUBLICATION.epub` | Reflowable EPUB | EPUB 3.3, **0 EPUBCheck errors/warnings** |
 
 Checksums in `SHA256SUMS.txt`.
@@ -70,7 +70,17 @@ python3 build-pod-chromium.py  out.pdf
 python3 inject-toc-folios.py            # reads page-map.json from the build above
 python3 build-pod-chromium.py  out.pdf  # 2nd pass: bakes injected TOC folios into final PDF
 
-# Publication EPUB:
+# Finalize the interior: embed fonts, 300dpi, and convert to TRUE GRAYSCALE so
+# KDP prints a predictable B&W interior (no auto-conversion surprises, no color
+# pricing). This is the canonical interior PDF:
+gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite \
+   -sProcessColorModel=DeviceGray -sColorConversionStrategy=Gray -dOverrideICC=true \
+   -dEmbedAllFonts=true -dSubsetFonts=true -dCompatibilityLevel=1.6 \
+   -dDownsampleColorImages=true -dColorImageResolution=300 \
+   -dDownsampleGrayImages=true -dGrayImageResolution=300 -dAutoRotatePages=/None \
+   -sOutputFile=Curls-and-Contemplation-POD-Royal-6.69x9.61-INTERIOR.pdf  out.pdf
+
+# Publication EPUB (stays full-color; grayscale is print-only):
 cd "Final edits"
 zip -X -0 out.epub mimetype
 zip -rX -9 out.epub META-INF OEBPS
@@ -88,8 +98,10 @@ preferred for the final perfect-bound interior if a Prince license is available.
   print cannot alternate recto/verso gutters. Use the Prince build for true
   mirrored gutters.
 - The chapter openers and full-page image-quotes use heavy dark backgrounds by
-  design (kept per direction); these are ink-heavy on a B&W interior. Order a
-  printed proof to confirm they read cleanly.
+  design (kept per direction). The interior PDF is now converted to **true
+  grayscale** (DeviceGray; 0 RGB/ICC images), so KDP prints a predictable B&W
+  interior — verified that the dark openers render cleanly with no banding. Still
+  order a printed proof to confirm ink coverage on the heavy dark pages.
 - ISBNs on the copyright page are placeholders (`978-X-…`) — drop in the real
   KDP-assigned/owned ISBNs before publishing, and recalculate the cover spine
   width for 465 pages.
