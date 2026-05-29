@@ -25,6 +25,20 @@
   -webkit-font-feature-settings: "liga" 0, "clig" 0, "dlig" 0, "hlig" 0 !important;
 }
 
+/* Padding/borders must not add to declared heights (prevents min-height pages
+   from overflowing onto a near-empty second page). */
+* {
+  box-sizing: border-box;
+}
+
+/* Each spine file is rendered as its own document for the POD build, so a
+   break-before on the very first element only manufactures a leading blank
+   page. Neutralize it; mid-document section breaks are unaffected. */
+body > *:first-child {
+  break-before: avoid !important;
+  page-break-before: avoid !important;
+}
+
 
 /* ====================================================================
    1. PAGE SETUP - 6.35x9.65" TRIM SIZE (PrinceXML + POD friendly)
@@ -46,7 +60,9 @@
   margin-left: 0.75in;
   margin-right: 0.75in;
 
-  /* Page number (folios) — PrinceXML only, wrapped for EPUB compat */
+  /* Page-number folios are stamped onto the PDF by the Chromium build
+     (build-pod-chromium.py) as an overlay, not via CSS margin boxes — an
+     @page margin box here is rejected by EPUBCheck (invalid in EPUB CSS). */
 }
 
 /* Verso (left) pages: inside margin on the LEFT */
@@ -138,13 +154,13 @@ section.part-container, section.part-divider, section.part-title, .part-title, .
    2. BASE TYPOGRAPHY FOR PRINT
    ==================================================================== */
 html {
-  font-size: 11pt;  /* Base font size for print readability */
+  font-size: 10.5pt;  /* Base font size for print readability */
 }
 
 body {
   font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
-  font-size: 11pt;
-  line-height: 1.5;
+  font-size: 10.5pt;
+  line-height: 1.34;
   color: #000;
   background: #fff;
   orphans: 3;       /* Minimum lines at bottom of page */
@@ -170,8 +186,23 @@ h1, .frontmatter-title, .main-title {
 }
 
 h1.main-title {
-  font-size: 28pt;
+  font-size: 21pt;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  word-spacing: -0.02em;
   margin-bottom: 0.25in;
+  overflow-wrap: break-word;
+}
+
+/* Title page: the screen rule body.title-page-body h1.main-title sets 4.5rem
+   (~47pt), which runs "CONTEMPLATION" off both edges of the 6.69" trim. Match
+   its specificity to cap it; print the title in black for the B&W interior. */
+body.title-page-body h1.main-title {
+  font-size: 17pt;
+  line-height: 1.12;
+  letter-spacing: 0;
+  color: #000;
+  margin: 0 0 0.3in 0;
 }
 
 h1.part-title {
@@ -187,8 +218,8 @@ h2, .subtitle, .toc-title {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   page-break-after: avoid;
-  margin-top: 0.5in;
-  margin-bottom: 0.25in;
+  margin-top: 0.26in;
+  margin-bottom: 0.13in;
 }
 
 h3 {
@@ -197,8 +228,8 @@ h3 {
   font-weight: 700;
   color: #000;
   page-break-after: avoid;
-  margin-top: 0.35in;
-  margin-bottom: 0.15in;
+  margin-top: 0.18in;
+  margin-bottom: 0.08in;
 }
 
 h4, h5, h6 {
@@ -207,8 +238,8 @@ h4, h5, h6 {
   font-weight: 700;
   color: #000;
   page-break-after: avoid;
-  margin-top: 0.25in;
-  margin-bottom: 0.1in;
+  margin-top: 0.13in;
+  margin-bottom: 0.06in;
 }
 
 /* ====================================================================
@@ -218,7 +249,7 @@ p {
   text-align: justify;
   text-indent: 0.25in;
   margin: 0;
-  margin-bottom: 0.1in;
+  margin-bottom: 0.045in;
 }
 
 /* First paragraph after heading - no indent */
@@ -566,12 +597,12 @@ p.intro-text:first-of-type::first-letter {
    10. QUOTES & BLOCKQUOTES
    ==================================================================== */
 blockquote, .quote-figure {
-  margin: 0.35in 0.5in;
+  margin: 0.15in 0.4in;
   padding: 0;
   font-style: italic;
   font-size: 10.5pt;
   border-left: 2pt solid #666;
-  padding-left: 0.25in;
+  padding-left: 0.22in;
 }
 
 blockquote cite,
@@ -609,32 +640,32 @@ blockquote cite,
 .action-steps {
   border: 1pt solid #000;
   border-left: 4pt solid #000;
-  padding: 0.2in;
-  margin: 0.25in 0;
+  padding: 0.12in 0.14in;
+  margin: 0.12in 0;
   background: #f9f9f9;
 }
 
 .action-steps h2 {
   font-size: 10pt;
   margin-top: 0;
-  margin-bottom: 0.15in;
+  margin-bottom: 0.08in;
   border-bottom: none;
 }
 
 .action-steps ol, .action-steps ul {
   margin: 0;
-  padding-left: 0.3in;
+  padding-left: 0.28in;
 }
 
 .action-steps li {
-  margin-bottom: 0.1in;
+  margin-bottom: 0.05in;
   font-size: 10pt;
 }
 
 .case-study {
   border: 1pt solid #666;
-  padding: 0.2in;
-  margin: 0.25in 0;
+  padding: 0.12in 0.14in;
+  margin: 0.12in 0;
   background: #fafafa;
 }
 
@@ -703,7 +734,7 @@ blockquote cite,
 .writing-line,
 .line {
   border-bottom: 0.5pt solid #000;
-  height: 0.3in;
+  height: 0.24in;
   margin-bottom: 0;
 }
 
@@ -1008,11 +1039,17 @@ a[href^="../"]:after {
 .text-left { text-align: left; }
 .text-right { text-align: right; }
 
-/* Hide web-only elements for print */
+/* Hide web-only elements for print. The "Prefer a printable version? Download
+   the Worksheet Pack" calls-to-action are meaningless in print (the book IS the
+   printable) and frequently consumed an otherwise blank page. */
 .cta-section,
 .btn-join,
 .video-link,
-.web-only {
+.web-only,
+.worksheet-cta,
+.epub-download-cta,
+.download-cta,
+.print-instruction {
   display: none !important;
 }
 
@@ -1021,12 +1058,12 @@ a[href^="../"]:after {
    ==================================================================== */
 .journal-page,
 .doodle-page {
-  min-height: 7.5in;
+  min-height: 0;
   page-break-inside: avoid;
 }
 
 .journal-page .writing-area {
-  min-height: 6in;
+  min-height: 3.5in;
 }
 
 .doodle-page {
@@ -1277,73 +1314,90 @@ nav[role="doc-toc"] .toc-chapter-num {
    Added by production pipeline — enforces KDP layout spec
    ==================================================================== */
 
-/* --- CHAPTER QUIZZES: single page, no break inside --- */
+/* --- CHAPTER QUIZZES: single page, no break inside ---
+   break-after intentionally omitted: forcing a break AFTER the quiz inserts a
+   trailing blank page before the next section's break-before. */
 .quiz-container,
 .chap-quiz {
   break-before: page;
-  break-after: page;
-  break-inside: auto;
+  break-after: auto;
+  break-inside: avoid;
   page-break-before: always;
-  page-break-after: always;
-  page-break-inside: auto;
+  page-break-after: auto;
+  page-break-inside: avoid;
   max-height: none;
   overflow: visible;
 }
 
-/* Compact quiz typography to fit single page */
+/* Compact quiz typography to fit a single page (Key Takeaways summary +
+   4 multiple-choice questions). */
+.quiz-container .quiz-header h2 {
+  font-size: 10pt;
+  margin-top: 0;
+  margin-bottom: 0.05in;
+}
 .quiz-container .key-takeaways {
-  font-size: 8pt;
-  line-height: 1.3;
-  margin-bottom: 0.1in;
+  font-size: 7.5pt;
+  line-height: 1.2;
+  margin-top: 0.02in;
+  margin-bottom: 0.08in;
+  padding-left: 0.18in;
 }
 .quiz-container .key-takeaways li {
-  margin-bottom: 0.04in;
+  margin-bottom: 0.02in;
 }
 .quiz-container .quiz-title {
-  font-size: 11pt;
-  margin-top: 0.1in;
-  margin-bottom: 0.08in;
+  font-size: 10.5pt;
+  margin-top: 0.05in;
+  margin-bottom: 0.05in;
 }
 .quiz-container .quiz-instructions {
-  font-size: 8pt;
-  margin-bottom: 0.08in;
+  font-size: 7.5pt;
+  font-style: italic;
+  margin-bottom: 0.06in;
 }
 .quiz-container .mcq-list {
-  font-size: 8.5pt;
-  line-height: 1.3;
+  font-size: 8pt;
+  line-height: 1.22;
+  margin: 0;
+  padding-left: 0.22in;
 }
 .quiz-container .mcq-item {
-  margin-bottom: 0.08in;
+  margin-bottom: 0.06in;
 }
 .quiz-container .question-text {
-  font-size: 8.5pt;
-  margin-bottom: 0.04in;
+  font-size: 8pt;
+  font-weight: bold;
+  margin-bottom: 0.03in;
   text-indent: 0;
+  line-height: 1.2;
 }
 .quiz-container .mcq-options {
-  font-size: 8pt;
-  margin-left: 0.2in;
+  font-size: 7.5pt;
+  line-height: 1.2;
+  margin-left: 0.18in;
   margin-bottom: 0;
 }
 .quiz-container .mcq-options li {
-  margin-bottom: 0.02in;
+  margin-bottom: 0.01in;
 }
 .quiz-container .quiz-footer {
-  margin-top: 0.08in;
+  margin-top: 0.06in;
 }
 .quiz-container .quiz-footer p {
-  font-size: 7.5pt;
+  font-size: 7pt;
   text-indent: 0;
 }
 
-/* --- CHAPTER WORKSHEETS: single page, no break inside --- */
+/* --- CHAPTER WORKSHEETS: single page, no break inside ---
+   break-after omitted (see quiz note) to avoid trailing blank pages. */
 section.worksheet,
 .worksheet.page {
   break-before: page;
-  break-after: page;
+  break-after: auto;
   break-inside: avoid;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
   page-break-inside: avoid;
   max-height: none;
   overflow: visible;
@@ -1352,14 +1406,14 @@ section.worksheet,
 /* Compact worksheet to fit single page */
 section.worksheet .worksheet-header,
 .worksheet.page .worksheet-header {
-  margin-bottom: 0.1in;
-  padding: 0.08in 0.15in;
+  margin-bottom: 0.08in;
+  padding: 0.07in 0.14in;
 }
 section.worksheet h2,
 .worksheet.page h2 {
   font-size: 11pt;
   margin-top: 0;
-  margin-bottom: 0.04in;
+  margin-bottom: 0.03in;
 }
 section.worksheet .worksheet-subtitle,
 .worksheet.page .worksheet-subtitle {
@@ -1368,23 +1422,28 @@ section.worksheet .worksheet-subtitle,
 }
 section.worksheet .prompt-container,
 .worksheet.page .prompt-container {
-  margin-bottom: 0.08in;
+  margin-bottom: 0.05in;
 }
 section.worksheet .prompt-label,
 .worksheet.page .prompt-label {
   font-size: 8.5pt;
-  line-height: 1.3;
-  margin-bottom: 0.04in;
+  line-height: 1.25;
+  margin-bottom: 0.03in;
+  display: block;
 }
 section.worksheet .response-area,
 .worksheet.page .response-area {
-  min-height: 0.5in;
-  max-height: 0.7in;
+  min-height: 0;
 }
 section.worksheet .line,
 .worksheet.page .line {
   height: 0.2in;
   margin-bottom: 0;
+}
+/* Ch VI-style worksheet writing area lines */
+.worksheet .response-area.lined .line,
+.worksheet.page .response-area.lined .line {
+  height: 0.2in;
 }
 section.worksheet .worksheet-footer,
 .worksheet.page .worksheet-footer {
@@ -1399,10 +1458,10 @@ section.worksheet .worksheet-footer p,
 /* Ch VI worksheet uses different markup */
 .worksheet.page-break-before {
   break-before: page;
-  break-after: page;
+  break-after: auto;
   break-inside: avoid;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
   page-break-inside: avoid;
   max-height: none;
   overflow: visible;
@@ -1417,13 +1476,14 @@ section.worksheet .worksheet-footer p,
   margin-bottom: 0.06in;
 }
 
-/* --- IMAGE QUOTE: full single page, image fills content area --- */
+/* --- IMAGE QUOTE: full single page, image fills content area ---
+   break-after omitted to avoid a trailing blank page after the quote image. */
 section.image-quote {
   break-before: page;
-  break-after: page;
+  break-after: auto;
   break-inside: avoid;
   page-break-before: always;
-  page-break-after: always;
+  page-break-after: auto;
   page-break-inside: avoid;
   display: flex;
   align-items: center;
@@ -1487,4 +1547,37 @@ section.doodle-page {
 .frontmatter-shell {
   break-inside: avoid;
   page-break-inside: avoid;
+}
+
+/* ====================================================================
+   FULL-PAGE HEIGHT RESET (PRINT)
+   Screen CSS uses min-height:100vh / 90vh for full-page shells. In print the
+   page box (9.61in) is taller than the text area (~8.11in after margins), so
+   100vh forces every such shell to overflow onto a near-empty second page.
+   Resetting min-height lets the shell occupy exactly the space its content
+   needs (still at least one page where content fills it), eliminating the
+   manufactured blank/sparse second pages. NOTE: max-height + overflow:hidden
+   is deliberately NOT used here — in paged media it does not constrain height
+   and risks clipping real content.
+   ==================================================================== */
+.frontmatter-shell,
+.assessment-shell,
+.affirmation-shell,
+.worksheet-page,
+.journal-shell,
+.backmatter-section,
+.certificate-body,
+section.affirmations-close,
+section.commitment-page,
+body.copyright-body,
+body.dedication-body,
+body.affirmation-body,
+body.assessment-body,
+body.about-author-body,
+body.doodle-body,
+body.journal-body,
+body.worksheet-page-body,
+body.ack-body,
+body.bio-body {
+  min-height: 0;
 }
