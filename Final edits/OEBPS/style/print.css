@@ -354,6 +354,8 @@ li {
 .copyright-notice,
 .rights-text,
 .isbn-info,
+.isbn-block,
+.edition-info,
 .publisher-info {
   font-family: 'Montserrat', Arial, sans-serif;
   font-size: 9pt;
@@ -362,7 +364,8 @@ li {
   margin-bottom: 0.15in;
 }
 
-.isbn-info {
+.isbn-info,
+.isbn-block {
   font-family: 'Courier New', monospace;
   font-weight: bold;
 }
