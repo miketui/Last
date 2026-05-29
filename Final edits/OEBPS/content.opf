@@ -11,10 +11,10 @@
     <meta refines="#title" property="display-seq">1</meta>
 
     <!-- Creator -->
-    <dc:creator id="creator">Michael David Warren Jr.</dc:creator>
+    <dc:creator id="creator">Michael David</dc:creator>
     <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
     <meta refines="#creator" property="display-seq">1</meta>
-    <meta refines="#creator" property="file-as">Warren, Michael David, Jr.</meta>
+    <meta refines="#creator" property="file-as">David, Michael</meta>
 
     <!-- Language and Publisher -->
     <dc:language>en</dc:language>

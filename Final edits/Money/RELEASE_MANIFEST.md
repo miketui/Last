@@ -14,7 +14,7 @@ embedded fonts, page-numbered TOC, EPUBCheck-clean). Checksums are maintained in
 
 | Format | Canonical filename | SHA256 | Distribution target |
 |---|---|---|---|
-| EPUB | `optimized/Curls-and-Contemplation-PUBLICATION.epub` | `9c70aa93f874ae8adf7379994e8d3335eacbd82e70406592935be9990a322a33` | KDP EPUB |
+| EPUB | `optimized/Curls-and-Contemplation-PUBLICATION.epub` | `9679e37f04ff28aab6c7a44278637bde614d2c7999834970d9cdd0512641a513` | KDP EPUB |
 | Print PDF | `optimized/Curls-and-Contemplation-POD-Royal-6.69x9.61-INTERIOR.pdf` | `1055b8cf11e5a0763ea5cddc456d1108c876a71debdadc88204cdf75a42e1bf8` | POD Royal 6.69×9.61 |
 
 - Print interior: **465 pages**, Royal 6.69 × 9.61 in, all fonts embedded,
