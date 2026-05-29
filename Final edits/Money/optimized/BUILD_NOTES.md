@@ -7,14 +7,14 @@ count, fixing layout/formatting issues, and producing publication-ready files.
 
 | File | Format | Spec |
 |---|---|---|
-| `Curls-and-Contemplation-POD-Royal-6.69x9.61-INTERIOR.pdf` | Print interior | KDP **Royal 6.69 × 9.61 in**, **462 pages**, all fonts embedded, page numbers, page-numbered TOC |
+| `Curls-and-Contemplation-POD-Royal-6.69x9.61-INTERIOR.pdf` | Print interior | KDP **Royal 6.69 × 9.61 in**, **465 pages**, all fonts embedded, page numbers, page-numbered TOC |
 | `Curls-and-Contemplation-PUBLICATION.epub` | Reflowable EPUB | EPUB 3.3, **0 EPUBCheck errors/warnings** |
 
 Checksums in `SHA256SUMS.txt`.
 
 ## Headline results
 
-- **POD page count: 607 → 462** (target was < 490). ✅
+- **POD page count: 607 → 465** (target was < 490). ✅
 - **Blank pages: ~78 (original canonical) / 33 (interim) → 0.** ✅
 - Trim: 6.69 × 9.61 in (KDP Royal). ✅
 - **All fonts embedded** (KDP requirement; the folio overlay embeds Montserrat). ✅
@@ -92,6 +92,6 @@ preferred for the final perfect-bound interior if a Prince license is available.
   printed proof to confirm they read cleanly.
 - ISBNs on the copyright page are placeholders (`978-X-…`) — drop in the real
   KDP-assigned/owned ISBNs before publishing, and recalculate the cover spine
-  width for 462 pages.
+  width for 465 pages.
 - An editorial fact-check of the high-visibility claims was performed; see
   `FACT_CHECK.md`. A line-by-line citation audit is still recommended.
