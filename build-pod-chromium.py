@@ -17,6 +17,7 @@ Usage: python3 build-pod-chromium.py [output.pdf]
 import sys
 import io
 import glob
+import json
 import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
@@ -183,7 +184,6 @@ def main():
 
     with open(out, "wb") as fh:
         writer.write(fh)
-    import json
     (out.parent / "page-map.json").write_text(json.dumps(page_map, indent=2))
     print(f"PDF generated: {out} ({out.stat().st_size/1024/1024:.1f} MB, "
           f"{folio} pages; dropped {dropped} blank pages)")

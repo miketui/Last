@@ -67,8 +67,8 @@ python3 build-pod-chromium.py  out.pdf
 
 # Refresh the print TOC page numbers from the latest build, then rebuild once
 # more so the TOC reflects final pagination (it converges in one pass):
-python3 inject-toc-folios.py
-python3 build-pod-chromium.py  out.pdf
+python3 inject-toc-folios.py            # reads page-map.json from the build above
+python3 build-pod-chromium.py  out.pdf  # 2nd pass: bakes injected TOC folios into final PDF
 
 # Publication EPUB:
 cd "Final edits"
