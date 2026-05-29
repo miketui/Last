@@ -1,5 +1,9 @@
 # Phase 4 — Pre-Publication Integrity Audit & Pre-Mortem
 
+**Audited:** 2026-05-29
+**Commit:** `7d1d009` (origin/main at audit time)
+**Tooling:** EPUBCheck 5.1.0, Poppler (pdfinfo/pdffonts/pdfimages/pdftotext), Ghostscript
+
 Full pre-publication sweep of the canonical artifacts and EPUB source. Every check
 below was run programmatically against the files on `main`.
 
@@ -41,7 +45,10 @@ Messages: 0 fatals / 0 errors / 0 warnings / 0 infos
 ## 4. Table of Contents — page-number accuracy (the key print check)
 
 - Print TOC links: **39**, broken: **0** (every target file + anchor resolves).
-- TOC folio numbers: **36**, monotonic non-decreasing, range **6–456**.
+- TOC folio numbers: **36**, monotonic non-decreasing, range **6–456**. The
+  3-entry gap (39 links vs 36 folios) is **by design** — part-divider/front-matter
+  entries suppress folios, consistent with the folio-suppression rule in
+  BUILD_NOTES.
 - **TOC folios vs PDF page-map: 0 mismatches** — every printed TOC page number
   equals the actual absolute page where that section begins.
 - Printed-folio spot checks: body pages (18, 19, 48, 167, 300, 456) print their
@@ -75,15 +82,18 @@ expected; the build is content-reproducible.
 
 These are **not defects**; they are choices to confirm before publishing.
 
-1. **Color images on a B&W interior — HIGHEST RISK.** The interior PDF contains
+1. **Color images on a B&W interior — RESOLVED.** The interior originally contained
    RGB (18) and ICC (19) images alongside grayscale (36), from the dark chapter
-   openers and full-page image-quotes (kept per direction).
-   - **At KDP:** if you select a **black-and-white** interior, KDP auto-converts
-     these to grayscale — the heavy dark backgrounds may band, posterize, or look
-     muddy in print. If you select a **premium/standard color** interior, the book
-     prices significantly higher and the page cost jumps.
-   - **Recommendation:** order a physical proof and decide deliberately, or convert
-     the interior to true grayscale before upload for predictable B&W output.
+   openers and full-page image-quotes. This was the highest-risk item: at KDP a
+   black-and-white interior would auto-convert these (risk of banding/posterizing
+   the heavy dark backgrounds), and a color interior would raise the price.
+   - **Action taken (per direction that images may be grayscale/B&W):** the interior
+     PDF is now converted to **true grayscale** (Ghostscript DeviceGray /
+     ColorConversionStrategy=Gray) — **73 grayscale images, 0 RGB, 0 ICC**. Verified
+     the dark Ch I opener renders cleanly with no banding. KDP will now print a
+     predictable B&W interior with no auto-conversion surprises or color pricing.
+   - **Still recommended:** order a physical proof to confirm ink coverage on the
+     heavy dark pages.
 
 2. **Placeholder ISBNs.** Copyright page still reads `978-X-XXXXXXX-X-X` for both
    paperback and e-book. Must be replaced with real ISBNs before publishing.
