@@ -13,23 +13,36 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 TOC = HERE / "Final edits" / "OEBPS" / "xhtml" / "3-TableOfContents.xhtml"
-# Default matches where build-pod-chromium.py writes the map for its default
-# output path; override with --map for other build directories / CI.
-DEFAULT_MAP = Path("/tmp/epub-build/page-map.json")
+# build-pod-chromium.py writes page-map.json next to its output PDF: the CWD when
+# called as `build-pod-chromium.py out.pdf`, or /tmp/epub-build for the default
+# output. Search both (CWD first) so the common workflows just work; override
+# with --map for other build directories / CI.
+DEFAULT_MAP_CANDIDATES = [Path("page-map.json"), Path("/tmp/epub-build/page-map.json")]
+
+
+def resolve_map(explicit):
+    if explicit is not None:
+        return explicit
+    for cand in DEFAULT_MAP_CANDIDATES:
+        if cand.exists():
+            return cand
+    return DEFAULT_MAP_CANDIDATES[-1]  # report the canonical default in the error
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--map", type=Path, default=DEFAULT_MAP,
-                        help="page-map.json produced by build-pod-chromium.py")
+    parser.add_argument("--map", type=Path, default=None,
+                        help="page-map.json produced by build-pod-chromium.py "
+                             "(default: ./page-map.json, then /tmp/epub-build/)")
     parser.add_argument("--toc", type=Path, default=TOC,
                         help="Table-of-Contents XHTML to update")
     args = parser.parse_args()
+    args.map = resolve_map(args.map)
 
     if not args.map.exists():
         raise FileNotFoundError(
-            f"page-map.json not found at {args.map}. Run build-pod-chromium.py "
-            f"first (it writes the map next to the output PDF).")
+            f"page-map.json not found (looked in {', '.join(str(c) for c in DEFAULT_MAP_CANDIDATES)}). "
+            f"Run build-pod-chromium.py first; it writes the map next to the output PDF.")
 
     page_map = json.loads(args.map.read_text())
     html = args.toc.read_text(encoding="utf-8")

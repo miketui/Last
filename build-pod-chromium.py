@@ -166,7 +166,7 @@ def main():
     dropped = 0
     seen_file = None
     page_map = {}  # spine filename -> first absolute (kept) page number
-    for pg, m, fr in zip(pages, meta, fracs):
+    for pg, m, fr in zip(pages, meta, fracs, strict=True):
         if fr < BLANK_INK_THRESHOLD and not m["keep_blank"]:
             dropped += 1
             continue
