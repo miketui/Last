@@ -24,131 +24,147 @@
       <navLabel><text>Preface</text></navLabel>
       <content src="xhtml/7-Preface.xhtml"/>
     </navPoint>
-    <navPoint id="nav-5" playOrder="5">
-      <navLabel><text>Chapter I: Unveiling Your Creative Odyssey</text></navLabel>
-      <content src="xhtml/9-chapter-i-unveiling-your-creative-odyssey.xhtml"/>
+    <navPoint id="nav-part-i" playOrder="5">
+      <navLabel><text>Part I: Foundations of Creative Hairstyling</text></navLabel>
+      <content src="xhtml/8-Part-I-Foundations-of-Creative-Hairstyling.xhtml"/>
+      <navPoint id="nav-5" playOrder="6">
+        <navLabel><text>Chapter I: Unveiling Your Creative Odyssey</text></navLabel>
+        <content src="xhtml/9-chapter-i-unveiling-your-creative-odyssey.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-6" playOrder="7">
+        <navLabel><text>Chapter II: Refining Your Creative Toolkit</text></navLabel>
+        <content src="xhtml/10-chapter-ii-refining-your-creative-toolkit.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-7" playOrder="8">
+        <navLabel><text>Chapter III: Reigniting Your Creative Fire</text></navLabel>
+        <content src="xhtml/11-chapter-iii-reigniting-your-creative-fire.xhtml"/>
+      </navPoint>
     </navPoint>
-    <navPoint id="nav-6" playOrder="6">
-      <navLabel><text>Chapter II: Refining Your Creative Toolkit</text></navLabel>
-      <content src="xhtml/10-chapter-ii-refining-your-creative-toolkit.xhtml"/>
+    <navPoint id="nav-part-ii" playOrder="9">
+      <navLabel><text>Part II: Building Your Professional Practice</text></navLabel>
+      <content src="xhtml/12-Part-II-Building-Your-Professional-Practice.xhtml"/>
+      <navPoint id="nav-8" playOrder="10">
+        <navLabel><text>Chapter IV: The Art of Networking in Freelance Hairstyling</text></navLabel>
+        <content src="xhtml/13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-9" playOrder="11">
+        <navLabel><text>Chapter V: Cultivating Creative Excellence Through Mentorship</text></navLabel>
+        <content src="xhtml/14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-10" playOrder="12">
+        <navLabel><text>Chapter VI: Mastering the Business of Hairstyling</text></navLabel>
+        <content src="xhtml/15-chapter-vi-mastering-the-business-of-hairstyling.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-11" playOrder="13">
+        <navLabel><text>Chapter VII: Embracing Wellness and Self-Care</text></navLabel>
+        <content src="xhtml/16-chapter-vii-embracing-wellness-and-self-care.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-12" playOrder="14">
+        <navLabel><text>Chapter VIII: Advancing Skills Through Continuous Education</text></navLabel>
+        <content src="xhtml/17-chapter-viii-advancing-skills-through-continuous-education.xhtml"/>
+      </navPoint>
     </navPoint>
-    <navPoint id="nav-7" playOrder="7">
-      <navLabel><text>Chapter III: Reigniting Your Creative Fire</text></navLabel>
-      <content src="xhtml/11-chapter-iii-reigniting-your-creative-fire.xhtml"/>
+    <navPoint id="nav-part-iii" playOrder="15">
+      <navLabel><text>Part III: Advanced Business Strategies</text></navLabel>
+      <content src="xhtml/18-Part-III-Advanced-Business-Strategies.xhtml"/>
+      <navPoint id="nav-13" playOrder="16">
+        <navLabel><text>Chapter IX: Stepping Into Leadership</text></navLabel>
+        <content src="xhtml/19-chapter-ix-stepping-into-leadership.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-14" playOrder="17">
+        <navLabel><text>Chapter X: Crafting Enduring Legacies</text></navLabel>
+        <content src="xhtml/20-chapter-x-crafting-enduring-legacies.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-15" playOrder="18">
+        <navLabel><text>Chapter XI: Advanced Digital Strategies for Freelance Hairstylists</text></navLabel>
+        <content src="xhtml/21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-16" playOrder="19">
+        <navLabel><text>Chapter XII: Financial Wisdom — Building Sustainable Ventures</text></navLabel>
+        <content src="xhtml/22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-17" playOrder="20">
+        <navLabel><text>Chapter XIII: Embracing Ethics and Sustainability in Hairstyling</text></navLabel>
+        <content src="xhtml/23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml"/>
+      </navPoint>
     </navPoint>
-    <navPoint id="nav-8" playOrder="8">
-      <navLabel><text>Chapter IV: The Art of Networking in Freelance Hairstyling</text></navLabel>
-      <content src="xhtml/13-chapter-iv-the-art-of-networking-in-freelance-hairstyling.xhtml"/>
+    <navPoint id="nav-part-iv" playOrder="21">
+      <navLabel><text>Part IV: Future-Focused Growth</text></navLabel>
+      <content src="xhtml/24-Part-IV-Future-Focused-Growth.xhtml"/>
+      <navPoint id="nav-18" playOrder="22">
+        <navLabel><text>Chapter XIV: The Impact of AI on the Beauty Industry</text></navLabel>
+        <content src="xhtml/25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-19" playOrder="23">
+        <navLabel><text>Chapter XV: Cultivating Resilience and Well-Being in Hairstyling</text></navLabel>
+        <content src="xhtml/26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml"/>
+      </navPoint>
+      <navPoint id="nav-20" playOrder="24">
+        <navLabel><text>Chapter XVI: Tresses and Textures — Embracing Diversity in Hairstyling</text></navLabel>
+        <content src="xhtml/27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml"/>
+      </navPoint>
     </navPoint>
-    <navPoint id="nav-9" playOrder="9">
-      <navLabel><text>Chapter V: Cultivating Creative Excellence Through Mentorship</text></navLabel>
-      <content src="xhtml/14-chapter-v-cultivating-creative-excellence-through-mentorship.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-10" playOrder="10">
-      <navLabel><text>Chapter VI: Mastering the Business of Hairstyling</text></navLabel>
-      <content src="xhtml/15-chapter-vi-mastering-the-business-of-hairstyling.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-11" playOrder="11">
-      <navLabel><text>Chapter VII: Embracing Wellness and Self-Care</text></navLabel>
-      <content src="xhtml/16-chapter-vii-embracing-wellness-and-self-care.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-12" playOrder="12">
-      <navLabel><text>Chapter VIII: Advancing Skills Through Continuous Education</text></navLabel>
-      <content src="xhtml/17-chapter-viii-advancing-skills-through-continuous-education.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-13" playOrder="13">
-      <navLabel><text>Chapter IX: Stepping Into Leadership</text></navLabel>
-      <content src="xhtml/19-chapter-ix-stepping-into-leadership.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-14" playOrder="14">
-      <navLabel><text>Chapter X: Crafting Enduring Legacies</text></navLabel>
-      <content src="xhtml/20-chapter-x-crafting-enduring-legacies.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-15" playOrder="15">
-      <navLabel><text>Chapter XI: Advanced Digital Strategies for Freelance Hairstylists</text></navLabel>
-      <content src="xhtml/21-chapter-xi-advanced-digital-strategies-for-freelance-hairstylists.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-16" playOrder="16">
-      <navLabel><text>Chapter XII: Financial Wisdom: Building Sustainable Ventures</text></navLabel>
-      <content src="xhtml/22-chapter-xii-financial-wisdom-building-sustainable-ventures.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-17" playOrder="17">
-      <navLabel><text>Chapter XIII: Embracing Ethics and Sustainability in Hairstyling</text></navLabel>
-      <content src="xhtml/23-chapter-xiii-embracing-ethics-and-sustainability-in-hairstyling.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-18" playOrder="18">
-      <navLabel><text>Chapter XIV: The Impact of AI on the Beauty Industry</text></navLabel>
-      <content src="xhtml/25-chapter-xiv-the-impact-of-ai-on-the-beauty-industry.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-19" playOrder="19">
-      <navLabel><text>Chapter XV: Cultivating Resilience and Well-Being in Hairstyling</text></navLabel>
-      <content src="xhtml/26-chapter-xv-cultivating-resilience-and-well-being-in-hairstyling.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-20" playOrder="20">
-      <navLabel><text>Chapter XVI: Tresses and Textures: Embracing Diversity in Hairstyling</text></navLabel>
-      <content src="xhtml/27-chapter-xvi-tresses-and-textures-embracing-diversity-in-hairstyling.xhtml"/>
-    </navPoint>
-    <navPoint id="nav-21" playOrder="21">
+    <navPoint id="nav-21" playOrder="25">
       <navLabel><text>Conclusion</text></navLabel>
       <content src="xhtml/28-Conclusion.xhtml"/>
     </navPoint>
-    <navPoint id="nav-22" playOrder="22">
+    <navPoint id="nav-22" playOrder="26">
       <navLabel><text>Quiz Key</text></navLabel>
       <content src="xhtml/29-QuizKey.xhtml"/>
     </navPoint>
-    <navPoint id="nav-23" playOrder="23">
+    <navPoint id="nav-23" playOrder="27">
       <navLabel><text>Self-Assessment Worksheet</text></navLabel>
       <content src="xhtml/30-SelfAssessment.xhtml"/>
     </navPoint>
-    <navPoint id="nav-24" playOrder="24">
+    <navPoint id="nav-24" playOrder="28">
       <navLabel><text>Affirmations Close Worksheet</text></navLabel>
       <content src="xhtml/31-affirmations-close.xhtml"/>
     </navPoint>
-    <navPoint id="nav-25" playOrder="25">
+    <navPoint id="nav-25" playOrder="29">
       <navLabel><text>Continued Learning Commitment</text></navLabel>
       <content src="xhtml/32-continued-learning-commitment.xhtml"/>
     </navPoint>
-    <navPoint id="nav-26" playOrder="26">
+    <navPoint id="nav-26" playOrder="30">
       <navLabel><text>Acknowledgments</text></navLabel>
       <content src="xhtml/33-Acknowledgments.xhtml"/>
     </navPoint>
-    <navPoint id="nav-27" playOrder="27">
+    <navPoint id="nav-27" playOrder="31">
       <navLabel><text>About the Author</text></navLabel>
       <content src="xhtml/34-AbouttheAuthor.xhtml"/>
     </navPoint>
-    <navPoint id="nav-28" playOrder="28">
+    <navPoint id="nav-28" playOrder="32">
       <navLabel><text>Journaling Start</text></navLabel>
       <content src="xhtml/35-JournalingStart.xhtml"/>
     </navPoint>
-    <navPoint id="nav-29" playOrder="29">
+    <navPoint id="nav-29" playOrder="33">
       <navLabel><text>Manifesting Journal</text></navLabel>
       <content src="xhtml/36-ManifestingJournal.xhtml"/>
     </navPoint>
-    <navPoint id="nav-30" playOrder="30">
+    <navPoint id="nav-30" playOrder="34">
       <navLabel><text>Journal Page</text></navLabel>
       <content src="xhtml/37-journal-page.xhtml"/>
     </navPoint>
-    <navPoint id="nav-31" playOrder="31">
+    <navPoint id="nav-31" playOrder="35">
       <navLabel><text>Professional Development Worksheet</text></navLabel>
       <content src="xhtml/38-professional-development.xhtml"/>
     </navPoint>
-    <navPoint id="nav-32" playOrder="32">
+    <navPoint id="nav-32" playOrder="36">
       <navLabel><text>SMART Goals Worksheet</text></navLabel>
       <content src="xhtml/39-SMARTGoals.xhtml"/>
     </navPoint>
-    <navPoint id="nav-33" playOrder="33">
+    <navPoint id="nav-33" playOrder="37">
       <navLabel><text>Self-Care Journal</text></navLabel>
       <content src="xhtml/40-self-care-journal.xhtml"/>
     </navPoint>
-    <navPoint id="nav-34" playOrder="34">
+    <navPoint id="nav-34" playOrder="38">
       <navLabel><text>Vision Journal</text></navLabel>
       <content src="xhtml/41-VisionJournal.xhtml"/>
     </navPoint>
-    <navPoint id="nav-35" playOrder="35">
+    <navPoint id="nav-35" playOrder="39">
       <navLabel><text>Doodle Page</text></navLabel>
       <content src="xhtml/42-DoodlePage.xhtml"/>
     </navPoint>
-    <navPoint id="nav-36" playOrder="36">
+    <navPoint id="nav-36" playOrder="40">
       <navLabel><text>Bibliography</text></navLabel>
       <content src="xhtml/43-bibliography.xhtml"/>
     </navPoint>
