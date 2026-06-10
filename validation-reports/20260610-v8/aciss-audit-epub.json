@@ -1,0 +1,45 @@
+{
+  "file": "/tmp/epub-build/Curls-and-Contemplation-v8-20260610.epub",
+  "checks": {
+    "aciss_palette": {
+      "status": "PASS",
+      "msg": "16 ACISS token uses; no retired or generic tokens",
+      "aciss_hits": {
+        "#111111": 0,
+        "#b08d57": 5,
+        "#d8d1c5": 0,
+        "#145b4b": 10,
+        "#c7d9d2": 1
+      }
+    },
+    "isbn_in_opf": {
+      "status": "FAIL",
+      "msg": "No ISBN \u2014 UUID-only identifier blocks KDP/IngramSpark identity",
+      "identifiers": [
+        [
+          "urn:uuid:b815780c-968e-4f5f-a928-f00e2f4341bc",
+          ""
+        ]
+      ]
+    },
+    "nav_ncx_parity": {
+      "status": "PASS",
+      "msg": "40 entries each"
+    },
+    "image_alt_text": {
+      "status": "PASS",
+      "msg": "all 38 images have alt attribute",
+      "missing_samples": []
+    },
+    "internal_links": {
+      "status": "PASS",
+      "msg": "all internal links resolve",
+      "broken_samples": []
+    },
+    "bibliography": {
+      "status": "PASS",
+      "msg": "88 external URLs in OEBPS/xhtml/43-bibliography.xhtml (use --online to check liveness)",
+      "count": 88
+    }
+  }
+}

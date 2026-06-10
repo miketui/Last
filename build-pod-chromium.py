@@ -25,6 +25,7 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 from pypdf import PdfReader, PdfWriter
+from pypdf.generic import DecodedStreamObject, NameObject
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -112,7 +113,19 @@ def folio_overlay(number):
     c.drawCentredString(PAGE_W / 2, 0.45 * 72, str(number))
     c.save()
     buf.seek(0)
-    return PdfReader(buf).pages[0]
+    page = PdfReader(buf).pages[0]
+    # Reportlab's initial graphics state emits a dead "BT /F1 12 Tf 14.4 TL ET"
+    # block referencing non-embedded Helvetica; no glyphs are drawn with it.
+    # Strip the operator and the /F1 resource so every font in the exported
+    # PDF is embedded (KDP rejects any non-embedded font).
+    data = page.get_contents().get_data().replace(b"BT /F1 12 Tf 14.4 TL ET", b"")
+    stream = DecodedStreamObject()
+    stream.set_data(data)
+    page.replace_contents(stream)
+    fonts = page["/Resources"]["/Font"]
+    if "/F1" in fonts:
+        del fonts[NameObject("/F1")]
+    return page
 
 
 def ink_fractions(pdf_path, dpi=36):
@@ -123,7 +136,8 @@ def ink_fractions(pdf_path, dpi=36):
     fracs = []
     for f in sorted(glob.glob(d + "/p-*.png")):
         im = Image.open(f).convert("L")
-        px = list(im.get_flattened_data())
+        # Pillow 14 renames getdata() -> get_flattened_data(); support both.
+        px = list(getattr(im, "get_flattened_data", im.getdata)())
         fracs.append(sum(1 for v in px if v < 160) / len(px))
     return fracs
 

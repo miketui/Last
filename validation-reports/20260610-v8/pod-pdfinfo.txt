@@ -1,0 +1,15 @@
+Producer:        pypdf
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           465
+Encrypted:       no
+Page size:       481.92 x 691.92 pts
+Page rot:        0
+File size:       24185382 bytes
+Optimized:       no
+PDF version:     1.4

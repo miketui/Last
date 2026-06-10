@@ -2,7 +2,7 @@
   style.css — ACISS Design System for Curls & Contemplation
   Complete Stylesheet with All Corrections
   
-  Colors: Teal (#008080), Gold (#D4AF37), Jade (#00A86B)
+  Colors: Deep Jade (#145B4B), Antique Gold (#B08D57) — ACISS locked palette
   Fonts: Libre Baskerville (Body), Cinzel Decorative (Display), Montserrat (Headers/UI)
   
   Version: 3.0 - Production Ready
@@ -15,19 +15,19 @@
    ==================================================================== */
 :root {
   /* Brand Colors */
-  --clr-teal-primary: #008080;
-  --clr-teal-dark: #006666;
-  --clr-teal-light: #339999;
-  --clr-teal-faint: rgba(0, 128, 128, 0.08);
+  --clr-teal-primary: #145B4B;
+  --clr-teal-dark: #0E4036;
+  --clr-teal-light: #3A7D6C;
+  --clr-teal-faint: rgba(20, 91, 75, 0.08);
   
-  --clr-gold-accent: #D4AF37;
-  --clr-gold-dark: #B8962E;
-  --clr-gold-light: #E0C564;
-  --clr-gold-faint: rgba(212, 175, 55, 0.1);
+  --clr-gold-accent: #B08D57;
+  --clr-gold-dark: #8F7142;
+  --clr-gold-light: #C9AC7E;
+  --clr-gold-faint: rgba(176, 141, 87, 0.1);
 
   /* Jade Accent */
-  --clr-jade: #00A86B;
-  --clr-jade-light: #33BB88;
+  --clr-jade: #145B4B;
+  --clr-jade-light: #C7D9D2;
   --clr-jade-faint: rgba(0, 168, 107, 0.08);
 
   /* Neutrals */
@@ -1249,8 +1249,8 @@ figcaption {
 
 /* Alias variables for inline style compatibility */
 :root {
-  --teal: #008080;
-  --gold: #D4AF37;
+  --teal: #145B4B;
+  --gold: #B08D57;
   --dark: #1F7272;
 }
 
@@ -1566,7 +1566,7 @@ body.toc-body .toc-entry .page-num {
   height: 100px;
   border: 1px solid var(--clr-teal-primary);
   border-radius: 4px;
-  background: rgba(0, 128, 128,0.02);
+  background: rgba(20, 91, 75, 0.02);
   resize: none;
   padding: 1rem;
   font-family: var(--font-display);
@@ -2774,7 +2774,7 @@ body.doodle-body {
   margin: 1.5em 0;
   padding: 1.2em;
   background-color: #f7f7f7;
-  border-left: 4px solid #008080;
+  border-left: 4px solid #145B4B;
   border-radius: 4px;
 }
 
@@ -2864,12 +2864,12 @@ body.doodle-body {
 .highlight-quote {
   font-size: 1.15em;
   font-style: italic;
-  color: #008080;
+  color: #145B4B;
   text-align: center;
   margin: 1.5em 2em;
   padding: 0.8em;
-  border-top: 2px solid #008080;
-  border-bottom: 2px solid #008080;
+  border-top: 2px solid #145B4B;
+  border-bottom: 2px solid #145B4B;
 }
 
 /* Image container wrapper */
@@ -2898,7 +2898,7 @@ body.doodle-body {
   content: "✓";
   position: absolute;
   left: 0;
-  color: #008080;
+  color: #145B4B;
   font-weight: bold;
 }
 
@@ -2918,7 +2918,7 @@ body.doodle-body {
 
 /* Social media handle link */
 .social-handle {
-  color: #008080;
+  color: #145B4B;
   text-decoration: none;
   font-weight: bold;
 }
@@ -2969,7 +2969,7 @@ body.doodle-body {
 .worksheet-cta {
   margin: 1.5em 0;
   padding: 1em;
-  border: 2px solid #c8a951;
+  border: 2px solid #B08D57;
   border-radius: 8px;
   text-align: center;
   background: #fdf8ed;
@@ -2986,7 +2986,7 @@ body.doodle-body {
 }
 
 .worksheet-cta-link {
-  color: #c8a951;
+  color: #B08D57;
   text-decoration: underline;
 }
 
