@@ -1597,3 +1597,24 @@ body.bio-body {
 a.backlink {
   display: none;
 }
+
+/* --- WIDOW/ORPHAN CONTROL (audit m20 re-scan): no paragraph may strand
+   fewer than 3 lines at a page boundary. --- */
+p {
+  orphans: 3;
+  widows: 3;
+}
+
+/* Chapter-opener intro paragraphs never split across pages (Blink does not
+   honor widows/orphans inside the opener's flex shell). */
+.introduction-paragraph p {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* The conclusion's valediction never strands on its own page: the final
+   paragraph and signature share one keep-together container. */
+.closing-keep {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}

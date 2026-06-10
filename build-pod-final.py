@@ -115,13 +115,11 @@ def folio_overlay(number):
     return PdfReader(buf).pages[0]
 
 
-def blank_page():
-    buf = io.BytesIO()
-    c = canvas.Canvas(buf, pagesize=(PAGE_W, PAGE_H))
-    c.showPage()
-    c.save()
-    buf.seek(0)
-    return PdfReader(buf).pages[0]
+def add_blank(writer):
+    # pypdf blank page: no content stream, no font resources — keeps the
+    # KDP "all fonts embedded" gate clean (a reportlab canvas page carries
+    # a default non-embedded Helvetica resource even when empty).
+    writer.add_blank_page(width=PAGE_W, height=PAGE_H)
 
 
 def ink_fractions(pdf_path, dpi=36):
@@ -179,7 +177,7 @@ def main():
         # odd physical page. Blanks consume a folio number, print nothing.
         if first_kept and _is_recto_file(m["name"]) and folio % 2 == 1:
             folio += 1
-            writer.add_page(blank_page())
+            add_blank(writer)
             padded += 1
         folio += 1
         seen_file = m["name"]
