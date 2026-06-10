@@ -1,0 +1,641 @@
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes      6  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes     18  0
+BAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes     23  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes     31  0
+BAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes     36  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes     44  0
+BAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes     49  0
+CAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes     54  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes     93  0
+BAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes    100  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    110  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes    114  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    119  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes    124  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    131  0
+EAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes    136  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    141  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    149  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes    153  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    158  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes    163  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    171  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    176  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    195  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes    199  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    204  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes    209  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes    214  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    219  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    226  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    232  0
+FAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes    236  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    249  0
+BAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes    254  0
+CAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    259  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    279  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes    284  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes    289  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    294  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes    299  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    307  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    314  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    321  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    329  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    337  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    346  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    352  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    358  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    364  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    370  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    376  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    382  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    388  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    394  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    400  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    406  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    412  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    418  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    424  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    430  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    436  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    442  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    448  0
+FAAAAA+DejaVuSans                    Type 3            Custom           yes yes yes    452  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    459  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    465  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    471  0
+GAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes    475  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    482  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    488  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    496  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    515  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes    520  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes    525  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    530  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes    535  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    543  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    549  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    557  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    564  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    571  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    578  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    585  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    591  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    598  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    604  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    610  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    620  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    626  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    632  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    638  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes    642  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    649  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    655  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    663  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    682  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes    687  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes    692  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    697  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    704  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes    708  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    718  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    727  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    735  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    741  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    747  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes    751  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    758  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    766  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    773  0
+BAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes    778  0
+CAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    783  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes    803  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes    808  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes    813  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes    818  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    825  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes    829  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    837  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    845  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    851  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    858  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    864  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    870  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    877  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    883  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    889  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    895  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    902  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    908  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    914  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    921  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    927  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    933  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    939  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    946  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    952  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    958  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes    962  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    969  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    975  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes    983  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   1002  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   1007  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   1012  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   1017  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   1022  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1030  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1036  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1043  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1049  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1055  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1061  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1068  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1074  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1081  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1087  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1094  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1100  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1107  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1113  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1119  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1126  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1133  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1139  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1145  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1158  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1166  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   1170  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1177  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1183  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1191  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   1210  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   1215  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   1220  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   1225  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   1230  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1238  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1244  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1251  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1258  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1265  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1272  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1278  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1284  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1291  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1298  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1304  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1311  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1317  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1323  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1330  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1337  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1343  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1349  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1363  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1370  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   1374  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1381  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1416  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1424  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   1443  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   1448  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   1453  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   1458  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1465  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1471  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   1475  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1482  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1489  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1496  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1503  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1509  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1515  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1521  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1528  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1534  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1541  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1548  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1561  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   1565  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1572  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1578  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1586  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   1605  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   1610  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   1615  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   1620  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   1625  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1633  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1639  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1645  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1652  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1658  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1665  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1673  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1680  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1686  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1693  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1699  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1706  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1713  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1719  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1726  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1733  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1740  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1747  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1754  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1761  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1767  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1774  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1781  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1788  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1794  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1800  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1806  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1819  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   1842  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1847  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1853  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1859  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1867  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   1874  0
+BAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   1879  0
+CAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   1884  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   1904  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   1909  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   1914  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   1919  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1926  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1932  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   1936  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1944  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1951  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1958  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1965  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1971  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1977  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1983  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1989  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   1995  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2001  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2007  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2014  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2020  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2027  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2033  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2039  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2045  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2051  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2057  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2063  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2069  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2078  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   2082  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2089  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2095  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2103  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   2122  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   2127  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   2132  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   2137  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2144  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2150  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   2154  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2162  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2170  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2176  0
+FAAAAA+LiberationSerif-Bold          CID TrueType      Identity-H       yes yes yes   2180  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2188  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2194  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2201  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2208  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2214  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2220  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2226  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2232  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2238  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2244  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2250  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2257  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2263  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2269  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2275  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2281  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2290  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2299  0
+GAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   2303  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2310  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2316  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2324  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   2343  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   2348  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   2353  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   2358  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2365  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2371  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   2375  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2382  0
+FAAAAA+DejaVuSans                    Type 3            Custom           yes yes yes   2386  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2393  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2399  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2405  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2411  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2417  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2423  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2429  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2435  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2441  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2447  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2453  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2459  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2465  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2471  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2477  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2483  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2489  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2495  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2505  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2515  0
+GAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   2519  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2526  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2532  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2540  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   2560  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   2565  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   2570  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2577  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   2581  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2588  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   2592  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2599  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2605  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2611  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2617  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2623  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2629  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2635  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2641  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2647  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2653  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2659  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2665  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2671  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2677  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2683  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2689  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2695  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2701  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2707  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2713  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2719  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2735  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2741  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   2745  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2752  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2758  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2766  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   2785  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   2790  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   2795  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   2800  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2807  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2813  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   2817  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2824  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2830  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2836  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2842  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2849  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2855  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2861  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2867  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2873  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2879  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2885  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2891  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2897  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2903  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2910  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2916  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2922  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2928  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2934  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2940  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2946  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2952  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2958  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2964  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2970  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2976  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2987  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   2991  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   2998  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3004  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3012  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3019  0
+BAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   3024  0
+CAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3029  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3049  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3054  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3059  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3064  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3071  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3077  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   3081  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3088  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3094  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3100  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3106  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3112  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3118  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3124  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3130  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3136  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3142  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3148  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3154  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3160  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3166  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3172  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3178  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3184  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3190  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3196  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3202  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3208  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3214  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3220  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3236  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   3240  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3247  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3253  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3261  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3280  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3285  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3290  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3295  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3303  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3309  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3315  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   3319  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3326  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3332  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3338  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3344  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3350  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3356  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3362  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3368  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3374  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3380  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3386  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3392  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3398  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3404  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3410  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3421  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3429  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   3433  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3440  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3446  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3454  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3473  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3478  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3483  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3488  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3495  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3501  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   3505  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3512  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3518  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3524  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3530  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3536  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3542  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3548  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3554  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3560  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3566  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3572  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3578  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3584  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3590  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3596  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3602  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3614  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3625  0
+FAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   3629  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3636  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3642  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3650  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3669  0
+EAAAAA+DejaVuSans                    CID TrueType      Identity-H       yes yes yes   3673  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3678  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3683  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3688  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3693  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3700  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3706  0
+FAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   3710  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3724  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3728  0
+BAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3733  0
+CAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   3738  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3748  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3752  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3757  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3762  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3769  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3777  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3785  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3789  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3794  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3799  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3804  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3811  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3818  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3822  0
+BAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3827  0
+CAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3832  0
+DAAAAA+DejaVuSans                    Type 3            Custom           yes yes yes   3837  0
+EAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   3844  0
+FAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3849  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3854  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3861  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3865  0
+BAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3870  0
+CAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3875  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3885  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3889  0
+BAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3894  0
+CAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   3899  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3904  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3913  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3917  0
+BAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3922  0
+CAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3927  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3937  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3941  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3946  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   3951  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3958  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3963  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3971  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   3975  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   3980  0
+DAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   3987  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   3992  0
+CAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   3996  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4006  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   4010  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   4015  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   4020  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4027  0
+DAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   4033  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4038  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4047  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   4051  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   4056  0
+CAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   4061  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4068  0
+DAAAAA+LiberationSerif               CID TrueType      Identity-H       yes yes yes   4076  0
+EAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   4081  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4086  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4094  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   4098  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   4103  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   4108  0
+DAAAAA+DejaVuSans                    Type 3            Custom           yes yes yes   4116  0
+EAAAAA+LibreBaskerville-Bold         CID TrueType      Identity-H       yes yes yes   4121  0
+FAAAAA+LiberationSans-Bold           CID TrueType      Identity-H       yes yes yes   4126  0
+GAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   4131  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4136  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4145  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   4149  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   4154  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   4159  0
+DAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   4166  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4171  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4180  0
+AAAAAA+Montserrat-Bold               CID TrueType      Identity-H       yes yes yes   4184  0
+BAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   4189  0
+CAAAAA+Montserrat-Regular            CID TrueType      Identity-H       yes yes yes   4194  0
+DAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   4199  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4207  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4214  0
+AAAAAA+CinzelDecorative-Black        CID TrueType      Identity-H       yes yes yes   4218  0
+BAAAAA+LibreBaskerville-Regular      CID TrueType      Identity-H       yes yes yes   4223  0
+CAAAAA+LibreBaskerville-Italic       CID TrueType      Identity-H       yes yes yes   4228  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4247  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4266  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4286  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4312  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4335  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4352  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4373  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4393  0
+AAAAAA+Montserrat-Regular            TrueType          WinAnsi          yes yes yes   4415  0

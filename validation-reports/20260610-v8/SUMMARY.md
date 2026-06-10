@@ -31,9 +31,35 @@ No XHTML/SVG content carried hardcoded off-brand colors (verified by grep).
   - **FAIL isbn_in_opf — still UUID-only.** Open decision (Pre-Mortem T1): Bowker vs KDP-free.
     If Bowker: insert ISBN into copyright page + `content.opf` `dc:identifier`, rebuild, re-run gates.
 
+## POD PDF rebuild (Chromium) — `CurlsAndContemplation-POD-Royal-v8-20260610.pdf`
+
+Built with `build-pod-chromium.py` (Chromium/Skia per spine file, merged, continuous folios).
+
+- **Badge fix:** the old `#47B9B1` teal badge came from `OEBPS/images/brushstroke.png`/`.svg`
+  (hardcoded `#4ECDC4`/`#3BA99C` — raster/SVG, untouchable by CSS). Both recolored to
+  Deep Jade `#145B4B` / `#0E4036` (luminance-preserving). Rebuilt badge samples `#155445` ✓.
+- **No blank pages:** 33 manufactured blanks dropped at build; final 465-page ink census
+  found **0 pages under 0.25% ink** (DoodlePage intentional pages retained).
+- **No truncation:** all 46 spine files present in page map; bibliography closes naturally
+  on p465; extracted word count 85,623 ≥ EPUB body (~81,978).
+- **Fonts: 639 total, 0 non-embedded.** (Fixed: reportlab folio overlay injected a dead
+  non-embedded Helvetica reference on every stamped page; stripped in `build-pod-chromium.py`.)
+- **Trim:** 481.92 × 691.92 pt = 6.69" × 9.61" exact, no bleed (inset panels).
+- Note: continuous-flow layout (no recto-padding blanks) means chapter openers are not
+  forced to recto — deliberate "no blank pages" decision, supersedes the recto standard.
+
+## Interior freeze + spine math (KDP B&W, white paper, 0.002252"/page)
+
+- **Page count (FROZEN): 465**
+- **Spine width: 1.0472" (26.60 mm)**
+- **Cover wrap flat size (with 0.125" bleed): 14.6772" × 9.8600"**
+
+Any interior change (e.g. ISBN insertion) that reflows pages re-opens this freeze —
+re-run the build and recompute before commissioning the wrap.
+
 ## Still open (cannot be resolved in-repo)
 
 1. **ISBN decision + insertion** (T1, launch-blocking) — owner: Michael.
-2. **PDF interior rebuild** with the corrected stylesheet (print PDF badges sampled `#47B9B1`
-   teal family) → then re-freeze page count → spine math → cover wrap (T4 sequencing).
+   Note: inserting the ISBN block on the copyright page may reflow page count → redo spine math.
+2. **Cover wrap** — can now be commissioned against the frozen spec above (after ISBN decision).
 3. **Kindle device test** light/dark/sepia for forced dark panels (T6).
