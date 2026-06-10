@@ -1584,3 +1584,16 @@ body.ack-body,
 body.bio-body {
   min-height: 0;
 }
+
+/* --- WIDOW FIX (audit m20): manifesto/quote callouts never split across
+   pages — the "I lead with integrity." box was stranding its last line. --- */
+.quote-box {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* --- POD (audit nit): endnote return-arrow backlinks are a web/EPUB
+   affordance; they do not print. --- */
+a.backlink {
+  display: none;
+}
