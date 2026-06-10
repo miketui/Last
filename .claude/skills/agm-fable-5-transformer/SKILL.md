@@ -311,7 +311,9 @@ message = client.messages.create(
     ],
 )
 
-print(message.content)
+# content is a list of blocks; with adaptive thinking enabled the first block
+# may be a (summarized) thinking block, so filter for text blocks
+print("".join(block.text for block in message.content if block.type == "text"))
 
 # Refusal handling: Fable 5 safety classifiers cover offensive cybersecurity,
 # biology/life sciences, and thinking-extraction. Benign work in those areas can
